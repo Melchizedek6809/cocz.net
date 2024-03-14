@@ -1,0 +1,10 @@
+name = "shisou"
+description = "a lightweight microblog theme for zola based on kangae"
+license = "NCSA"
+homepage = "https://github.com/Melchizedek6809/shisou/"
+demo = "https://cocz.net/"
+min_version = "0.15.0"
+
+[author]
+name = "Benjamin Vincent Schulenburg"
+homepage = "https://cocz.net/"

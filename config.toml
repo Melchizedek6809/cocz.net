@@ -1,0 +1,48 @@
+# The URL the site will be built for
+base_url = "https://cocz.net/"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+theme = "shisou"
+
+feed_filenames = ["rss.xml"]
+title = "Ben's blog"
+description = "ramblings from cyberspace"
+default_language = "en"
+
+taxonomies = [
+  { name = "tags", feed = true }
+]
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+
+[extra]
+author = "Benjamin Vincent Schulenburg"
+username = "melchizedek6809"
+keywords = [ "microblog", "linux", "lisp", "plt", "programming", "c", "rust" ]
+
+navbar = [
+  { name = "Home", url = "/", rel="me" },
+  { name = "About me", url = "/about-me/", rel="me" },
+  { name = "Blog", url = "/tags/blog/", rel="me" },
+  { name = "Tech", url = "/tags/tech/", rel="me" },
+  { name = "sourcehut", url = "https://sr.ht/~melchizedek6809/", rel="me", icon="sourcehut" },
+  { name = "GitHub", url = "https://github.com/Melchizedek6809", rel="me", icon="github" },
+  { name = "Twitch", url = "https://www.twitch.tv/melchizedek6809", rel="me", icon="twitch" }
+]
+
+[extra.content_license]
+spdx = "CC-BY-NC-ND-4.0"
+url = "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.txt"
+
+[extra.source_license]
+spdx = "MIT"
+url = "https://spdx.org/licenses/MIT.html"
+src_url = "https://github.com/melchizedek6809/cocz.net/"

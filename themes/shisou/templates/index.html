@@ -1,0 +1,14 @@
+{% import "macros/article.html" as article %}
+{% extends "base.html" -%}
+
+{%- block main %}
+  {%- for post in section.pages %}
+  {% if post.taxonomies.tags %}
+  <article>
+    {{ article::header(page=post) }}
+    {{ article::teaser(page=post) }}
+    {{ article::footer(page=post) }}
+  </article>
+  {% endif %}
+  {% endfor -%}
+{% endblock -%}
