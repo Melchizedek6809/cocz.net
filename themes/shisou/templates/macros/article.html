@@ -5,6 +5,7 @@
     {% endif -%}
     {%- if page.date %}
       <div class="post-side">
+        <time datetime="{{ page.date | date }}">{{ page.date | date }}</time>
         {%- if page.taxonomies and page.taxonomies.tags %}
           <ul role="list">
           {%- for tag in page.taxonomies.tags %}
@@ -12,7 +13,6 @@
           {% endfor -%}
           </ul>
         {% endif -%}
-        <time datetime="{{ page.date | date }}">{{ page.date | date }}</time>
       </div>
     {% endif -%}
   </header>
@@ -23,6 +23,7 @@
     <h1 class="post-title">{{ page.title }}</h1>
     {%- if page.date %}
       <div class="post-side">
+        <time datetime="{{ page.date | date }}">{{ page.date | date }}</time>
         {%- if page.taxonomies and page.taxonomies.tags %}
           <ul role="list">
           {%- for tag in page.taxonomies.tags %}
@@ -30,7 +31,6 @@
           {% endfor -%}
           </ul>
         {% endif -%}
-        <time datetime="{{ page.date | date }}">{{ page.date | date }}</time>
       </div>
     {% endif -%}
   </header>

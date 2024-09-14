@@ -29,8 +29,8 @@ in playtesters. This mostly came about because some of the kids I've been
 teaching GameDev in a Youth Center started playing that game by themselves
 and getting quite competitive about it, at first they weren't sure whether
 one can actually beat that game because it's too hard, after showing them that it's
-possible things started heating up until the first beat it, gotta say it was really
-nice to see people actually enjoying something I made!
+possible things started heating up until the first one beat it,
+gotta say it was really nice to see people actually enjoying something I made!
 
 With that experience in mind, I'll build a couple of apps in the future to just
 try out various ideas, trying to keep things as simple as possible, and not just

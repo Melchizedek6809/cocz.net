@@ -21,8 +21,11 @@
 }
 
 :root {
-  --sans-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  --serif-font: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  --sans-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --mono-font: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Inconsolata, monospace;
+
+  
 
   /* @link https://utopia.fyi/type/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
   --step-s5: clamp(0.37rem, calc(0.52rem + -0.19vw), 0.49rem);
@@ -196,12 +199,16 @@ h1,h2,h3,h4,h5,h6 {
   margin-bottom:0.3em;
 }
 
-h1 { font-size: 2.4rem; }
-h2 { font-size: 2.1rem; }
-h3 { font-size: 1.8rem; }
-h4 { font-size: 1.6rem; }
-h5 { font-size: 1.4rem; }
-h6 { font-size: 1.2rem; }
+h1 { font-size: 3.2rem; }
+h2 { font-size: 2.4rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1.1rem; }
+
+h1,h2 {
+  font-family: var(--serif-font);
+}
 
 .primary-header h3 {
   margin-bottom: 0;
@@ -262,7 +269,7 @@ footer {
 .page-header > ul[role="list"] {
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: var(--space-2xs);
 }
 
