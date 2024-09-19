@@ -3,7 +3,7 @@ title = "Skill X Change - Day 1"
 date = "2024-09-17"
 
 [taxonomies]
-tags = ["blog", "projects", "webdev", "skillxchange"]
+tags = ["projects", "webdev", "skillxchange"]
 +++
 
 So, I'm calling quits on this project. Mainly because working with

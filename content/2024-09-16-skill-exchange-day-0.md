@@ -3,7 +3,7 @@ title = "Skill X Change - Day 0"
 date = "2024-09-16"
 
 [taxonomies]
-tags = ["blog", "projects", "webdev", "skillxchange"]
+tags = ["projects", "webdev", "skillxchange"]
 +++
 
 So for my first project I though I'd build a simple Web Page/App where people
