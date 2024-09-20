@@ -3,7 +3,7 @@ title = "Future projects"
 date = "2024-09-15"
 
 [taxonomies]
-tags = ["blog"]
+tags = ["blog", "tech"]
 +++
 
 So, I've finally become one of these digital nomad backpackers,
