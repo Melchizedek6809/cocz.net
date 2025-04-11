@@ -207,7 +207,7 @@ h5 { font-size: 1.2rem; }
 h6 { font-size: 1.1rem; }
 
 h1,h2 {
-  font-family: var(--serif-font);
+  font-family: var(--sans-font);
 }
 
 .primary-header h3 {
@@ -407,3 +407,44 @@ kbd {
   }
 }
 
+p + h1,
+p + h2 {
+  padding-top: var(--space-s);
+}
+
+p + h3,
+p + h4 {
+  padding-top: var(--space-xs);
+}
+
+ol > li::marker {
+  color: var(--fg-href);
+}
+
+ul > li::marker {
+  color: var(--fg-href);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 2.6rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+}
+
+h3 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 0.125rem;
+}
+
+h4 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 0.125rem;
+}
