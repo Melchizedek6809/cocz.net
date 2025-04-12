@@ -2,10 +2,10 @@
 base_url = "https://cocz.net/"
 
 # Whether to automatically compile all Sass files in the sass directory
-compile_sass = true
+compile_sass = false
 
 # Whether to build a search index to be used later on by a JavaScript library
-build_search_index = true
+build_search_index = false
 
 theme = "shisou"
 
@@ -33,6 +33,7 @@ navbar = [
   { name = "About me", url = "/about-me/", rel="me" },
   { name = "Blog", url = "/tags/blog/", rel="me" },
   { name = "Tech", url = "/tags/tech/", rel="me" },
+
   { name = "sourcehut", url = "https://sr.ht/~melchizedek6809/", rel="me", icon="sourcehut" },
   { name = "GitHub", url = "https://github.com/Melchizedek6809", rel="me", icon="github" },
   { name = "Twitch", url = "https://www.twitch.tv/melchizedek6809", rel="me", icon="twitch" }
