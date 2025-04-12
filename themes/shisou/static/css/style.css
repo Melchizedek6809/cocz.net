@@ -467,36 +467,12 @@ article h3 {
   font-family: var(--mono-font);
 }
 
+ol > li::marker,
 ul > li::marker {
   color: var(--fg-border);
-  font-size: 2em;
-  font-weight: 300;
+  font-weight: bold;
 }
 
-ol {
-  counter-reset: cupcake;
-  padding-left: 2em;
-  list-style-type: none;
-}
-
-ol > li {
-  counter-increment: cupcake;
-  position: relative;
-}
-
-ol > li:before {
-  content: counters(cupcake, '.') '.';
-  /* Whatever custom styles you want here */
-  color: var(--fg-border);
-  font-weight: 300;
-  font-size: 2em;
-  position: absolute;
-  right: 100%;
-  margin-right: 4px;
-  top: 0;
-  vertical-align: top;
-  line-height: 1em;
-}
 
 .cs1 { color: #50b8f8; }
 .cs2 { color: #f8b850; }
