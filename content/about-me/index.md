@@ -9,8 +9,6 @@ Hey there!
 
 I'm a free software developer and language enthusiast, originally from Germany. My journey in software development has been driven by curiosity and a passion for elegant solutions to complex problems.
 
-As I travel across different countries, I find inspiration in diverse cultures and perspectives that often influence my approach to coding.
-
 Regarding the format of the blog: I'm trying to make it a habit to write every week about my various projects and my thoughts regarding the technologies used, sometimes interspersed with personal stuff.
 
 ## My Interests
