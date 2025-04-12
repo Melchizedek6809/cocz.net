@@ -1,20 +1,24 @@
 :root {
   --fg-color: #f0f0f0;
-  --bg-color: #222;
-  --fg-href: #f2e4c4;
-  --fg-border: #969696;
+  --bg-color: #223;
+  --bg-gradient: linear-gradient(50deg, #123, #012);
+  --bg-gradient-back: linear-gradient(30deg, #012, #123);
+  --fg-href: #50b8f8;
+  --fg-border: #57B;
   --bg-mark: #dfdfb0;
   --fg-mark: #100f10;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --fg-color: #222;
+    --fg-color: #223;
     --bg-color: #f0f0f0;
-    --fg-href: #1058c8;
+    --bg-gradient: linear-gradient(50deg, #cdf, #def);
+    --bg-gradient-back: linear-gradient(30deg, #def, #cdf);
+    --fg-href: #1058d8;
     /* deliberaty choose a color with a lesser contrast */
     /* APCA contrast value of 83.77 against bg-color */
-    --fg-border: #505050;
+    --fg-border: #259;
     --bg-mark: #f9ff00;
     --fg-mark: #282828;
   }
@@ -60,6 +64,8 @@ html {
   box-sizing: border-box;
   /* fallback for safari - remove if it starts supporting scrollbar-gutter */
   overflow-y: auto;
+  background: var(--bg-color);
+  background: var(--bg-gradient-back);
 }
 
 body {
@@ -68,12 +74,17 @@ body {
   /* readability */
   margin: auto;
   width: 100%;
-  max-width: 1000px;
+  max-width: 980px;
   padding: var(--space-m);
   line-height: var(--body-line-height);
   font-family: var(--sans-font);
   color: var(--fg-color);
   background: var(--bg-color);
+  background: var(--bg-gradient);
+
+  min-height: 100vh;
+  box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.2);
+
 }
 
 nav a.twitch::before,
@@ -131,7 +142,9 @@ a {
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: var(--space-3xs);
-  transition: text-decoration-color 150ms;
+  text-decoration-thickness: 0.02em;
+  display: inline-block;
+  transition: text-decoration-color 200ms;
 }
 
 /* underline hyperlinks on hover and increase their underline offset */
@@ -413,24 +426,16 @@ p + h3,
 p + h4 {
   padding-top: var(--space-xs);
 }
-
-ol > li::marker {
-  color: var(--fg-href);
-}
-
-ul > li::marker {
-  color: var(--fg-href);
-}
-
+`
 h1 {
   font-size: 3rem;
-  font-weight: 300;
+  font-weight: 200;
   margin-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: 2.4rem;
-  font-weight: 300;
+  font-size: 2.2rem;
+  font-weight: 200;
   margin-bottom: 0.25rem;
 }
 
@@ -441,7 +446,7 @@ h3 {
 }
 
 h4 {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 300;
   margin-bottom: 0.125rem;
 }
