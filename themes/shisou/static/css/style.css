@@ -455,6 +455,17 @@ h4 {
   h2 { font-size: 1.8rem; }
 }
 
+article h2,
+article h3 {
+  border-bottom: 1px solid var(--fg-border);
+  margin-bottom: 0.5rem;
+}
+
+.article-header h2,
+.article-header h3 {
+  border: none;
+}
+
 .cs1, .cs2, .cs3, .cs4, .cs5 {
   font-family: var(--mono-font);
 }
