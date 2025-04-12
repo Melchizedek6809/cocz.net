@@ -1,5 +1,5 @@
 :root {
-  --fg-color: #e0e6f0;
+  --fg-color: #f0f0f0;
   --bg-color: #222;
   --fg-href: #f2e4c4;
   --fg-border: #969696;
@@ -10,7 +10,7 @@
 @media (prefers-color-scheme: light) {
   :root {
     --fg-color: #222;
-    --bg-color: #e0e6f0;
+    --bg-color: #f0f0f0;
     --fg-href: #1058c8;
     /* deliberaty choose a color with a lesser contrast */
     /* APCA contrast value of 83.77 against bg-color */
@@ -22,7 +22,7 @@
 
 :root {
   --serif-font: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-  --sans-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --sans-font: system-ui,Avenir,Helvetica,Arial,sans-serif;
   --mono-font: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Inconsolata, monospace;
 
   
@@ -70,7 +70,6 @@ body {
   width: 100%;
   max-width: 1000px;
   padding: var(--space-m);
-  font-size: 1rem;
   line-height: var(--body-line-height);
   font-family: var(--sans-font);
   color: var(--fg-color);

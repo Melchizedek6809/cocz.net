@@ -58,7 +58,7 @@
 {% endmacro %}
 
 {% macro teaser(page) %}
-  {{ page.content | truncate(length=256) | safe }}
+  <p>{{ page.content | striptags | truncate(length=256) | safe }}</p>
 {% endmacro %}
 
 {% macro footer(page) %}
