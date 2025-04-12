@@ -207,20 +207,13 @@ section {
 }
 
 h1,h2,h3,h4,h5,h6 {
+  font-family: var(--sans-font);
   line-height: var(--head-line-height);
   margin-bottom:0.3em;
 }
 
-h1 { font-size: 3.2rem; }
-h2 { font-size: 2.4rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.4rem; }
-h5 { font-size: 1.2rem; }
-h6 { font-size: 1.1rem; }
-
-h1,h2 {
-  font-family: var(--sans-font);
-}
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1.05rem; }
 
 .primary-header h3 {
   margin-bottom: 0;
@@ -426,7 +419,7 @@ p + h3,
 p + h4 {
   padding-top: var(--space-xs);
 }
-`
+
 h1 {
   font-size: 3rem;
   font-weight: 200;
@@ -449,4 +442,33 @@ h4 {
   font-size: 1.4rem;
   font-weight: 300;
   margin-bottom: 0.125rem;
+}
+
+@media screen and (max-width: 700px) {
+  h1 { font-size: 2.4rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.6rem; }
+}
+
+@media screen and (max-width: 450px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.8rem; }
+}
+
+.cs1, .cs2, .cs3, .cs4, .cs5 {
+  font-family: var(--mono-font);
+}
+
+.cs1 { color: #50b8f8; }
+.cs2 { color: #f8b850; }
+.cs3 { color: #50f863; }
+.cs4 { color: #f850b8; }
+.cs5 { color: #b850f8; }
+
+@media (prefers-color-scheme: light) {
+  .cs1 { color: #2088e8; }
+  .cs2 { color: #e88820; }
+  .cs3 { color: #20c863; }
+  .cs4 { color: #e82088; }
+  .cs5 { color: #8820e8; }
 }
