@@ -1,5 +1,5 @@
 +++
-title = "MandoMaster: How I Built a Chinese Learning App with LLMs and Spaced Repetition"
+title = "MandoMaster: AI-Powered Chinese Learning with Spaced Repetition"
 date = "2025-04-13"
 description = "Learn how I created MandoMaster, a free app that makes learning Chinese characters actually stick using spaced repetition, audio pronunciation, and HSK vocabulary - all powered by modern AI"
 
