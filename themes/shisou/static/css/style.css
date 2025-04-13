@@ -491,3 +491,7 @@ ul > li::marker {
   .cs4 { color: #e82088; }
   .cs5 { color: #8820e8; }
 }
+
+pre {
+  margin-bottom: 0.5rem;
+}
