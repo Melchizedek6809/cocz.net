@@ -149,9 +149,9 @@
 
 {% macro title() %}
   {%- if page.title and config.extra.username %}
-    {{ page.title }} by {{ config.extra.username }}
+    {{ page.title }}
   {%- elif page.title and config.extra.author %}
-    {{ page.title }} by {{ config.extra.author }}
+    {{ page.title }}
   {%- elif page.title %}
     {{ page.title }}
   {%- elif config.title %}
