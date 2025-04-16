@@ -40,7 +40,7 @@ Let me walk you through how I put this thing together. It was quite the journey 
 
 ### Technical overview
 
-The tech stack is very similar to [bitmenu](/bitmenu), mainly because I started this project off by making a copy of the bitmenu repo and then stripping out all the digital menu stuff. This actually worked really well and meant that I could focus on actually developing features specific to this particular idea, rather than doing generic boilerplate.
+The tech stack is very similar to [bitmenu](/bitmenu/), mainly because I started this project off by making a copy of the bitmenu repo and then stripping out all the digital menu stuff. This actually worked really well and meant that I could focus on actually developing features specific to this particular idea, rather than doing generic boilerplate.
 
 It was quite the challenge to build an app for learning Chinese when I only speak a couple of words. It helped to have a native speaker for asking questions as well as modern LLMs around. It's also amazing how much LLMs helped and actually made this possible.
 
