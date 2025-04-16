@@ -7,6 +7,8 @@ description = "Learn how I created MandoMaster, a free app that makes learning C
 tags = ["tech", "projects", "node", "llm"]
 +++
 
+![Screenshot of the MandoMaster.com startpage](/img/mandomaster/mandomaster_screenshot_0.png)
+
 ## Hey there!
 
 First off, [MandoMaster](https://mandomaster.com/) is live and free to use, so if you're interested you can just take a quick look to see what I'm talking about.
@@ -18,6 +20,8 @@ Alright, time to write about another project of mine, this one is almost finishe
 MandoMaster is a WebApp for learning Chinese making use of spaced repetition techniques to make memorization easier. I've wanted to do this since Pei started teaching me (traditional) Chinese and I kept forgetting things, now it's much easier since I'll just add any new words to my review pile. 
 
 The way it works is that it's basically a huge dictionary with lots of metadata for each word/character. This can be basic stuff like the meaning of a character, or something like an audio sample of how it is supposed to be pronounced, or on which level of the [HSK](https://en.wikipedia.org/wiki/Hanyu_Shuiping_Kaoshi)/[TOCFL](https://en.wikipedia.org/wiki/Test_of_Chinese_as_a_Foreign_Language) test it is required.
+
+![Screenshot of the MandoMaster.com learners dashboard](/img/mandomaster/mandomaster_screenshot_2.png)
 
 ## So what can it do?
 
@@ -39,6 +43,8 @@ Let me walk you through how I put this thing together. It was quite the journey 
 The tech stack is very similar to [bitmenu](/bitmenu), mainly because I started this project off by making a copy of the bitmenu repo and then stripping out all the digital menu stuff. This actually worked really well and meant that I could focus on actually developing features specific to this particular idea, rather than doing generic boilerplate.
 
 It was quite the challenge to build an app for learning Chinese when I only speak a couple of words. It helped to have a native speaker for asking questions as well as modern LLMs around. It's also amazing how much LLMs helped and actually made this possible.
+
+![Screenshot of the MandoMaster.com dictionary showing some TOCFL1 words/characters](/img/mandomaster/mandomaster_screenshot_1.png)
 
 ### Building the Dictionary
 
@@ -106,6 +112,8 @@ Worked great and Cursor one-shotted it, so the actual coding took me a couple of
 This one I've been struggling with, thought it might be a good project to check out best practices for SEO and in general depend on search engines to generate traffic. It kind of works but not as much as I'd like to. 
 
 I suppose one of the good things is that due to the dictionary there is a lot of very specific content people might actually search for (think "what does 你 mean?"). This part still isn't done and I quite enjoy using MandoMaster as an SEO testbed.
+
+![Screenshot of a MandoMaster.com review page for the Chinese character 我](/img/mandomaster/mandomaster_screenshot_3.png)
 
 ## Future development
 

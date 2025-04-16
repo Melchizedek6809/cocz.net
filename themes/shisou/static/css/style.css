@@ -102,7 +102,7 @@ nav a.github::before {
 }
 
 nav a.sourcehut::before {
-  background-image: url('/branding/sr.ht-white.svg');
+  background-image: url('/branding/sr.ht-white.svg?v=2');
 }
 
 nav a.twitch::before {
@@ -115,7 +115,7 @@ nav a.twitch::before {
   }
 
   nav a.sourcehut::before {
-    background-image: url('/branding/sr.ht.svg');
+    background-image: url('/branding/sr.ht.svg?v=2');
   }
 
   nav a.twitch::before {
