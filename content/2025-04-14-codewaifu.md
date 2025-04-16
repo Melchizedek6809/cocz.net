@@ -1,5 +1,5 @@
 +++
-title = "CodeWaifu: Building an AI Code Assistant with Voice Control and VTuber Avatar"
+title = "CodeWaifu: AI Code Assistant with Voice Control and VTuber Avatar"
 date = "2025-04-14"
 description = "Exploring my plans to build CodeWaifu, an AI coding assistant with voice control and a VTuber avatar that works alongside your favorite IDE"
 
@@ -15,7 +15,7 @@ It will be interesting to compare my expectations with actual reality once I sta
 
 CodeWaifu is my take on an AI Code Editor since there are a couple of ideas I'd like to experiment with. It's more similar to <a href="https://aider.chat/">Aider</a> or <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude Code</a> rather than an IDE like <a href="https://www.cursor.com/">Cursor</a> or <a href="https://windsurf.com/">Windsurf</a>.
 
-This is mainly because it should help simplify things somewhat while allowing users to use the IDE of their choice (would love to return to Emacs). 
+This is mainly because it should help simplify things somewhat while allowing users to use the IDE of their choice (would love to return to Emacs).
 
 ### What makes CodeWaifu unique?
 
@@ -43,7 +43,7 @@ Just a couple of notes on how I'm planning on implementing CodeWaifu.
 
 ### Tech stack
 
-I'll start off with a copy of the [MandoMaster](/mandomaster) backend for the server-side component, the client side app will most likely be Electron based, while this might seem bloated I'll need the following:
+I'll start off with a copy of the [MandoMaster](/mandomaster/) backend for the server-side component, the client side app will most likely be Electron based, while this might seem bloated I'll need the following:
 
 - Proper Unicode/IME support
 - 3D Accelerated Graphics
