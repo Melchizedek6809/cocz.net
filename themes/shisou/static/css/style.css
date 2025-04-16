@@ -240,7 +240,8 @@ footer {
   padding-top: var(--space-s);
 }
 
-:is(.primary-nav, .primary-footer, .article-footer, .tag-list-nav) > ul[role="list"] {
+.primary-nav > ul[role="list"],
+.primary-footer > ul[role="list"] {
   display: flex;
   flex-flow: row wrap;
   /* prevent accidental incorrect clicks by increasing space between elements */

@@ -9,10 +9,12 @@
 {% endblock -%}
 
 {%- block main %}
+  <h1>Tags</h1>
+  <p>Have a list of all the tags I've used in my posts.</p>
   <nav aria-labelledby="list-of-tags" class="tag-list-nav">
     <ul role="list">
       {% for tag in terms %}
-      <li role="listitem"><a href="{{ get_taxonomy_url(kind="tags", name=tag.name) }}">{{ tag.name }}</a><sup class="tag-sup">{{ tag.pages | length }}</sup></li><br/>
+      <li role="listitem"><a href="{{ get_taxonomy_url(kind="tags", name=tag.name) }}">{{ tag.name }}</a><sup class="tag-sup">{{ tag.pages | length }}</sup></li>
       {% endfor %}
     </ul>
   </nav>
