@@ -4,6 +4,7 @@
   --bg-gradient: linear-gradient(50deg, #123, #012);
   --bg-gradient-back: linear-gradient(30deg, #012, #123);
   --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
   --fg-border: #57B;
   --bg-mark: #dfdfb0;
   --fg-mark: #100f10;
@@ -16,6 +17,7 @@
     --bg-gradient: linear-gradient(50deg, #cdf, #def);
     --bg-gradient-back: linear-gradient(30deg, #def, #cdf);
     --fg-href: #1058d8;
+    --fg-secondary: #d810a8;
     /* deliberaty choose a color with a lesser contrast */
     /* APCA contrast value of 83.77 against bg-color */
     --fg-border: #259;
@@ -29,7 +31,7 @@
   --sans-font: system-ui,Avenir,Helvetica,Arial,sans-serif;
   --mono-font: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Inconsolata, monospace;
 
-  
+
 
   /* @link https://utopia.fyi/type/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
   --step-s5: clamp(0.37rem, calc(0.52rem + -0.19vw), 0.49rem);
@@ -91,8 +93,9 @@ nav a.twitch::before,
 nav a.sourcehut::before,
 nav a.github::before {
   content:'';
-  width:1.2em;
-  height:1.2em;
+  width:1.4em;
+  height:1.4em;
+  position: relative;
   background: url('/branding/github-mark-white.svg') no-repeat;
   background-size: contain;
   display: inline-block;

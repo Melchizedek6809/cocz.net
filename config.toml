@@ -29,14 +29,15 @@ username = "melchizedek6809"
 keywords = [ "microblog", "linux", "lisp", "plt", "programming", "c", "rust" ]
 
 navbar = [
-  { name = "Home", url = "/", rel="me" },
-  { name = "About me", url = "/about-me/", rel="me" },
-  { name = "Blog", url = "/tags/blog/", rel="me" },
-  { name = "Tech", url = "/tags/tech/", rel="me" },
+  { name = "Home", url = "/" },
+  { name = "About me", url = "/about-me/" },
+  { name = "Blog", url = "/tags/blog/" },
+  { name = "Tech", url = "/tags/tech/" },
+  { name = "Tags", url = "/tags" },
 
-  { name = "sourcehut", url = "https://sr.ht/~melchizedek6809/", rel="me", icon="sourcehut" },
-  { name = "GitHub", url = "https://github.com/Melchizedek6809", rel="me", icon="github" },
-  { name = "Twitch", url = "https://www.twitch.tv/melchizedek6809", rel="me", icon="twitch" }
+  { name = "sourcehut", url = "https://sr.ht/~melchizedek6809/", icon="sourcehut" },
+  { name = "GitHub", url = "https://github.com/Melchizedek6809", icon="github" },
+  { name = "Twitch", url = "https://www.twitch.tv/melchizedek6809", icon="twitch" }
 ]
 
 [extra.content_license]

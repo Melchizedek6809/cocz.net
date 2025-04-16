@@ -3,13 +3,13 @@
 # for the complete configuration file
 
 # [MANDATORY] the URL of the microblog
-base_url = "https://kangae.ayushnix.com"
+base_url = "https://cocz.net"
 
 # [recommended] kangae doesn't use sass for its global stylesheet
 compile_sass = false
 
 # enable this when using kangae as a theme
-# theme = "kangae"
+theme = "shisou"
 
 # [optional] minify HTML to save space at the cost of readability
 minify_html = false
@@ -22,10 +22,10 @@ generate_feed = true
 feed_filename = "atom.xml"
 
 # [recommended] the title of the website
-title = "shikamaru microblog"
+title = "Ben's blog"
 
 # [recommended] the description of the website
-description = "the personal microblog of shikamaru"
+description = "ramblings from cyberspace"
 
 # [recommended] the default language of the website
 default_language = "en"
@@ -65,10 +65,10 @@ smart_punctuation = false
 
 [extra]
 # [recommended] your name
-author = "Nara Shikamaru"
+author = "Ben"
 
 # [recommended] your internet username
-username = "shikamaru"
+username = "melchizedek6809"
 
 # [optional] your 128x128 avatar, preferably svg
 avatar = "images/shikamaru_avatar.webp"
@@ -141,12 +141,12 @@ src_url = "https://github.com/ayushnix/kangae"
 [extra.post_footer]
 
 # [recommended] show a permalink to microblog posts
-share = true
+share = false
 
 # [optional] show a link which redirects to github discussions for writing comments
 # in the example provided below, the URL will be
 # https://github.com/ayushnix/kangae/discussions/new?category=general&title=The+Post+Title
-discuss_github = true
+discuss_github = false
 github_url = "https://github.com/ayushnix/kangae"
 
 # [optional] other misc urls that should be shown in the post footers
