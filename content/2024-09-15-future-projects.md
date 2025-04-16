@@ -1,19 +1,24 @@
 +++
-title = "Future projects"
+title = "Future Projects: One-Week App Development Challenge"
 date = "2024-09-15"
+description = "As a digital nomad exploring Asia, I'm pivoting my coding approach to focus on smaller, user-focused projects with one-week timeframes instead of endless technical pursuits. This post outlines my new constraints, tech stack choices, and first project plans."
 
 [taxonomies]
-tags = ["blog", "tech"]
+tags = ["blog", "tech", "digital-nomad", "rapid-development", "indie-development", "projects"]
 +++
+
+## Digital Nomad Life
 
 So, I've finally become one of these digital nomad backpackers,
 floating through Asia with neither purpose nor goals.
 
-While it is pretty nice get to see so many different places and cultures it
+While it is pretty nice to get to see so many different places and cultures it
 does become a bit weird after a bit to not really have a home, a place
 to relax. While I've been struggling with a missing purpose these last
 couple of weeks and since I'm not one to just enjoy hedonistic pleasures
-all day, I though I'd do what I like most, do some coding!
+all day, I thought I'd do what I like most, do some coding!
+
+## Changing My Project Approach
 
 However, this time I kind of want to try something different, since in the
 past most projects just ended up going on forever while I work on some
@@ -25,19 +30,25 @@ I've made, the only one I've seen other people actually like/enjoy was
 a [game I made for a GameJam in a week](https://melchizedek6809.itch.io/a-certain-magical-shooter),
 while other games I've [spent months](https://github.com/wolkenwelten/wolkenwelten-ts)
 or [even years](https://github.com/wolkenwelten/wolkenwelten-c) on don't really evoke anything
-in playtesters. This mostly came about because some of the kids I've been
+in playtesters. 
+
+This mostly came about because some of the kids I've been
 teaching GameDev in a Youth Center started playing that game by themselves
-and getting quite competitive about it, at first they weren't sure whether
-one can actually beat that game because it's too hard, after showing them that it's
-possible things started heating up until the first one beat it,
-gotta say it was really nice to see people actually enjoying something I made!
+and getting quite competitive about it. At first they weren't sure whether
+one can actually beat that game because it's too hard. After showing them that it's
+possible things started heating up until the first one beat it.
+Gotta say it was really nice to see people actually enjoying something I made!
+
+## The New Project Philosophy
 
 With that experience in mind, I'll build a couple of apps in the future to just
 try out various ideas, trying to keep things as simple as possible, and not just
 spend months obsessing over technicalities that are irrelevant without a sufficiently
 big userbase. This also seems like a nice opportunity to try out different stacks and
 see with which one I get results the easiest/fastest, trying to keep an open mind and
-not just write off because it's too hip or something.
+not just write technologies off because they're too hip or something.
+
+## My Self-Imposed Rules
 
 This all can be boiled down into a couple of rules/constraints I'll put on myself,
 since constraint begets creativity.
@@ -48,18 +59,21 @@ since constraint begets creativity.
 4. Make it Open-Source (probably AGPLv3)
 5. Actually tell people about it!
 
-
 Especially that last part will be quite the challenge for me, but in the end people will
 either like it or just ignore or forget about it.
+
+## First Project: Skill Exchange App
 
 So, for a first project I'm working on social app, matching people that want to learn something
 with people that are willing to teach that. Nothing fancy, might already exist, but seems simple
 enough for a first project.
 
-Regarding the tech stack I'll try out Astro/React/Tailwind/Material Tailwind/Supabase, I'm
+Regarding the tech stack I'll try out Astro/React/Tailwind/Material Tailwind/Supabase. I'm
 especially interested in Supabase, since if it works out it could simplify things greatly and
 Material Tailwind looks like a nice component library so that I spend my time actually building
 the app, instead of designing another button component.
+
+## Wrapping Up
 
 Well, that was quite the brain-dump, hope you enjoyed reading it.
 It's currently 2:38AM here in Busan and I gotta wake up somewhat early tomorrow since I'm getting
