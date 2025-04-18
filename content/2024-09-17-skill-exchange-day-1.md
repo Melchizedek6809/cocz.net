@@ -1,7 +1,7 @@
 +++
 title = "Skill X Change - Day 1: Why I'm Abandoning the Project"
 date = "2024-09-17"
-description = "Why I'm ending my Skill X Change project after one day. I share my honest assessment of Astro, React, Tailwind, and Supabase, explaining which technologies worked well and which didn't meet my needs for rapid MVP development. Includes recommendations for simpler tech stacks."
+description = "My honest review of using Astro, React, Tailwind and Supabase for rapid MVP development, with insights on why I'm pivoting to a simpler tech stack."
 
 [taxonomies]
 tags = ["projects", "tech", "skillxchange", "web-development", "tech-stack", "astro", "react", "tailwind", "supabase"]

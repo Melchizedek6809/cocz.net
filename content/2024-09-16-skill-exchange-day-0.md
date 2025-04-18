@@ -1,7 +1,7 @@
 +++
 title = "Skill X Change - Day 0: Project Setup and Tech Stack Exploration"
 date = "2024-09-16"
-description = "First day of building a web app that matches people based on skills they want to teach and learn. I explore Astro, React, Tailwind, Material Tailwind, and Supabase as my tech stack for this one-week project from Busan, South Korea."
+description = "Day one of building a skill-matching web app using Astro, React, Tailwind, and Supabase. Setting up the project architecture from Busan, South Korea."
 
 [taxonomies]
 tags = ["projects", "tech", "skillxchange", "web-development", "react", "astro", "tailwind", "supabase"]

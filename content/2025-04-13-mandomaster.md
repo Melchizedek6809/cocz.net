@@ -1,7 +1,7 @@
 +++
 title = "MandoMaster: AI-Powered Chinese Learning with Spaced Repetition"
 date = "2025-04-13"
-description = "Learn how I created MandoMaster, a free app that makes learning Chinese characters actually stick using spaced repetition, audio pronunciation, and HSK vocabulary - all powered by modern AI"
+description = "How I built MandoMaster, a free app for learning Chinese characters that uses spaced repetition, audio pronunciation, and AI-generated content."
 
 [taxonomies]
 tags = ["tech", "projects", "node", "llm"]

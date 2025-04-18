@@ -1,7 +1,7 @@
 +++
 title = "Modern C Makefiles: Complete Setup with CI/CD"
 date = "2025-04-15"
-description = "Learn how to create a clean, efficient Makefile for C projects with automatic dependency tracking, plus set up cross-platform CI using GitHub Actions. Includes a full template you can clone and use immediately."
+description = "A guide to creating efficient C project Makefiles with automatic dependency tracking, plus cross-platform CI setup using GitHub Actions for Windows, macOS and Linux."
 
 [taxonomies]
 tags = ["tech", "tutorial", "c", "make", "ci-cd", "github-actions", "build-systems", "cross-platform", "msys2", "windows"]

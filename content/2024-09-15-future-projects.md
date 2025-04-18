@@ -1,7 +1,7 @@
 +++
 title = "Future Projects: One-Week App Development Challenge"
 date = "2024-09-15"
-description = "As a digital nomad exploring Asia, I'm pivoting my coding approach to focus on smaller, user-focused projects with one-week timeframes instead of endless technical pursuits. This post outlines my new constraints, tech stack choices, and first project plans."
+description = "How I'm shifting to one-week development timeframes for focused, user-centric projects while traveling Asia as a digital nomad, with clear constraints and goals."
 
 [taxonomies]
 tags = ["blog", "tech", "digital-nomad", "rapid-development", "indie-development", "projects"]

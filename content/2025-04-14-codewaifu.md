@@ -1,7 +1,7 @@
 +++
-title = "CodeWaifu: AI Code Assistant with Voice Control and VTuber Avatar"
+title = "CodeWaifu: Building an AI Code Assistant with Voice Control and VTuber Avatar"
 date = "2025-04-14"
-description = "Exploring my plans to build CodeWaifu, an AI coding assistant with voice control and a VTuber avatar that works alongside your favorite IDE"
+description = "My plans for CodeWaifu, an innovative AI coding assistant that combines voice control with a VTuber avatar, offering a unique alternative to traditional IDE plugins."
 
 [taxonomies]
 tags = ["tech", "projects", "node", "llm"]
@@ -15,7 +15,7 @@ It will be interesting to compare my expectations with actual reality once I sta
 
 CodeWaifu is my take on an AI Code Editor since there are a couple of ideas I'd like to experiment with. It's more similar to <a href="https://aider.chat/">Aider</a> or <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude Code</a> rather than an IDE like <a href="https://www.cursor.com/">Cursor</a> or <a href="https://windsurf.com/">Windsurf</a>.
 
-This is mainly because it should help simplify things somewhat while allowing users to use the IDE of their choice (would love to return to Emacs).
+This is mainly because it should help simplify things somewhat while allowing users to use the IDE of their choice (would love to return to Emacs). 
 
 ### What makes CodeWaifu unique?
 
@@ -71,6 +71,6 @@ I'll probably use the same pricing model that Cursor uses, will have to calculat
 
 ## Next steps
 
-So, this is pretty much my plan for now, we'll see how it works out. While this idea has been floating around my mind for a while now right now I really wanna try it out because I'm daily driving <a href="https://www.netbsd.org/">NetBSD</a> on my Laptop where Cursor/Windsurf don't seem to be available. So I'll just try and build my own.
+So, this is pretty much my plan for now, we'll see how it works out. While this idea has been floating around my mind for a while now right now I really wanna try it out because I'm daily driving <a href="https://www.netbsd.org/" rel="nofollow">NetBSD</a> on my Laptop where Cursor/Windsurf don't seem to be available. So I'll just try and build my own.
 
 Oh and if you're interested, I've already bought a domain and put up a <a href="https://codewaifu.net/">placeholder page</a>. Will probably take a while but I'll probably make another post about how well things work and if it actually seems to be useful how to distribute it to people.

@@ -1,7 +1,7 @@
 +++
 title = "Trade-offs between Single- and Multiple-Dispatch"
 date = "2024-03-14"
-description = "Exploring the performance and implementation differences between single-dispatch and multiple-dispatch in programming languages. Learn why single-dispatch offers simplicity and runtime efficiency, while multiple-dispatch provides more flexibility at the cost of complexity and potential performance impacts."
+description = "Comparing single-dispatch vs multiple-dispatch in programming languages: performance tradeoffs, implementation complexity, and runtime considerations."
 
 [taxonomies]
 tags = ["tech", "plt", "programming-languages", "method-dispatch"]

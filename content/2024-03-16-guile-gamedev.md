@@ -1,7 +1,7 @@
 +++
 title = "Thoughts on Interactive Programming"
 date = "2024-03-16"
-description = "Exploring the challenges of REPL-driven development with Guile Scheme for game programming compared to hot-reload workflows. I examine the limitations of interactive programming environments and outline requirements for a better developer experience."
+description = "Comparing REPL-driven development with Guile Scheme to hot-reload workflows for game programming, with insights on creating better interactive environments."
 
 [taxonomies]
 tags = ["tech", "scheme", "guile", "repl", "game-development", "interactive-programming"]
