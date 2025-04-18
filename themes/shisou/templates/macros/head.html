@@ -12,8 +12,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {%- if config.description %}
-      {%- if page.content %}
-        <meta name="description" content="{{ page.content | truncate(length=180) | striptags | safe }}">
+      {%- if page.description %}
+        <meta name="description" content="{{ page.description | striptags | safe }}">
       {%- else %}
         <meta name="description" content="{{ config.description | striptags | safe }}">
       {%- endif -%}
@@ -49,12 +49,10 @@
     {%- if config.title %}
       <meta property="og:site_name" content="{{ config.title }}">
     {% endif -%}
-    {%- if config.description %}
-      {%- if page.content %}
-        <meta property="og:description" content="{{ page.content | truncate(length=180) | striptags | safe }}">
-      {%- else %}
-        <meta property="og:description" content="{{ config.description | striptags | safe }}">
-      {% endif -%}
+    {%- if page.description %}
+      <meta property="og:description" content="{{ page.description | striptags | safe }}">
+    {% else -%} 
+      <meta property="og:description" content="{{ config.description | striptags | safe }}">
     {% endif -%}
     {# https://github.com/getzola/zola/issues/1161 #}
     {%- if config.extra.opengraph.img %}
