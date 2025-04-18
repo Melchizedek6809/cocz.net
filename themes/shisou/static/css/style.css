@@ -391,6 +391,8 @@ kbd {
   border-radius: var(--step-s5);
   padding-inline: var(--space-3xs);
   padding-block: 0.1rem;
+  font-family: var(--mono-font);
+  margin: 0 0.1rem;
 }
 
 @media only screen and (max-width: 700px) {
