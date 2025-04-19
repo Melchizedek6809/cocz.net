@@ -1,5 +1,5 @@
 +++
-title = "About Me"
+title = "About Me: Software Developer, Language Enthusiast & Digital Nomad"
 template = "static.html"
 date = "2024-03-14"
 description = "Meet a passionate free software developer exploring programming languages, Lisp, Rust, and JS/TS while traveling the world. Insights on tech projects and personal experiences."

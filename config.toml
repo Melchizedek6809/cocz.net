@@ -46,3 +46,6 @@ url = "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.txt"
 spdx = "MIT"
 url = "https://spdx.org/licenses/MIT.html"
 src_url = "https://github.com/melchizedek6809/cocz.net/"
+
+[extra.opengraph]
+img = "/img/logo.jpg"
