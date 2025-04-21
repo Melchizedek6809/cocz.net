@@ -11,7 +11,7 @@ tags = ["gamedev", "voxel", "typescript", "c", "cpp", "rust", "modding", "web-ga
 
 Today I'm diving into one of my most ambitious projects, [WolkenWelten](https://wolkenwelten.net/) - a voxel sandbox game that evolved across multiple programming languages over several years. While development has slowed down (I'm now focusing mainly on the Web/TypeScript version when I find time), the journey taught me invaluable lessons about game engines, modding systems, and language trade-offs.
 
-![A third-person view of WolkenWelten's TypeScript version showing the blocky voxel world with islands floating in the sky](/img/wolkenwelten/wwts.jpg)
+[![A third-person view of WolkenWelten's TypeScript version showing the blocky voxel world with islands floating in the sky](/img/wolkenwelten/wwts.jpg)](/img/wolkenwelten/wwts.jpg)
 
 **Table of Contents:**
 - [The Vision: A Moddable Voxel Sandbox](#the-vision-a-moddable-voxel-sandbox)
@@ -52,7 +52,7 @@ a super cheap used machine could even play normal Minecraft rather well.
 
 ## The C++ Prototype: Skycastle
 
-![Early C++ version of WolkenWelten showing basic voxel terrain rendering](/img/wolkenwelten/wwcpp.jpg)
+[![Early C++ version of WolkenWelten showing basic voxel terrain rendering](/img/wolkenwelten/wwcpp.jpg)](/img/wolkenwelten/wwcpp.jpg)
 
 I first started developing what would become the C version of WolkenWelten in
 C++. This was mainly because there were some features of C++ I rather like, mainly
@@ -84,13 +84,15 @@ start anyways).
 
 ## The C Rewrite: Performance and Multiplayer
 
-![C version of WolkenWelten showing improved graphics and terrain generation](/img/wolkenwelten/wwc1.jpg)
+[![C version of WolkenWelten showing improved graphics and terrain generation](/img/wolkenwelten/wwc1.jpg)](/img/wolkenwelten/wwc1.jpg)
 
 Now that the codebase was in C, another big problem came up. Up until this point
 the entire code was single-player only, and I had no idea how to actually do
 multiplayer. This was sure to become a problem since playing with others is
 much more fun and should probably be introduced somewhat early in development
 since it will have quite the impact on the overall architecture of the game.
+
+> **Source Code:** You can find the entire source code over on [GitHub](https://github.com/wolkenwelten/wolkenwelten-c)
 
 So the plan was to make sure that everything would work in multiplayer.
 There wouldn't be a difference between multiplayer and singleplayer mode -
@@ -114,7 +116,7 @@ hooks there are in these mod files. It would then generate code that calls all
 of the hooks in turn. These hooks were for things like the game starting where
 we could then add new items or recipes.
 
-![C version with GUI elements, inventory system, and improved lighting](/img/wolkenwelten/wwc2.jpg)
+[![C version with GUI elements, inventory system, and improved lighting](/img/wolkenwelten/wwc2.jpg)](/img/wolkenwelten/wwc2.jpg)
 
 > **Technical Highlight:** The C version introduced a client-server architecture where even single-player mode runs as a local server, making multiplayer a core part of the design.
 
@@ -134,7 +136,7 @@ could be improved.
 
 ## [Nujel](/nujel): Creating a Custom Scripting Language
 
-![WolkenWelten with Nujel scripting integration showing a more complex world with custom entities](/img/wolkenwelten/wwc3.jpg)
+[![WolkenWelten with Nujel scripting integration showing a more complex world with custom entities](/img/wolkenwelten/wwc3.jpg)](/img/wolkenwelten/wwc3.jpg)
 
 Now I think it was during one Christmas when I went away to visit my family and didn't
 stream for a while that I thought I'd just write my own scripting language. I've
@@ -156,7 +158,7 @@ C Engine to Nujel, and port most of the content to use Nujel.
 
 ## Browser Adventures: [Emscripten](https://emscripten.org/) and WASM
 
-![Final C version of WolkenWelten running in a browser via WebAssembly](/img/wolkenwelten/wwc4.jpg)
+[![Final C version of WolkenWelten running in a browser via WebAssembly](/img/wolkenwelten/wwc4.jpg)](/img/wolkenwelten/wwc4.jpg)
 
 It is still quite amazing to me that we could actually compile the C code to
 JS/WASM and run everything in the browser. While I consciously know what a
@@ -170,13 +172,15 @@ in a different way.
 
 ## The Rust Experiment: V8 Integration
 
-![Rust version of WolkenWelten featuring a first-person battle with a giant crab monster](/img/wolkenwelten/wwrs.jpg)
+[![Rust version of WolkenWelten featuring a first-person battle with a giant crab monster](/img/wolkenwelten/wwrs.jpg)](/img/wolkenwelten/wwrs.jpg)
 
 Over time I grew dissatisfied with how much time it took to get basic
 functionality implemented in Nujel, and in general it didn't seem like much of
 an improvement while taking up most of the development time. So I thought I'd
 try something else. Since I don't like [Lua](https://www.lua.org/) all that much, and think [Python](https://www.python.org/)
 is too slow, I thought we might try and embed a JS Runtime like [V8](https://v8.dev/).
+
+> **Source Code:** You can find the entire source code over on [GitHub](https://github.com/wolkenwelten/wolkenwelten-rs)
 
 After some experiments I discovered that [Deno](https://deno.land/) actually provides some crates for
 easily embedding V8 into a [Rust](https://www.rust-lang.org/) project. Since I was intrigued by Rust for
@@ -199,13 +203,15 @@ This gave me an interesting idea which brings us to the next implementation.
 
 ## The TypeScript Revolution: One Language to Rule Them All
 
-![TypeScript version featuring improved graphics, third-person view, and more detailed world](/img/wolkenwelten/wwts2.jpg)
+[![TypeScript version featuring improved graphics, third-person view, and more detailed world](/img/wolkenwelten/wwts2.jpg)](/img/wolkenwelten/wwts2.jpg)
 
 The (so far) last iteration of the overall idea, this time completely written
 in [TypeScript](https://www.typescriptlang.org/). I noticed that I could easily port the C/Rust parts and get
 somewhat similar performance, while gaining complete portability, super easy
 distribution, and almost instant iteration times due to modern tooling like
 [Vite](https://vitejs.dev/).
+
+> **Source Code:** You can find the entire source code over on [GitHub](https://github.com/wolkenwelten/wolkenwelten-ts)
 
 This also allows for the entire game to be written in one language. That way
 we don't have to expose certain parts to the scripting layer since everything
@@ -224,13 +230,13 @@ multiplayer which already somewhat works but with a lot of limitations. I would
 love to turn this into a game that plays similar to [Super Smash Brothers](https://www.smashbros.com/) but
 with elemental powers similar to [Avatar](https://avatar.fandom.com/wiki/Avatar:_The_Last_Airbender).
 
-> **Technical Highlight:** The TypeScript version achieves comparable performance to the lower-level implementations while dramatically improving development speed, mod support, and distribution.
+> **Technical Highlight:** The TypeScript version achieves comparable performance to the lower-level implementations while dramatically improving development speed, mod support, and simpler distribution.
 
 ## Lessons Learned
 
 After working on WolkenWelten across multiple languages and paradigms, I've gained several key insights:
 
-1. **Language trade-offs matter**: C++ offered libraries but slow compilation, C was faster to compile but required more manual work, Rust had strong safety but slow compilation, and TypeScript provided the best balance for this project.
+1. **Language trade-offs matter**: C++ offered libraries but slow compilation, C was faster to compile but third-party libraries were a pain, Rust had strong safety but slow compilation, and TypeScript provided the best balance for this project.
 
 2. **Modding architecture is crucial**: Design for modding from the start rather than trying to bolt it on later.
 
