@@ -362,9 +362,15 @@ pre[data-linenos] table {
 }
 
 blockquote {
-  margin-inline-start: var(--space-l);
-  padding: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-s);
+  border: solid 1px var(--fg-border);
   border-inline-start: var(--step-s4) solid var(--fg-border);
+  border-radius: 0 1rem 1rem 0;
+  margin: 0 0 2.5rem;
+}
+
+blockquote p {
+  margin: 0;
 }
 
 figcaption {
