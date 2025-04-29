@@ -515,3 +515,27 @@ hr {
   margin: 0 0 1rem;
   padding: 0;
 }
+
+.intro {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  padding: 0 0 1rem;
+}
+
+html.url2og header.primary-header,
+html.url2og footer.primary-footer {
+  display: none !important;
+}
+
+html.url2og {
+  --fg-color: #f0f0f0;
+  --bg-color: #223;
+  --bg-gradient: linear-gradient(50deg, #123, #012);
+  --bg-gradient-back: linear-gradient(30deg, #012, #123);
+  --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
+  --fg-border: #57B;
+  --bg-mark: #dfdfb0;
+  --fg-mark: #100f10;
+}

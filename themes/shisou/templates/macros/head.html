@@ -41,7 +41,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ current_url | safe }}">
     {%- if config.extra.opengraph.img %}
-      <meta property="og:image" content="{{ get_url(path=config.extra.opengraph.img) }}">
+      <meta property="og:image" content="https://url2og.cocz.net/?url={{ current_url | urlencode_strict }}">
     {% endif -%}
 {% endmacro %}
 

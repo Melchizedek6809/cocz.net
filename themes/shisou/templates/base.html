@@ -48,6 +48,11 @@
     {%- endblock -%}
   </head>
   <body>
+    <script defer>
+      if (window.location.search.includes("URL2OG=1")) {
+        document.documentElement.classList.add("url2og");
+      }
+    </script>
     <header class="primary-header">
       {%- if config.extra.avatar %}
         <a href="{{ config.base_url | safe }}">
