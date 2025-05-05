@@ -46,10 +46,9 @@ export class Entry {
         if (url.startsWith('/')) {
             url = url.slice(1);
         }
-        url = url.replace(/(\d+-?)*/g, '');
+        url = url.replace(/^(\d+-?)*/g, '');
         this.url = url;
         
-        console.log(filename, url);
         const md = new markdownIt({
             html: true,
         });
@@ -63,7 +62,6 @@ export class Entry {
         }
 
         const fm = parse(rawFM);
-        console.log(fm);
         this.title = fm.title || "";
         this.date = fm.date ? new Date(fm.date) : undefined;
         this.description = fm.description || "";
@@ -72,5 +70,23 @@ export class Entry {
 
         const parsed = md.render(raw);
         this.content = parsed;
+    }
+
+    renderTeaser() {
+        return `<article>
+            <header class="article-header">
+            <h3 class="post-title"><a href="/${this.url}/">${this.title}</a></h3>
+                <div class="post-side">
+                    <time datetime="${this.date?.toISOString()}">${this.date?.toISOString().split('T')[0]}</time>
+                    <ul role="list">
+                        ${this.tags.map(tag => `<li role="listitem"><a rel="tag" class="tag" href="/tags/${tag}/">${tag}</a></li>`).join(' ')}
+                    </ul>
+                </div>
+            </header>
+        </article>`;
+    }
+
+    renderFull() {
+        
     }
 }

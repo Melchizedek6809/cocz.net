@@ -49,6 +49,57 @@ const renderFooter = async (): Promise<string> => {
     `;
 }
 
+const renderTags = async (): Promise<RenderedPage> => {
+    const tags = new Map<string, number>();
+    const allEntries = await Entry.loadAll();
+    for (const entry of allEntries.values()) {
+        for (const tag of entry.tags) {
+            tags.set(tag, (tags.get(tag) || 0) + 1);
+        }
+    }
+    const uniqueTags = [...new Set(tags.keys())].sort();
+
+    return {
+        head: '<title>Tags</title>',
+        body: `
+            ${await renderHeader()}
+            <main>
+                <h1>Tags</h1>
+                <p>Here is a list of all the tags I've used in my posts so far.</p>
+                <nav aria-labelledby="list-of-tags" class="tag-list-nav">
+                    <ul role="list">
+                        ${uniqueTags.map(tag => `<li role="listitem"><a href="/tags/${tag}/">${tag}</a><sup class="tag-sup">${tags.get(tag)}</sup></li>`).join(' ')}
+                    </ul>
+                </nav>
+            </main>
+            ${await renderFooter()}
+        `,
+        status: 200
+    }
+}
+
+const renderTag = async (tag: string): Promise<RenderedPage> => {
+    const allEntries = await Entry.loadAll();
+    const entries = Array.from(allEntries.values()).filter(entry => entry.tags.includes(tag));
+    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
+
+    return {
+        head: `<title>${tag}</title>`,
+        body: `
+            ${await renderHeader()}
+            <main>
+                <h1>All posts tagged with '${tag}'</h1>
+                <br>
+                <hr>
+                <br>
+                ${entriesHTML}
+            </main>
+            ${await renderFooter()}
+        `,
+        status: 200
+    }
+}
+
 const renderIndex = async (): Promise<RenderedPage> => {
     const head = `
         <title>Ben's Blog</title>
@@ -58,19 +109,7 @@ const renderIndex = async (): Promise<RenderedPage> => {
     const allEntries = await Entry.loadAll();
     const entries = Array.from(allEntries.values()).sort((a, b) => b.date!.getTime() - a.date!.getTime()).filter(entry => !entry.hidden);
 
-    const entriesHTML = entries.map(entry => `
-        <article>
-            <header class="article-header">
-            <h3 class="post-title"><a href="/${entry.url}">${entry.title}</a></h3>
-                <div class="post-side">
-                    <time datetime="${entry.date?.toISOString()}">${entry.date?.toISOString().split('T')[0]}</time>
-                    <ul role="list">
-                        ${entry.tags.map(tag => `<li role="listitem"><a rel="tag" class="tag" href="/tags/${tag}/">${tag}</a></li>`).join(' ')}
-                    </ul>
-                </div>
-            </header>
-        </article>
-    `).join(' ');
+    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
 
     const main = `
         <main>
@@ -146,8 +185,16 @@ export const render = async (url: string): Promise<RenderedPage> => {
     }
 
     const split = url.split("/");
-    const page = split[split.length - 1];
+    const page = split[1];
     const pageName = page.split(".")[0];
-    
+
+    if (pageName === "tags") {
+        const tag = split[2];
+        if (tag) {
+            return await renderTag(tag);
+        }
+        return await renderTags();
+    }
+
     return renderPage(pageName);
 }
