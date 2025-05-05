@@ -96,7 +96,21 @@ export class Entry {
                 "name": "Ben's Blog",
                 "url": "https://cocz.net"
             },
-            "articleBody": this.content
+            "articleBody": this.content,
+            "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://cocz.net/"
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": this.title,
+                    "item": this.getUrl()
+                }]
+            }
         };
     }
 
