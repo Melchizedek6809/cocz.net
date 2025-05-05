@@ -88,6 +88,7 @@ export class Entry {
             "dateModified": this.date?.toISOString(),
             "author": {
                 "@type": "Person",
+                "url": "https://cocz.net/",
                 "name": "Ben"
             },
             "publisher": {
