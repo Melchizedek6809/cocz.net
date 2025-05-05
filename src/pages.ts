@@ -62,6 +62,7 @@ const renderTags = async (): Promise<RenderedPage> => {
     const head = `
         <title>Tags</title>
         <meta name="description" content="A list of all the tags I've used in my posts so far.">
+        <meta name="robots" content="noindex">
     `;
 
     return {
@@ -91,6 +92,7 @@ const renderTag = async (tag: string): Promise<RenderedPage> => {
     const head = `
         <title>Tag: ${tag}</title>
         <meta name="description" content="A list of all the posts I've written with the tag '${tag}'.">
+        <meta name="robots" content="noindex">
     `;
 
     return {
