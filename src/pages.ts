@@ -59,8 +59,13 @@ const renderTags = async (): Promise<RenderedPage> => {
     }
     const uniqueTags = [...new Set(tags.keys())].sort();
 
+    const head = `
+        <title>Tags</title>
+        <meta name="description" content="A list of all the tags I've used in my posts so far.">
+    `;
+
     return {
-        head: '<title>Tags</title>',
+        head,
         body: `
             ${await renderHeader()}
             <main>
@@ -83,8 +88,13 @@ const renderTag = async (tag: string): Promise<RenderedPage> => {
     const entries = Array.from(allEntries.values()).filter(entry => entry.tags.includes(tag));
     const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
 
+    const head = `
+        <title>Tag: ${tag}</title>
+        <meta name="description" content="A list of all the posts I've written with the tag '${tag}'.">
+    `;
+
     return {
-        head: `<title>${tag}</title>`,
+        head,
         body: `
             ${await renderHeader()}
             <main>
@@ -151,24 +161,11 @@ const renderPage = async (pageName: string): Promise<RenderedPage> => {
         <meta name="date" content="${entry.date?.toISOString()}">
       `;
 
-    const main = `
-        <main>
-          <article>
-            <header class="page-header">
-                <h1 class="post-title">${entry.title}</h1>
-                <div class="post-side">
-                    ${entry.date ? `<time datetime="${entry.date.toISOString()}">${entry.date.toISOString().split('T')[0]}</time>` : ""}
-                    <ul role="list">${entry.tags.map(tag => `<li role="listitem"><a href="/tags/${tag}/">#${tag}</a></li>`).join(' ')}</ul>
-                </div>
-            </header>
-            ${entry.content}
-          </article>
-        </main>
-    `;
-
     const body = `
         ${await renderHeader()}
-        ${main}
+        <main>
+          ${entry.renderFull()}
+        </main>
         ${await renderFooter()}
       `;
 

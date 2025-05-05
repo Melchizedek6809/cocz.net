@@ -83,10 +83,44 @@ export class Entry {
                     </ul>
                 </div>
             </header>
+            <p>${this.getSummary()}</p>
         </article>`;
     }
 
     renderFull() {
-        
+        return `<article>
+            <header class="page-header">
+                <h1 class="post-title">${this.title}</h1>
+                <div class="post-side">
+                    ${this.date ? `<time datetime="${this.date.toISOString()}">${this.date.toISOString().split('T')[0]}</time>` : ""}
+                    <ul role="list">${this.tags.map(tag => `<li role="listitem"><a href="/tags/${tag}/">#${tag}</a></li>`).join(' ')}</ul>
+                </div>
+            </header>
+            ${this.content}
+          </article>`
+    }
+
+    getSummary() {
+        const text = this.content
+            .replace(/<[^>]*>/g, '')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&apos;/g, "'")
+            .replace(/&copy;/g, '©')
+            .replace(/&reg;/g, '®')
+            .replace(/&trade;/g, '™')
+            .replace(/&bull;/g, '•')
+            .replace(/&hellip;/g, '…')
+            .replace(/&mdash;/g, '—')
+            .replace(/&ndash;/g, '–')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&mdash;/g, '—')
+            .replace(/&ndash;/g, '–')
+            .replace(/&nbsp;/g, ' ');
+
+        return text.slice(0, 200) + '...';
     }
 }
