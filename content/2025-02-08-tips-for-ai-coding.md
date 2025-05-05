@@ -1,0 +1,87 @@
+---
+title: "6 Tips for Effective AI-Assisted Coding"
+date: "2025-02-08"
+description: "Six practical lessons from my 6-month experience with Cursor, from writing effective prompts to maintaining architectural control while using AI coding assistants."
+
+tags:
+  - "tech"
+  - "ai"
+  - "programming"
+  - "cursor"
+  - "developer-tools"
+  - "llm"
+  - "productivity"
+---
+
+## Introduction: My Journey with AI Coding Tools
+
+So, I've started using Cursor about 6 months ago, in the beginning I was quite
+skeptical but by now I can't imagine going back to coding everything by hand.
+
+Generally it seems to me as though people are still trying to figure out how
+to utilize LLMs for coding properly, some just flat out refusing to touch
+anything AI related, others prophesizing how most programmers will be replaced
+by AI soonish.
+
+So let me start by sharing some experiences I've gathered in these last couple
+of months.
+
+## Key Lessons for Effective AI-Assisted Coding
+
+### 1. Be very detailed in your prompts
+
+This is something I've seen quite often, people just write half a sentence and
+expect the AI to read their minds, sometimes not even writing proper sentences.
+I've seen prompts like "login page" which the AI generally will completely fail
+at. Though to my surprise some of these actually did end up working out quite well.
+
+### 2. Don't make it change too much at once
+
+This might be me being overly cautious but in general I've found that it's
+better to change things in smaller steps rather than a big change upfront and
+then iterating on that big change to make it work (small changes are alright,
+but things should always generally work!)
+
+### 3. Be careful what you wish for
+
+Generally it seems like the LLM is a bit too nice, so far I haven't seen a LLM
+deny a request, it'll change whatever you ask of it, whether it's a good idea
+or not.
+
+### 4. You must be the architect
+
+Similar to the prior point, you have to make sure to pause every now and then
+and clean up the codebase, since just like human programmers the LLM also seems
+to get confused if the codebase grows too much without proper abstractions that
+ease the mental burden. However the LLM can actually help here, so far it doesn't
+seem to think up useful abstraction itself but will happily implement ones you
+decide are beneficial to the overall architecture.
+
+### 5. Choose the right stack
+
+At first I tried writing some WebApp with React/Next.js since it seems to be
+one of the most popular stacks these days, funnily enough the result has been
+somewhat disappointing. Not entirely sure exactly why but it seems that having
+to touch so many files for a change confused the LLM. I've gotten much better
+results when just doing simple SSR with PHP or Express/EJS.
+
+### 6. Customize the response style
+
+Now not everyone might like this, however for me it has made things much
+more fun if the LLM doesn't just respond like a robot but instead always
+speaks in rhymes or other stupid things like that. While they won't increase
+the quality of the code, they make interacting with the LLM more fun and
+thereby the overall work more enjoyable.
+
+## Conclusions: AI as a Coding Partner, Not a Replacement
+
+I really enjoy using Cursor, it's made me quite a bit more productive by
+allowing me to focus on the things that actually matter and let the LLM deal
+with the boilerplate. There still are many parts that I need to code myself,
+but that's alright, it does allow me to give the boring work to someone else
+for the most part. In general it feels like having a super responsive junior dev
+there to do your bidding.
+
+It also allows me to add some nice finishing touches that otherwise I probably
+wouldn't bother with because they aren't a priority. Things like nicely written
+error/log messages. Or add some nice touches to the UI of a prototype.

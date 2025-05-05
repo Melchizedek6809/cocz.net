@@ -1,0 +1,27 @@
+{
+  "name": "vite-ssg",
+  "version": "1.0.0",
+  "description": "A simple SSG based on Vite",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --watch src/server.ts",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck:fe": "tsc --noEmit",
+    "typecheck:be": "tsc --noEmit src/server.ts",
+    "test": "npm run typecheck:fe && npm run typecheck:be"
+  },
+  "dependencies": {
+    "express": "latest",
+    "markdown-it": "latest",
+    "vite": "latest",
+    "yaml": "^2.7.1"
+  },
+  "devDependencies": {
+    "@types/express": "latest",
+    "@types/markdown-it": "latest",
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

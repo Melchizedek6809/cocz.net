@@ -1,0 +1,541 @@
+:root {
+  --fg-color: #f0f0f0;
+  --bg-color: #223;
+  --bg-gradient: linear-gradient(50deg, #123, #012);
+  --bg-gradient-back: linear-gradient(30deg, #012, #123);
+  --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
+  --fg-border: #57B;
+  --bg-mark: #dfdfb0;
+  --fg-mark: #100f10;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fg-color: #223;
+    --bg-color: #f0f0f0;
+    --bg-gradient: linear-gradient(50deg, #cdf, #def);
+    --bg-gradient-back: linear-gradient(30deg, #def, #cdf);
+    --fg-href: #1058d8;
+    --fg-secondary: #d810a8;
+    /* deliberaty choose a color with a lesser contrast */
+    /* APCA contrast value of 83.77 against bg-color */
+    --fg-border: #259;
+    --bg-mark: #f9ff00;
+    --fg-mark: #282828;
+  }
+}
+
+:root {
+  --serif-font: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  --sans-font: system-ui,Avenir,Helvetica,Arial,sans-serif;
+  --mono-font: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Inconsolata, monospace;
+
+
+
+  /* @link https://utopia.fyi/type/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+  --step-s5: clamp(0.37rem, calc(0.52rem + -0.19vw), 0.49rem);
+  --step-s4: clamp(0.46rem, calc(0.57rem + -0.14vw), 0.55rem);
+  --step-s3: clamp(0.58rem, calc(0.63rem + -0.06vw), 0.61rem);
+  --step-s2: clamp(0.69rem, calc(0.68rem + 0.05vw), 0.72rem);
+  --step-s1: clamp(0.78rem, calc(0.74rem + 0.20vw), 0.90rem);
+  --step-x0: clamp(0.88rem, calc(0.79rem + 0.42vw), 1.13rem);
+  --step-x1: clamp(0.98rem, calc(0.84rem + 0.70vw), 1.41rem);
+  --step-x2: clamp(1.11rem, calc(0.89rem + 1.08vw), 1.76rem);
+  --step-x3: clamp(1.25rem, calc(0.93rem + 1.59vw), 2.20rem);
+  --step-x4: clamp(1.40rem, calc(0.95rem + 2.24vw), 2.75rem);
+
+  /* @link https://utopia.fyi/space/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+  --space-3xs: clamp(0.25rem, calc(0.23rem + 0.10vw), 0.31rem);
+  --space-2xs: clamp(0.44rem, calc(0.40rem + 0.21vw), 0.56rem);
+  --space-xs: clamp(0.69rem, calc(0.63rem + 0.31vw), 0.88rem);
+  --space-s: clamp(0.88rem, calc(0.79rem + 0.42vw), 1.13rem);
+  --space-m: clamp(1.31rem, calc(1.19rem + 0.63vw), 1.69rem);
+  --space-l: clamp(1.75rem, calc(1.58rem + 0.83vw), 2.25rem);
+  --space-xl: clamp(2.63rem, calc(2.38rem + 1.25vw), 3.38rem);
+  --space-2xl: clamp(3.50rem, calc(3.17rem + 1.67vw), 4.50rem);
+  --space-3xl: clamp(5.25rem, calc(4.75rem + 2.50vw), 6.75rem);
+
+  --width: 70ch;
+  --body-line-height: 1.5;
+  --head-line-height: 1.3;
+}
+
+html {
+  /* use the border-box box model instead of the browser default content-box */
+  box-sizing: border-box;
+  /* fallback for safari - remove if it starts supporting scrollbar-gutter */
+  overflow-y: auto;
+  background: var(--bg-color);
+  background: var(--bg-gradient-back);
+}
+
+body {
+  display: block;
+  /* align-items: center; */
+  /* readability */
+  margin: auto;
+  width: 100%;
+  max-width: 980px;
+  padding: var(--space-m);
+  line-height: var(--body-line-height);
+  font-family: var(--sans-font);
+  color: var(--fg-color);
+  background: var(--bg-color);
+  background: var(--bg-gradient);
+
+  min-height: 100vh;
+  box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.2);
+}
+
+nav a.twitch::before,
+nav a.sourcehut::before,
+nav a.github::before {
+  content:'';
+  width:1.4em;
+  height:1.4em;
+  position: relative;
+  background: url('./branding/github-mark-white.svg') no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+
+nav a.sourcehut::before {
+  background-image: url('./branding/sr.ht-white.svg?v=2');
+}
+
+nav a.twitch::before {
+  background-image: url('./branding/twitch-white.svg');
+}
+
+@media (prefers-color-scheme: light) {
+  nav a.github::before {
+    background-image: url('./branding/github-mark.svg');
+  }
+
+  nav a.sourcehut::before {
+    background-image: url('./branding/sr.ht.svg?v=2');
+  }
+
+  nav a.twitch::before {
+    background-image: url('./branding/twitch.svg');
+  }
+}
+
+/* remove all browser default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* if any of the following elements don't exist, the rule still applies  */
+:is(code, kbd, samp, pre) {
+  font-family: var(--mono-font);
+  overflow-x: auto;
+}
+
+/* reduce distraction from text by removing underlines from hyperlinks */
+/* rely on color to distinguish hyperlinks */
+/* the order of pseudo classes should follow the LVHA order */
+/* :link, :visited, :hover, :active */
+a {
+  color: var(--fg-href);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--space-3xs);
+  text-decoration-thickness: 0.02em;
+  display: inline-block;
+  transition: text-decoration-color 200ms;
+}
+
+/* underline hyperlinks on hover and increase their underline offset */
+a:hover {
+  text-decoration-color: var(--fg-href);
+}
+
+/* if the role of a list is explicitly defined, it isn't being used as a list */
+ul[role="list"] {
+  padding: 0;
+  list-style: none;
+}
+
+/* prevent overflow of possibly long lines */
+p, li, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+ul,ol,p {
+  margin-bottom: 1rem;
+}
+
+time {
+  white-space: nowrap;
+}
+
+article {
+  margin-bottom: var(--step-x0);
+}
+
+article:last-child {
+  margin-bottom: 0;
+}
+
+article + article {
+  padding-top: var(--step-x0);
+  border-top: 1px solid var(--fg-border);
+}
+
+img, video {
+  /* never render images/videos wider than their containing element */
+  max-inline-size: 100%;
+  height: auto;
+  /* preserve the aspect ratio of the image */
+  block-size: auto;
+  margin-inline: auto;
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+:is(img, video) {
+  /* make images/videos blocks rather than inline elements */
+  display: block;
+}
+
+.avatar {
+  border-radius: var(--step-x1);
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--sans-font);
+  line-height: var(--head-line-height);
+  margin-bottom:0.3em;
+}
+
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1.05rem; }
+
+.primary-header h3 {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+
+header {
+  margin-bottom: var(--space-s);
+}
+
+header.primary-header {
+  margin-bottom: var(--space-l);
+}
+
+main {
+  margin-bottom: var(--space-l);
+}
+
+footer {
+  padding-top: var(--space-s);
+}
+
+.primary-nav > ul[role="list"],
+.primary-footer > ul[role="list"] {
+  display: flex;
+  flex-flow: row wrap;
+  /* prevent accidental incorrect clicks by increasing space between elements */
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.primary-header {
+  border-bottom: 1px solid var(--fg-border);
+}
+
+.primary-footer {
+  border-top: 1px solid var(--fg-border);
+}
+
+/* add a hash symbol before the taxonomy tag links */
+.tag::before {
+  content: "#";
+}
+
+.tag-sup {
+  padding-inline: var(--space-3xs);
+}
+
+.article-header > ul[role="list"] {
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  gap: var(--space-2xs);
+}
+
+.post-side,
+.post-side > ul[role="list"],
+.page-header > ul[role="list"] {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: var(--space-2xs);
+}
+
+article > header {
+  padding-top: 0.2rem;
+}
+
+.article-header {
+  display: block;
+}
+
+header.primary-header {
+  display: flex;
+  gap: var(--space-2xs);
+  justify-content: space-between;
+}
+
+.unknown-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-block: var(--space-xl);
+}
+
+/* code blocks inside pre should be a block otherwise it doesn't work well when
+ * text overflows inside code */
+pre > code {
+  display: block;
+}
+
+code[role="img"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.figquote {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+/* -------------------------------------------------------------------------- */
+
+pre {
+  padding: var(--space-2xs);
+  border: 0.1rem solid var(--fg-border);
+  border-radius: var(--step-s5);
+}
+
+/* show the name of the programming language inside pre */
+pre[data-lang]::before {
+  display: block;
+  content: attr(data-lang);
+  text-decoration: underline var(--fg-border) solid;
+  text-underline-offset: var(--space-3xs);
+  text-decoration-thickness: 0.1rem;
+  text-transform: uppercase;
+  padding-block-end: var(--space-2xs);
+}
+
+/* add space after line numbers and don't select the line numbers for copying */
+pre[data-linenos] table tbody tr td:first-child {
+  padding-inline-end: var(--space-s);
+  user-select: none;
+}
+
+pre[data-linenos] table {
+  /* if we set table width to 100% and if text overflows, the space separation
+   * between cells is removed */
+  /* width: 100%; */
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: 0;
+}
+
+.unknown-page-emoticon {
+  font-size: var(--step-x3);
+  padding: var(--space-2xs);
+  border: 0;
+  border-radius: 0;
+}
+
+blockquote {
+  padding: var(--space-2xs) var(--space-s);
+  border: solid 1px var(--fg-border);
+  border-inline-start: var(--step-s4) solid var(--fg-border);
+  border-radius: 0 1rem 1rem 0;
+  margin: 0 0 2.5rem;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+figcaption {
+  text-align: center;
+}
+
+:is(ul, ol) {
+  padding-inline: var(--space-l);
+}
+
+mark {
+  /* plays well with at least 1.5 line-height or more */
+  padding-inline: var(--space-3xs);
+  padding-block: 0.1rem;
+  color: var(--fg-mark);
+  background: var(--bg-mark);
+  border-radius: var(--step-s5);
+}
+
+kbd {
+  border-inline: 0.1rem solid var(--fg-border);
+  border-block-start: 0.1rem solid var(--fg-border);
+  border-block-end: 0.2rem solid var(--fg-border);
+  border-radius: var(--step-s5);
+  padding-inline: var(--space-3xs);
+  padding-block: 0.1rem;
+  font-family: var(--mono-font);
+  margin: 0 0.1rem;
+}
+
+@media only screen and (max-width: 700px) {
+  header.article-header,
+  header.primary-header {
+    display: block;
+  }
+
+  .post-side ul[role="list"],
+  .post-side {
+    gap: var(--space-s);
+  }
+
+  footer.primary-footer > ul[role="list"] {
+    display: block;
+    text-align: right;
+  }
+
+  footer.primary-footer > ul[role="list"] > li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+p + h1,
+p + h2,
+p + h3,
+p + h4 {
+  padding-top: var(--space-s);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 200;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-weight: 200;
+  margin-bottom: 0.25rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 0.125rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.125rem;
+}
+
+h4.cyberspace {
+  font-weight: 200;
+}
+
+@media screen and (max-width: 700px) {
+  h1 { font-size: 2.4rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.6rem; }
+}
+
+@media screen and (max-width: 450px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.8rem; }
+}
+
+article h2,
+article h3 {
+  border-bottom: 1px solid var(--fg-border);
+  margin-bottom: 0.5rem;
+}
+
+.article-header h2,
+.article-header h3 {
+  border: none;
+}
+
+.cs1, .cs2, .cs3, .cs4, .cs5 {
+  font-family: var(--mono-font);
+}
+
+ol > li::marker,
+ul > li::marker {
+  color: var(--fg-border);
+  font-weight: bold;
+}
+
+
+.cs1 { color: #50b8f8; }
+.cs2 { color: #f8b850; }
+.cs3 { color: #50f863; }
+.cs4 { color: #f850b8; }
+.cs5 { color: #b850f8; }
+
+@media (prefers-color-scheme: light) {
+  .cs1 { color: #2088e8; }
+  .cs2 { color: #e88820; }
+  .cs3 { color: #20c863; }
+  .cs4 { color: #e82088; }
+  .cs5 { color: #8820e8; }
+}
+
+pre {
+  margin-bottom: 0.5rem;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid var(--fg-border);
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.intro {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  padding: 0 0 1rem;
+}
+
+html.url2og header.primary-header,
+html.url2og footer.primary-footer {
+  display: none !important;
+}
+
+html.url2og {
+  --fg-color: #f0f0f0;
+  --bg-color: #223;
+  --bg-gradient: linear-gradient(50deg, #123, #012);
+  --bg-gradient-back: linear-gradient(30deg, #012, #123);
+  --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
+  --fg-border: #57B;
+  --bg-mark: #dfdfb0;
+  --fg-mark: #100f10;
+}
