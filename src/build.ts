@@ -1,11 +1,50 @@
 import { exec } from "child_process";
 import { Entry } from "./entry";
 import fs from "fs/promises";
-import path, { dirname, resolve } from "path";
+import path, { dirname } from "path";
 import { render } from "./pages";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export const renderSitemap = async (): Promise<string> => {
+    const allEntries = await Entry.loadAll();
+    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
+
+    const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
+
+    const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
+
+    return `
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+                <loc>https://cocz.net/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>1.0</priority>
+            </url>
+            ${entries.map(entry => `<url>
+                <loc>${entry.getUrl()}</loc>
+                <lastmod>${entry.date?.toISOString()}</lastmod>
+                <changefreq>monthly</changefreq>
+                <priority>0.8</priority>
+            </url>`).join(' ')}
+            <url>
+                <loc>https://cocz.net/tags/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>0.5</priority>
+            </url>
+            ${tags.map(tag => `<url>
+                <loc>https://cocz.net/tags/${tag}/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>0.5</priority>
+            </url>`).join(' ')}
+        </urlset>
+    `;
+}
+
 
 export const buildAll = async () => {
     // First change to the root directory containing the package.json
@@ -33,7 +72,7 @@ export const buildAll = async () => {
 
     const template = await fs.readFile("dist/src/template.html", "utf-8");
     await fs.rm("dist/src", { recursive: true, force: true });
-    
+
     const templateRender = (head: string, body: string) => {
         return template
             .replace('<!-- HEAD_CONTENT_PLACEHOLDER -->', head)
@@ -42,12 +81,12 @@ export const buildAll = async () => {
 
     // Now build all the entries
     const entries = await Entry.loadAll();
-    for (const entry of entries.values()) {
+    await Promise.all(Array.from(entries.values()).map(async (entry) => {
         const filename = path.join("dist", entry.url, "index.html");
         const rendered = await render(entry.url);
         await fs.mkdir(path.dirname(filename), { recursive: true });
         await fs.writeFile(filename, templateRender(rendered.head, rendered.body));
-    }
+    }));
 
     // Now build the index page
     const indexFilename = path.join("dist", "index.html");
@@ -68,6 +107,9 @@ export const buildAll = async () => {
         await fs.mkdir(path.dirname(tagFilename), { recursive: true });
         await fs.writeFile(tagFilename, templateRender(rendered.head, rendered.body));
     }
+
+    // Now build the sitemap
+    await fs.writeFile("dist/sitemap.xml", await renderSitemap());
 };
 
 buildAll();

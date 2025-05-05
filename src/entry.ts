@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import markdownIt from 'markdown-it';
+import markdownItHighlightJS from 'markdown-it-highlightjs';
 import { parse } from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -17,6 +18,7 @@ export class Entry {
     readonly tags: string[] = [];
     readonly content:string = "";
     readonly hidden: boolean = false;
+
     static async loadAll(): Promise<Map<string, Entry>> {
         const urlMap = new Map<string, Entry>();
 
@@ -49,9 +51,9 @@ export class Entry {
         url = url.replace(/^(\d+-?)*/g, '');
         this.url = url;
         
-        const md = new markdownIt({
+        const md = markdownIt({
             html: true,
-        });
+        }).use(markdownItHighlightJS);
 
         let raw = rawContent;
         let rawFM = "";
@@ -70,6 +72,68 @@ export class Entry {
 
         const parsed = md.render(raw);
         this.content = parsed;
+    }
+
+    getJsonLd() {
+        return {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": this.getUrl()
+            },
+            "headline": this.title,
+            "image": this.getImageUrl(),
+            "datePublished": this.date?.toISOString(),
+            "dateModified": this.date?.toISOString(),
+            "author": {
+                "@type": "Person",
+                "name": "Ben"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Ben's Blog",
+                "url": "https://cocz.net"
+            },
+            "articleBody": this.content
+        };
+    }
+
+    renderJsonLd() {
+        return `
+            <script type="application/ld+json">
+                ${JSON.stringify(this.getJsonLd())}
+            </script>
+        `;
+    }
+
+    getImageUrl() {
+        return `https://url2og.cocz.net/?url=${encodeURIComponent(this.getUrl())}`;
+    }
+
+    renderOpenGraph() {
+        return `
+            <meta property="og:title" content="${this.title}">
+            <meta property="og:description" content="${this.description}">
+            <meta property="og:url" content="${this.getUrl()}">
+            <meta property="og:image" content="${this.getImageUrl()}">
+            <meta property="og:type" content="article">
+            <meta property="og:site_name" content="Ben's Blog">
+            <meta property="og:locale" content="en_US">
+        `;
+    }
+
+    renderMetadata() {
+        return `
+            <meta name="description" content="${this.description}">
+            <meta name="keywords" content="${this.tags.join(', ')}">
+            <meta name="author" content="Ben">
+            <meta name="robots" content="index, follow">
+            <meta name="last-modified" content="${this.date?.toISOString()}">
+            <link rel="canonical" href="${this.getUrl()}">
+            ${this.renderOpenGraph()}
+            ${this.renderJsonLd()}
+        `;
     }
 
     renderTeaser() {
@@ -122,5 +186,9 @@ export class Entry {
             .replace(/&nbsp;/g, ' ');
 
         return text.slice(0, 200) + '...';
+    }
+
+    getUrl() {
+        return `https://cocz.net/${this.url}/`;
     }
 }

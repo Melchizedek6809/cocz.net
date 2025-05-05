@@ -489,18 +489,18 @@ ul > li::marker {
 }
 
 
-.cs1 { color: #50b8f8; }
-.cs2 { color: #f8b850; }
-.cs3 { color: #50f863; }
-.cs4 { color: #f850b8; }
-.cs5 { color: #b850f8; }
+.hljs-attr, .hljs-built_in, .hljs-title, .hljs-name, .cs1 { color: #50b8f8; }
+.hljs-string, .cs2 { color: #f8b850; }
+.hljs-type, .hljs-number, .cs3 { color: #50f863; }
+.hljs-variable, .hljs-keyword, .cs4 { color: #f850b8; }
+.hljs-comment, .cs5 { color: #b850f8; }
 
 @media (prefers-color-scheme: light) {
-  .cs1 { color: #2088e8; }
-  .cs2 { color: #e88820; }
-  .cs3 { color: #20c863; }
-  .cs4 { color: #e82088; }
-  .cs5 { color: #8820e8; }
+  .hljs-attr, .hljs-built_in, .hljs-title, .hljs-name, .cs1 { color: #2088e8; }
+  .hljs-string, .cs2 { color: #e88820; }
+  .hljs-type, .hljs-number, .cs3 { color: #20c863; }
+  .hljs-variable, .hljs-keyword, .cs4 { color: #e82088; }
+  .hljs-comment, .cs5 { color: #8820e8; }
 }
 
 pre {

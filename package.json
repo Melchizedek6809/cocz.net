@@ -1,7 +1,7 @@
 {
-  "name": "vite-ssg",
+  "name": "cocz.net",
   "version": "1.0.0",
-  "description": "A simple SSG based on Vite",
+  "description": "Ben's custom SSG / Blog",
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/server.ts",
@@ -15,8 +15,9 @@
   "dependencies": {
     "express": "latest",
     "markdown-it": "latest",
+    "markdown-it-highlightjs": "latest",
     "vite": "latest",
-    "yaml": "^2.7.1"
+    "yaml": "latest"
   },
   "devDependencies": {
     "@types/express": "latest",

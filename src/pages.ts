@@ -15,7 +15,7 @@ const renderHeader = async (): Promise<string> => {
           </section>
           <section>
             <nav class="primary-nav">
-                <ul role="list"><li role="listitem"><a href="/" class="">Home</a></li>
+                <ul role="list"><li role="listitem">
                     <li role="listitem"><a href="/about-me/" class="">About me</a></li>
                     <li role="listitem"><a href="/tags/" class="">Tags</a></li>
                     <li role="listitem"><a href="https://sr.ht/~melchizedek6809/" target="_blank" rel="noopener noreferrer" title="sourcehut" class="sourcehut"></a></li>
@@ -110,16 +110,49 @@ const renderTag = async (tag: string): Promise<RenderedPage> => {
     }
 }
 
+const renderOpenGraph = async (): Promise<string> => {
+    return `
+        <meta property="og:title" content="Ben's Blog">
+        <meta property="og:description" content="ramblings from cyberspace">
+        <meta property="og:url" content="https://cocz.net/">
+        <meta property="og:image" content="https://url2og.cocz.net/?url=https://cocz.net/">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Ben's Blog">
+        <meta property="og:locale" content="en_US">
+    `;
+}
+
+const renderJsonLd = async (): Promise<string> => {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://cocz.net/",
+        "name": "Ben's Blog",
+        "description": "ramblings from cyberspace"
+    };
+
+    return `
+        <script type="application/ld+json">
+            ${JSON.stringify(jsonLd)}
+        </script>
+    `;
+}
+
 const renderIndex = async (): Promise<RenderedPage> => {
+    const allEntries = await Entry.loadAll();
+    const entries = Array.from(allEntries.values()).sort((a, b) => b.date!.getTime() - a.date!.getTime()).filter(entry => !entry.hidden);
+    const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
+    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
+
     const head = `
         <title>Ben's Blog</title>
         <meta name="description" content="ramblings from cyberspace">
+        <meta name="robots" content="index, follow">
+        <meta name="last-modified" content="${lastmod}">
+        <link rel="canonical" href="https://cocz.net/">
+        ${await renderOpenGraph()}
+        ${await renderJsonLd()}
       `;
-
-    const allEntries = await Entry.loadAll();
-    const entries = Array.from(allEntries.values()).sort((a, b) => b.date!.getTime() - a.date!.getTime()).filter(entry => !entry.hidden);
-
-    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
 
     const main = `
         <main>
@@ -159,6 +192,7 @@ const renderPage = async (pageName: string): Promise<RenderedPage> => {
         <meta name="description" content="${entry.description}">
         <meta name="tags" content="${entry.tags.join(', ')}">
         <meta name="date" content="${entry.date?.toISOString()}">
+        ${entry.renderMetadata()}
       `;
 
     const body = `
