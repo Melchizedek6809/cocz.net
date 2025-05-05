@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/server.ts",
-    "build": "tsc && vite build",
+    "build": "tsx src/build.ts",
+    "build:vite": "vite build",
     "preview": "vite preview",
     "typecheck:fe": "tsc --noEmit",
     "typecheck:be": "tsc --noEmit src/server.ts",

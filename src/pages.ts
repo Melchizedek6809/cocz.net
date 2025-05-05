@@ -182,7 +182,7 @@ export const render = async (url: string): Promise<RenderedPage> => {
     }
 
     const split = url.split("/");
-    const page = split[1];
+    const page = split[1] || split[0] || "";
     const pageName = page.split(".")[0];
 
     if (pageName === "tags") {
