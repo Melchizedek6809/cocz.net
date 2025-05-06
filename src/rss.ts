@@ -2,6 +2,17 @@ import { Entry } from "./entry";
 import { escapeHtml } from "./utils";
 
 /**
+ * Convert relative URLs to absolute URLs in HTML content
+ */
+const convertRelativeUrls = (content: string, baseUrl: string): string => {
+  // Convert href attributes
+  let processedContent = content.replace(/href=(["'])\/(.*?)\1/g, `href=$1${baseUrl}/$2$1`);
+  // Convert src attributes
+  processedContent = processedContent.replace(/src=(["'])\/(.*?)\1/g, `src=$1${baseUrl}/$2$1`);
+  return processedContent;
+};
+
+/**
  * Generate an RSS feed from a list of entries
  */
 export const generateRSS = async (entries: Map<string, Entry>): Promise<string> => {
@@ -13,14 +24,16 @@ export const generateRSS = async (entries: Map<string, Entry>): Promise<string> 
     })
     .slice(0, 20); // Get the 20 most recent entries
 
+  const baseUrl = "https://cocz.net";
+  
   const items = sortedEntries.map(entry => {
-    const content = entry.content;
+    const content = convertRelativeUrls(entry.content, baseUrl);
     const pubDate = entry.date ? new Date(entry.date).toUTCString() : new Date().toUTCString();
     
     return `    <item>
       <title>${escapeHtml(entry.title)}</title>
-      <link>https://cocz.net/${entry.url}/</link>
-      <guid>https://cocz.net/${entry.url}/</guid>
+      <link>${baseUrl}/${entry.url}/</link>
+      <guid>${baseUrl}/${entry.url}/</guid>
       <pubDate>${pubDate}</pubDate>
       <description>${escapeHtml(entry.description)}</description>
       <content:encoded><![CDATA[${content}]]></content:encoded>
@@ -34,11 +47,11 @@ export const generateRSS = async (entries: Map<string, Entry>): Promise<string> 
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cocz.net</title>
-    <link>https://cocz.net</link>
+    <link>${baseUrl}</link>
     <description>A blog about programming, tech, and projects</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="https://cocz.net/rss.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>`;
