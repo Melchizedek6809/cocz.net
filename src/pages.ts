@@ -4,6 +4,45 @@ export interface RenderedPage {
     head: string;
     body: string;
     status: number;
+    contentType?: string;
+}
+
+export const renderSitemap = async (): Promise<string> => {
+    const allEntries = await Entry.loadAll();
+    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
+
+    const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
+
+    const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
+
+    return `
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+                <loc>https://cocz.net/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>1.0</priority>
+            </url>
+            ${entries.map(entry => `<url>
+                <loc>${entry.getUrl()}</loc>
+                <lastmod>${entry.date?.toISOString()}</lastmod>
+                <changefreq>monthly</changefreq>
+                <priority>0.8</priority>
+            </url>`).join(' ')}
+            <url>
+                <loc>https://cocz.net/tags/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>0.5</priority>
+            </url>
+            ${tags.map(tag => `<url>
+                <loc>https://cocz.net/tags/${tag}/</loc>
+                <lastmod>${lastmod}</lastmod>
+                <changefreq>weekly</changefreq>
+                <priority>0.5</priority>
+            </url>`).join(' ')}
+        </urlset>
+    `;
 }
 
 const renderHeader = async (): Promise<string> => {
@@ -215,6 +254,15 @@ const renderPage = async (pageName: string): Promise<RenderedPage> => {
 export const render = async (url: string): Promise<RenderedPage> => {
     if ((url === '/') || (url === "") || (url === "/index") || (url === "/index.html")) {
         return await renderIndex();
+    }
+
+    if (url === "/sitemap.xml") {
+        return {
+            head: '',
+            body: await renderSitemap(),
+            status: 200,
+            contentType: 'text/xml'
+        }
     }
 
     const split = url.split("/");

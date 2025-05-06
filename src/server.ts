@@ -45,12 +45,15 @@ const createServer = async () => {
     const url = req.originalUrl;
 
     try {
-      const { head, body, status } = await render(url);
+      let { head, body, status, contentType } = await render(url);
 
-      const html = await renderTemplate(url, head, body);
+      contentType = contentType || 'text/html';
+      if (contentType === 'text/html') {
+        body = await renderTemplate(url, head, body);
+      }
 
       // Send the rendered HTML back
-      res.status(status).set({ 'Content-Type': 'text/html' }).end(html);
+      res.status(status).set({ 'Content-Type': contentType }).end(body);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
       console.error(e);

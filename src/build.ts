@@ -2,49 +2,10 @@ import { exec } from "child_process";
 import { Entry } from "./entry";
 import fs from "fs/promises";
 import path, { dirname } from "path";
-import { render } from "./pages";
+import { render, renderSitemap } from "./pages";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export const renderSitemap = async (): Promise<string> => {
-    const allEntries = await Entry.loadAll();
-    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
-
-    const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
-
-    const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
-
-    return `
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url>
-                <loc>https://cocz.net/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>1.0</priority>
-            </url>
-            ${entries.map(entry => `<url>
-                <loc>${entry.getUrl()}</loc>
-                <lastmod>${entry.date?.toISOString()}</lastmod>
-                <changefreq>monthly</changefreq>
-                <priority>0.8</priority>
-            </url>`).join(' ')}
-            <url>
-                <loc>https://cocz.net/tags/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>0.5</priority>
-            </url>
-            ${tags.map(tag => `<url>
-                <loc>https://cocz.net/tags/${tag}/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>0.5</priority>
-            </url>`).join(' ')}
-        </urlset>
-    `;
-}
-
 
 export const buildAll = async () => {
     // First change to the root directory containing the package.json
