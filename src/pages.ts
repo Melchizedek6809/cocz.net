@@ -1,4 +1,6 @@
 import { Entry } from "./entry";
+import { generateRSS } from "./rss";
+import { renderSitemap } from "./sitemap";
 
 export interface RenderedPage {
     head: string;
@@ -7,43 +9,6 @@ export interface RenderedPage {
     contentType?: string;
 }
 
-export const renderSitemap = async (): Promise<string> => {
-    const allEntries = await Entry.loadAll();
-    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
-
-    const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
-
-    const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
-
-    return `
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url>
-                <loc>https://cocz.net/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>1.0</priority>
-            </url>
-            ${entries.map(entry => `<url>
-                <loc>${entry.getUrl()}</loc>
-                <lastmod>${entry.date?.toISOString()}</lastmod>
-                <changefreq>monthly</changefreq>
-                <priority>0.8</priority>
-            </url>`).join(' ')}
-            <url>
-                <loc>https://cocz.net/tags/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>0.5</priority>
-            </url>
-            ${tags.map(tag => `<url>
-                <loc>https://cocz.net/tags/${tag}/</loc>
-                <lastmod>${lastmod}</lastmod>
-                <changefreq>weekly</changefreq>
-                <priority>0.5</priority>
-            </url>`).join(' ')}
-        </urlset>
-    `;
-}
 
 const renderHeader = async (): Promise<string> => {
     return `
@@ -54,9 +19,10 @@ const renderHeader = async (): Promise<string> => {
           </section>
           <section>
             <nav class="primary-nav">
-                <ul role="list"><li role="listitem">
+                <ul role="list">
                     <li role="listitem"><a href="/about-me/" class="">About me</a></li>
                     <li role="listitem"><a href="/tags/" class="">Tags</a></li>
+                    <li role="listitem"><a href="/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" class="rss-icon"></a></li>
                     <li role="listitem"><a href="https://sr.ht/~melchizedek6809/" target="_blank" rel="noopener noreferrer" title="sourcehut" class="sourcehut"></a></li>
                     <li role="listitem"><a href="https://github.com/Melchizedek6809" target="_blank" rel="noopener noreferrer" title="GitHub" class="github"></a></li>
                     <li role="listitem"><a href="https://www.twitch.tv/melchizedek6809" target="_blank" rel="noopener noreferrer" title="Twitch" class="twitch"></a></li>
@@ -252,22 +218,37 @@ const renderPage = async (pageName: string): Promise<RenderedPage> => {
 }
 
 export const render = async (url: string): Promise<RenderedPage> => {
+    // Handle root/index routes
     if ((url === '/') || (url === "") || (url === "/index") || (url === "/index.html")) {
         return await renderIndex();
     }
 
+    // Handle sitemap.xml
     if (url === "/sitemap.xml") {
         return {
             head: '',
             body: await renderSitemap(),
             status: 200,
             contentType: 'text/xml'
-        }
+        };
     }
 
+    // Handle RSS feed
+    if (url === "/rss.xml") {
+        const entries = await Entry.loadAll();
+        return {
+            head: '',
+            body: await generateRSS(entries),
+            status: 200,
+            contentType: 'application/rss+xml'
+        };
+    }
+
+    // Parse URL and handle other routes
     const split = url.split("/");
     const pageName = split[1] || split[0] || "";
 
+    // Handle tag routes
     if (pageName === "tags") {
         const tag = split[2];
         if (tag) {
@@ -276,5 +257,6 @@ export const render = async (url: string): Promise<RenderedPage> => {
         return await renderTags();
     }
 
+    // Default: render single page
     return renderPage(pageName);
 }

@@ -90,14 +90,19 @@ body {
 
 nav a.twitch::before,
 nav a.sourcehut::before,
-nav a.github::before {
-  content:'';
-  width:1.4em;
-  height:1.4em;
-  position: relative;
-  background: url('./branding/github-mark-white.svg') no-repeat;
-  background-size: contain;
+nav a.github::before,
+nav a.rss-icon::before {
+  content: "";
   display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+nav a.github::before {
+  background-image: url('./branding/github-mark-white.svg');
 }
 
 nav a.sourcehut::before {
@@ -108,17 +113,25 @@ nav a.twitch::before {
   background-image: url('./branding/twitch-white.svg');
 }
 
+nav a.rss-icon::before {
+  background-image: url('./branding/rss-white.svg');
+}
+
 @media (prefers-color-scheme: light) {
   nav a.github::before {
     background-image: url('./branding/github-mark.svg');
   }
 
   nav a.sourcehut::before {
-    background-image: url('./branding/sr.ht.svg?v=2');
+    background-image: url('./branding/srht-light.svg');
   }
 
   nav a.twitch::before {
     background-image: url('./branding/twitch.svg');
+  }
+
+  nav a.rss-icon::before {
+    background-image: url('./branding/rss.svg');
   }
 }
 

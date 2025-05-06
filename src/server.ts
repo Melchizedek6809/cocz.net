@@ -7,6 +7,52 @@ import { render } from './pages';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Render a template with the given head and body content
+ */
+const renderTemplate = async (
+  vite: any, 
+  url: string, 
+  head: string, 
+  body: string
+): Promise<string> => {
+  const rawTemplate = await fs.readFile(resolve(__dirname, 'template.html'), 'utf-8');
+  const template = await vite.transformIndexHtml(url, rawTemplate);
+  
+  return template
+    .replace('<!-- HEAD_CONTENT_PLACEHOLDER -->', head)
+    .replace('<!-- BODY_CONTENT_PLACEHOLDER -->', body);
+};
+
+/**
+ * Handle an HTTP request and return the response
+ */
+const handleRequest = async (
+  vite: any,
+  req: express.Request, 
+  res: express.Response
+): Promise<void> => {
+  const url = req.originalUrl;
+
+  try {
+    // Render the page
+    const { head, body, status, contentType = 'text/html' } = await render(url);
+
+    // For HTML content, apply the template
+    let content = body;
+    if (contentType === 'text/html') {
+      content = await renderTemplate(vite, url, head, body);
+    }
+
+    // Send the response
+    res.status(status).set({ 'Content-Type': contentType }).end(content);
+  } catch (e) {
+    vite.ssrFixStacktrace(e as Error);
+    console.error(e);
+    res.status(500).end((e as Error).stack);
+  }
+};
+
 const createServer = async () => {
   const app = express();
 
@@ -28,41 +74,14 @@ const createServer = async () => {
   // Serve static files from the public directory
   app.use(express.static(resolve(__dirname, '../public')));
 
-  const renderTemplate = async (url: string, head: string, body: string) => {
-    const rawTemplate = await fs.readFile(resolve(__dirname, 'template.html'), 'utf-8');
-
-    const template = await vite.transformIndexHtml(
-      url,
-      rawTemplate
-    );
-
-    return template
-      .replace('<!-- HEAD_CONTENT_PLACEHOLDER -->', head)
-      .replace('<!-- BODY_CONTENT_PLACEHOLDER -->', body);
-  }
-
+  // Handle all requests
   app.use(/(.*)/, async (req, res) => {
-    const url = req.originalUrl;
-
-    try {
-      let { head, body, status, contentType } = await render(url);
-
-      contentType = contentType || 'text/html';
-      if (contentType === 'text/html') {
-        body = await renderTemplate(url, head, body);
-      }
-
-      // Send the rendered HTML back
-      res.status(status).set({ 'Content-Type': contentType }).end(body);
-    } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      console.error(e);
-      res.status(500).end((e as Error).stack);
-    }
+    await handleRequest(vite, req, res);
   });
 
+  // Start the server
   app.listen(3000, () => {
-    console.log('Server running at http://localhost:3000')
+    console.log('Server running at http://localhost:3000');
   });
 };
 

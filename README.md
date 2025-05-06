@@ -1,100 +1,73 @@
-# CoCZ.net 🌟
+# Cocz.net - Custom TypeScript SSG
 
-Source code for my blog over at [cocz.net](https://cocz.net/)
+A minimalist static site generator built with TypeScript, featuring RSS feed support, sitemaps, and JSON-LD structured data.
 
-Now it also contains a custom Static Site Generator (SSG) and built with TypeScript, Express, and Vite! (｀・ω・´)
+## Features
 
-## Why another SSG
+- Markdown post rendering
+- RSS feed generation
+- XML sitemap generation
+- JSON-LD structured data
+- Tag-based organization
+- Development server with hot reloading
+- Customizable templates
 
-I tried to use Zola for blogging but got very frustrated trying to add JSON-LD using the template system, I'm no fan of templating languages at all (in my opinion they are just atrocious untested programming languages, I'd rather use something sensible).
+## Project Structure
 
-So after giving up on that I looked around for some other SSGs but had to give up on most of them because they either bloated up the output, had no good way to theme/extend things with a proper language.
-
-Now here we are, one afternoon spent with Cursor and I've got everything I need, and even done in a way that I can extend it further down the line.
-
-## Features ✨
-
-- 🚀 Fast and modern development experience with Vite
-- 📝 Markdown support with markdown-it
-- 💅 Syntax highlighting with highlight.js
-- 🔧 TypeScript for type safety
-- 🎨 Custom styling and theming
-- 📱 Responsive design
-
-## Prerequisites 🛠️
-
-- Node.js (Latest LTS version recommended)
-- npm (comes with Node.js)
-
-## Installation 🏗️
-
-1. Clone the repository:
-```bash
-git clone https://github.com/Melchizedek6809/cocz.net.git
-cd cocz.net
+```
+.
+├── content/          # Markdown blog posts
+├── public/           # Static assets
+├── src/
+│   ├── build.ts      # Build process for static site generation
+│   ├── entry.ts      # Entry class for managing blog posts
+│   ├── fe/           # Frontend assets (CSS, JS)
+│   ├── pages.ts      # Page renderers
+│   ├── rss.ts        # RSS feed generator
+│   ├── server.ts     # Development server
+│   ├── sitemap.ts    # Sitemap generator
+│   ├── template.html # HTML template
+│   └── utils.ts      # Utility functions
+└── dist/             # Generated site (after build)
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+## Usage
 
-## Development 🚀
+### Development
 
-To start the development server:
+Start the development server:
+
 ```bash
 npm run dev
 ```
 
-## Building for Production 🏭
+This will start a local server at http://localhost:3000 with hot reloading.
 
-To build the project:
+### Build
+
+Build the static site:
+
 ```bash
 npm run build
 ```
 
-To preview the production build:
-```bash
-npm run preview
+This will generate the static site in the `dist/` directory.
+
+## Content Format
+
+Blog posts are Markdown files in the `content/` directory with YAML frontmatter:
+
+```md
+---
+title: "Post Title"
+date: "2025-05-05"
+description: "Post description"
+tags: ["tag1", "tag2"]
+---
+
+Post content goes here...
 ```
 
-## Type Checking ✅
+## License
 
-Run type checking for frontend:
-```bash
-npm run typecheck:fe
-```
-
-Run type checking for backend:
-```bash
-npm run typecheck:be
-```
-
-Run all type checks:
-```bash
-npm test
-```
-
-## Project Structure 📁
-
-```
-cocz.net/
-├── src/           # Source code
-├── content/       # Content files (markdown, etc.)
-├── public/        # Static assets
-├── dist/          # Build output
-└── vite.config.ts # Vite configuration
-```
-
-## Technologies Used 🛠️
-
-- TypeScript
-- Express
-- Vite
-- markdown-it
-- highlight.js
-- YAML
-
-## License 📄
-
-MIT License
+MIT

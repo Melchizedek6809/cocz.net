@@ -2,10 +2,40 @@ import { exec } from "child_process";
 import { Entry } from "./entry";
 import fs from "fs/promises";
 import path, { dirname } from "path";
-import { render, renderSitemap } from "./pages";
+import { render } from "./pages";
 import { fileURLToPath } from "url";
+import { renderSitemap } from "./sitemap";
+import { generateRSS } from "./rss";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Run a command in a shell and return the result
+ */
+const runCommand = async (command: string): Promise<{stdout: string, stderr: string}> => {
+    return new Promise((resolve, reject) => {
+        const process = exec(command, (error, stdout, stderr) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve({stdout, stderr});
+        });
+    });
+};
+
+/**
+ * Render a page and write it to a file
+ */
+const renderAndWritePage = async (
+    outputPath: string, 
+    url: string, 
+    templateRender: (head: string, body: string) => string
+): Promise<void> => {
+    const rendered = await render(url);
+    await fs.mkdir(path.dirname(outputPath), { recursive: true });
+    await fs.writeFile(outputPath, templateRender(rendered.head, rendered.body));
+};
 
 export const buildAll = async () => {
     // First change to the root directory containing the package.json
@@ -20,15 +50,7 @@ export const buildAll = async () => {
     await fs.cp("public", "dist", { recursive: true });
 
     // Now run npm run build to bundle everything up
-    const build = await new Promise<{stdout: string, stderr: string}>((resolve, reject) => {
-        const process = exec("vite build", (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
-                return;
-            }
-            resolve({stdout, stderr});
-        });
-    });
+    const build = await runCommand("vite build");
     console.log("Build output:", build.stdout);
 
     const template = await fs.readFile("dist/src/template.html", "utf-8");
@@ -38,39 +60,38 @@ export const buildAll = async () => {
         return template
             .replace('<!-- HEAD_CONTENT_PLACEHOLDER -->', head)
             .replace('<!-- BODY_CONTENT_PLACEHOLDER -->', body);
-    }
+    };
 
     // Now build all the entries
     const entries = await Entry.loadAll();
     await Promise.all(Array.from(entries.values()).map(async (entry) => {
         const filename = path.join("dist", entry.url, "index.html");
-        const rendered = await render(entry.url);
-        await fs.mkdir(path.dirname(filename), { recursive: true });
-        await fs.writeFile(filename, templateRender(rendered.head, rendered.body));
+        await renderAndWritePage(filename, entry.url, templateRender);
     }));
 
     // Now build the index page
     const indexFilename = path.join("dist", "index.html");
-    const renderedIndex = await render("/");
-    await fs.writeFile(indexFilename, templateRender(renderedIndex.head, renderedIndex.body));
+    await renderAndWritePage(indexFilename, "/", templateRender);
 
     // Now build the tags page
     const tagsFilename = path.join("dist", "tags", "index.html");
-    const renderedTags = await render("/tags");
-    await fs.mkdir(path.dirname(tagsFilename), { recursive: true });
-    await fs.writeFile(tagsFilename, templateRender(renderedTags.head, renderedTags.body));
+    await renderAndWritePage(tagsFilename, "/tags", templateRender);
 
     // Now build the tag pages
     const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
     for (const tag of tags) {
         const tagFilename = path.join("dist", "tags", tag, "index.html");
-        const rendered = await render(`/tags/${tag}`);
-        await fs.mkdir(path.dirname(tagFilename), { recursive: true });
-        await fs.writeFile(tagFilename, templateRender(rendered.head, rendered.body));
+        await renderAndWritePage(tagFilename, `/tags/${tag}`, templateRender);
     }
+
+    // Generate the RSS feed
+    const rssContent = await generateRSS(entries);
+    await fs.writeFile("dist/rss.xml", rssContent);
+    console.log("RSS feed generated at dist/rss.xml");
 
     // Now build the sitemap
     await fs.writeFile("dist/sitemap.xml", await renderSitemap());
+    console.log("Sitemap generated at dist/sitemap.xml");
 };
 
 buildAll();
