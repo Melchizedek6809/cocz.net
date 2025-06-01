@@ -29,6 +29,13 @@ const renderHeader = async (): Promise<string> => {
                 </ul>
             </nav>
         </section>
+        <div class="primary-header-spacer">
+            <div class="primary-header-spacer-a"></div>
+            <div class="primary-header-spacer-b"></div>
+            <div class="primary-header-spacer-c"></div>
+            <div class="primary-header-spacer-d"></div>
+            <div class="primary-header-spacer-e"></div>
+        </div>
         </header>
     `;
 }

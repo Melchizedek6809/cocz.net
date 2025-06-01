@@ -310,16 +310,50 @@ footer.primary-footer {
   position: relative;
 }
 
-.primary-header:after {
+.primary-header-spacer {
   content: '';
   position: absolute;
   bottom: -1px;
   left: 0;
-  width: 100px;
+  width: 100%;
   height: 3px;
-  background: var(--fg-secondary);
   border-radius: 2px;
 }
+
+.primary-header-spacer-b,
+.primary-header-spacer-c,
+.primary-header-spacer-d,
+.primary-header-spacer-e,
+.primary-header-spacer-a {
+  background: var(--accent-1);
+  height: 100%;
+  width: 20%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.primary-header-spacer-b {
+  background: var(--accent-2);
+  left: 20%;
+}
+
+.primary-header-spacer-c {
+  background: var(--accent-3);
+  left: 40%;
+}
+
+.primary-header-spacer-d {
+  background: var(--accent-4);
+  left: 60%;
+}
+
+.primary-header-spacer-e {
+  background: var(--accent-5);
+  height: 100%;
+  left: 80%;
+}
+
 
 .primary-footer {
   border-top: 1px solid var(--fg-border);
