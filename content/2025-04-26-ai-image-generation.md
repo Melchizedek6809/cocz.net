@@ -3,9 +3,12 @@ title: "My AI Image Generation Journey: ChatGPT vs Gemini"
 date: "2025-04-26"
 description: "Comparing ChatGPT, Gemini, and post-processing workflows for creating web-ready images with practical prompting tips and real results"
 tags: ["vibe-coding", "ai", "image-generation", "dall-e", "gemini", "gimp"]
+image: /img/ai_imagegen.jpg
 ---
 
 Alright, so in the last couple of days I've been quite busy polishing [MandoMaster](https://mandomaster.com/) to get it to a state that I'm content with to show widely. Have learned quite a bit and I do enjoy the end result so now it's just about cleaning up what we already have so that I can put my main focus on [other projects](https://codewaifu.net/) and become just a user trying to improve their Chinese.
+
+[![Example image generated for one of the mandomstar lessons](/img/ai_imagegen.jpg)](/img/ai_imagegen.jpg)
 
 During these days I frequently needed header/hero images for various pages. For example, each lesson now contains a hero image, mainly so things don't look as boring and so that in the list view each item is at least somewhat visually distinct.
 
