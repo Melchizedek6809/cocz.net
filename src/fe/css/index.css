@@ -504,14 +504,14 @@ h2 {
 }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 300;
   margin-bottom: 0.125rem;
   color: var(--fg-color);
 }
 
 h4 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 0.125rem;
   color: var(--fg-color);
