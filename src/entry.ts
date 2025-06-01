@@ -17,6 +17,7 @@ export class Entry {
     readonly description = "";
     readonly tags: string[] = [];
     readonly content:string = "";
+    readonly image: string | undefined;
     readonly hidden: boolean = false;
 
     static async loadAll(): Promise<Map<string, Entry>> {
@@ -69,6 +70,7 @@ export class Entry {
         this.description = fm.description || "";
         this.tags = fm.tags || [];
         this.hidden = fm.hidden || false;
+        this.image = fm.image || undefined;
 
         const parsed = md.render(raw);
         this.content = parsed;
@@ -162,12 +164,12 @@ export class Entry {
                     </ul>
                 </div>
             </header>
-            <p>${this.getSummary()}</p>
+            ${this.image ? `<a class="teaser-image-link" href="/${this.url}/"><img class="teaser-image" src="${this.image}" alt="${this.title}" /></a>` : `<p>${this.getSummary()}</p>`}
         </article>`;
     }
 
     renderFull() {
-        return `<article>
+        return `<article class="full-article">
             <header class="page-header">
                 <h1 class="post-title">${this.title}</h1>
                 <div class="post-side">

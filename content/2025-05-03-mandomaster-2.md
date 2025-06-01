@@ -3,6 +3,7 @@ title: "MandoMaster 2: Evolution of a Chinese Learning Tool"
 date: "2025-05-03"
 description: "A journey through the latest developments of MandoMaster, exploring improved lessons, AI-powered content creation, and the integration of beautiful Midjourney-generated imagery in this Chinese learning application."
 tags: ["tech", "projects", "node", "llm"]
+image: /img/mandomaster/mm2_sc0.webp
 ---
 
 <div class="intro">

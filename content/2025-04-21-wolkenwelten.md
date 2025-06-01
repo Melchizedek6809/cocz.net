@@ -2,6 +2,7 @@
 title: "WolkenWelten: From C++ to TypeScript in Game Development"
 date: "2025-04-21"
 description: "Discover how I built WolkenWelten, a moddable voxel sandbox game, across multiple languages and the surprising advantages of TypeScript and web technologies for game dev."
+image: /img/wolkenwelten/wwts.jpg
 tags:
   - gamedev
   - voxel

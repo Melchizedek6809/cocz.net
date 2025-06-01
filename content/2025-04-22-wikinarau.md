@@ -2,6 +2,7 @@
 title: "WikiNarau: Interactive Learning Meets Wiki"
 date: "2025-04-22"
 description: "Exploring the development of WikiNarau, a platform combining wiki collaboration with interactive learning materials"
+image: /img/wikinarau.png
 tags: 
   - "projects"
   - "tech"

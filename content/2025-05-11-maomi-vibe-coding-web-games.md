@@ -3,6 +3,7 @@ title: "MaoMi - Building a Vibe Coding Platform for Web Games"
 date: "2025-05-11"
 description: "Exploring my journey creating MaoMi, an LLM-powered platform that aims to make web game development accessible to non-programmers through AI assistance, asset generation, and intuitive interfaces."
 tags: ["tech", "projects", "ai-coding", "gamedev", "web-games"]
+image: /img/maomi/maomi1.webp
 ---
 
 [![Screenshot of the current MaoMi LLM-Assitant](/img/maomi/maomi1.webp)](/img/maomi/maomi1.webp)

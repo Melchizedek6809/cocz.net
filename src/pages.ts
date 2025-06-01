@@ -169,7 +169,7 @@ const renderIndex = async (): Promise<RenderedPage> => {
       `;
 
     const main = `
-        <main>
+        <main class="index-main">
           ${entriesHTML}
         </main>
     `;

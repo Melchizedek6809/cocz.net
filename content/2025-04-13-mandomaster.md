@@ -3,6 +3,7 @@ title: "MandoMaster: AI-Powered Chinese Learning with Spaced Repetition"
 date: "2025-04-13"
 description: "How I built MandoMaster, a free app for learning Chinese characters that uses spaced repetition, audio pronunciation, and AI-generated content."
 tags: ["tech", "projects", "node", "llm"]
+image: /img/mandomaster/mandomaster_screenshot_0.png
 ---
 
 ![Screenshot of the MandoMaster.com startpage](/img/mandomaster/mandomaster_screenshot_0.png)

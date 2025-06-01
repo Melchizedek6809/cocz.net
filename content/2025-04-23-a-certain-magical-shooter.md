@@ -3,6 +3,7 @@ title: "A certain magical shooter - My Touhou-Inspired Game Jam Project"
 date: "2025-04-23"
 description: "A look at my Touhou-inspired shooter game created for a game jam, featuring custom mechanics, pixel art, and lessons learned from the development process."
 tags: ["projects", "tech", "gamedev", "javascript", "open-source"]
+image: /img/a-certain-magical-shooter/screenshot.png
 ---
 
 Hey there,

@@ -3,6 +3,7 @@ title: "WolkenWelten Update - Multiplayer Now Working in TypeScript Version!"
 date: "2025-06-01"
 description: "Finally got around to fixing the multiplayer and completed some very successful tests today"
 tags: ["tech", "projects", "ai-coding", "gamedev", "web-games"]
+image: /img/wolkenwelten/wwts3.jpg
 ---
 
 [![Screenshot of me running around](/img/wolkenwelten/wwts3.jpg)](/img/wolkenwelten/wwts3.jpg)
