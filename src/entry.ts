@@ -174,7 +174,9 @@ export class Entry {
                 <h1 class="post-title">${this.title}</h1>
                 <div class="post-side">
                     ${this.date ? `<time datetime="${this.date.toISOString()}">${this.date.toISOString().split('T')[0]}</time>` : ""}
-                    <ul role="list">${this.tags.map(tag => `<li role="listitem"><a href="/tags/${tag}/">#${tag}</a></li>`).join(' ')}</ul>
+                    <ul role="list">
+                        ${this.tags.map(tag => `<li role="listitem"><a rel="tag" class="tag" href="/tags/${tag}/">${tag}</a></li>`).join(' ')}
+                    </ul>
                 </div>
             </header>
             ${this.content}
