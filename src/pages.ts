@@ -14,7 +14,7 @@ const renderHeader = async (): Promise<string> => {
     return `
         <header class="primary-header">
           <section>
-            <h3><a href="https://cocz.net/">Ben's blog</a></h3>
+            <h3><a href="/">Ben's blog</a></h3>
             <h4 class="cyberspace">rambling through <span class="cs1">c</span><span class="cs2">y</span><span class="cs3">b</span><span class="cs4">e</span><span class="cs5">r</span><span class="cs1">s</span><span class="cs2">p</span><span class="cs3">a</span><span class="cs4">c</span><span class="cs5">e</span></h4>
           </section>
           <section>
@@ -47,11 +47,11 @@ const renderFooter = async (): Promise<string> => {
             <li role="listitem">©
               <time datetime="2025">2025</time> Benjamin Vincent Schulenburg
             </li>
-          
+
             <li role="listitem">
               Content <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.txt" target="_blank" rel="noopener noreferrer">CC-BY-NC-ND-4.0</a>
             </li>
-          
+
             <li role="listitem">
               <a href="https://github.com/melchizedek6809/cocz.net/" target="_blank" rel="noopener noreferrer">Source Code</a>
               <a href="https://spdx.org/licenses/MIT.html" target="_blank" rel="noopener noreferrer">MIT</a>
@@ -113,8 +113,6 @@ const renderTag = async (tag: string): Promise<RenderedPage> => {
             ${await renderHeader()}
             <main>
                 <h1>All posts tagged with '${tag}'</h1>
-                <br>
-                <hr>
                 <br>
                 ${entriesHTML}
             </main>
