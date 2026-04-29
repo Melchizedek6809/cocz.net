@@ -15,7 +15,6 @@ A minimalist static site generator built with Guile Scheme, featuring RSS feed s
 
 - Guile 3
 - guile-commonmark
-- sha256sum
 
 ## Project Structure
 
@@ -40,7 +39,7 @@ Build the static site:
 ./build.scm
 ```
 
-This will generate the static site in the `dist/` directory, including a content-hashed CSS file in `dist/assets/`.
+This will generate the static site in the `dist/` directory. CSS is embedded directly into each generated HTML page.
 
 ## Content Format
 
