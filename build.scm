@@ -3,6 +3,8 @@
 
 (use-modules (commonmark)
              (ice-9 ftw)
+             (ice-9 popen)
+             (ice-9 rdelim)
              (ice-9 regex)
              (ice-9 threads)
              (ice-9 textual-ports)
@@ -14,6 +16,8 @@
 
 (define site-url "https://cocz.net")
 (define css-source-path "src/fe/css/index.css")
+(define branding-source-path "src/fe/css/branding")
+(define assets-output-path "dist/assets")
 (define slug-regexp (make-regexp "^[0-9-]*(.*)$"))
 
 (define (read-file path)
@@ -102,21 +106,6 @@
              (else (string char))))
          (string->list value)))
    "\""))
-
-(define (hex-byte value)
-  (let ((hex (string-upcase (number->string value 16))))
-    (if (= (string-length hex) 1)
-        (string-append "0" hex)
-        hex)))
-
-(define (url-encode value)
-  (string-concatenate
-   (map (lambda (char)
-          (if (or (char-set-contains? char-set:letter+digit char)
-                  (memv char '(#\- #\_ #\. #\~)))
-              (string char)
-              (string-append "%" (hex-byte (char->integer char)))))
-        (string->list value))))
 
 (define (date-iso date)
   (and date (string-append date "T00:00:00.000Z")))
@@ -659,27 +648,21 @@
         "\n    ") "
 </urlset>")))
 
-(define (inline-css-asset file css)
-  (string-replace-all css
-                      (string-append "url('./branding/" file "')")
-                      (string-append "url(\"data:image/svg+xml,"
-                                     (url-encode (read-file (string-append "src/fe/css/branding/" file)))
-                                     "\")")))
+(define (sha256-prefix path length)
+  (let* ((port (open-pipe* OPEN_READ "sha256sum" path))
+         (line (read-line port)))
+    (close-pipe port)
+    (substring line 0 length)))
 
-(define (stylesheet-html)
-  (let ((css (fold inline-css-asset
-                   (read-file css-source-path)
-                   '("github-mark-white.svg"
-                     "github-mark.svg"
-                     "rss-white.svg"
-                     "rss.svg"
-                     "sr.ht-white.svg"
-                     "sr.ht.svg"
-                     "twitch-white.svg"
-                     "twitch.svg"))))
-    (string-append "<style>\n"
-                   (string-replace-all css "</style" "<\\/style")
-                   "\n</style>")))
+(define (build-assets)
+  (let* ((css (read-file css-source-path))
+         (css-hash (sha256-prefix css-source-path 12))
+         (css-file (string-append "index." css-hash ".css"))
+         (css-output (string-append assets-output-path "/" css-file)))
+    (mkdir-p assets-output-path)
+    (write-file css-output css)
+    (copy-directory branding-source-path (string-append assets-output-path "/branding"))
+    (string-append "/assets/" css-file)))
 
 (define (write-rendered-page template output-path render-page)
   (call-with-values
@@ -696,9 +679,10 @@
   (remove-tree "dist")
   (mkdir-p "dist")
   (let* ((public-copy-thread (start-public-copy))
+         (stylesheet-path (build-assets))
          (template (string-replace-all (read-file "src/template.html")
-                                       "<!-- STYLE_CONTENT_PLACEHOLDER -->"
-                                       (stylesheet-html)))
+                                       "<!-- STYLESHEET_PATH_PLACEHOLDER -->"
+                                       stylesheet-path))
          (entries (load-entries)))
     (n-par-map
      4
