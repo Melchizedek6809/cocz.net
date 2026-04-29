@@ -86,7 +86,7 @@ const renderTags = async (): Promise<RenderedPage> => {
                 <p>Here is a list of all the tags I've used in my posts so far.</p>
                 <nav aria-labelledby="list-of-tags" class="tag-list-nav">
                     <ul role="list">
-                        ${uniqueTags.map(tag => `<li role="listitem"><a href="/tags/${tag}/">${tag}</a><sup class="tag-sup">${tags.get(tag)}</sup></li>`).join(' ')}
+                        ${uniqueTags.map(tag => `<li role="listitem"><span class="tag">${tag}</span><sup class="tag-sup">${tags.get(tag)}</sup></li>`).join(' ')}
                     </ul>
                 </nav>
             </main>

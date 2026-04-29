@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/server.ts",
-    "build": "tsx src/build.ts",
+    "build": "node --import tsx src/build.ts",
     "build:vite": "vite build",
     "preview": "vite preview",
     "typecheck:fe": "tsc --noEmit",
-    "typecheck:be": "tsc --noEmit src/server.ts",
+    "typecheck:be": "tsc --noEmit",
     "test": "npm run typecheck:fe && npm run typecheck:be"
   },
   "dependencies": {

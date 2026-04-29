@@ -2,10 +2,12 @@
 node_modules/
 .pnp
 .pnp.js
+.codex
 
 # Build output
 dist/
 build/
+.cocz-build-cache.json
 
 # Environment files
 .env

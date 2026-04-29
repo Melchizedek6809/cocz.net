@@ -8,9 +8,6 @@ export const renderSitemap = async (): Promise<string> => {
     const allEntries = await Entry.loadAll();
     const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
 
-    // Extract all unique tags from entries
-    const tags = [...new Set(entries.map(entry => entry.tags).flat())];
-
     // Get the last modification date from the entries
     const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop() || new Date().toISOString();
 
@@ -41,12 +38,5 @@ export const renderSitemap = async (): Promise<string> => {
         <priority>0.5</priority>
     </url>
 
-    <!-- Individual tag pages -->
-    ${tags.map(tag => `<url>
-        <loc>https://cocz.net/tags/${tag}/</loc>
-        <lastmod>${lastmod}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
-    </url>`).join('\n    ')}
 </urlset>`;
 }
