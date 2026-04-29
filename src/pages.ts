@@ -21,7 +21,6 @@ const renderHeader = async (): Promise<string> => {
             <nav class="primary-nav">
                 <ul role="list">
                     <li role="listitem"><a href="/about-me/" class="">About me</a></li>
-                    <li role="listitem"><a href="/tags/" class="">Tags</a></li>
                     <li role="listitem"><a href="/rss.xml" target="_blank" rel="noopener noreferrer" title="RSS Feed" class="rss-icon"></a></li>
                     <li role="listitem"><a href="https://sr.ht/~melchizedek6809/" target="_blank" rel="noopener noreferrer" title="sourcehut" class="sourcehut"></a></li>
                     <li role="listitem"><a href="https://github.com/Melchizedek6809" target="_blank" rel="noopener noreferrer" title="GitHub" class="github"></a></li>
@@ -61,67 +60,6 @@ const renderFooter = async (): Promise<string> => {
     `;
 }
 
-const renderTags = async (): Promise<RenderedPage> => {
-    const tags = new Map<string, number>();
-    const allEntries = await Entry.loadAll();
-    for (const entry of allEntries.values()) {
-        for (const tag of entry.tags) {
-            tags.set(tag, (tags.get(tag) || 0) + 1);
-        }
-    }
-    const uniqueTags = [...new Set(tags.keys())].sort();
-
-    const head = `
-        <title>Tags</title>
-        <meta name="description" content="A list of all the tags I've used in my posts so far.">
-        <meta name="robots" content="noindex">
-    `;
-
-    return {
-        head,
-        body: `
-            ${await renderHeader()}
-            <main>
-                <h1>Tags</h1>
-                <p>Here is a list of all the tags I've used in my posts so far.</p>
-                <nav aria-labelledby="list-of-tags" class="tag-list-nav">
-                    <ul role="list">
-                        ${uniqueTags.map(tag => `<li role="listitem"><span class="tag">${tag}</span><sup class="tag-sup">${tags.get(tag)}</sup></li>`).join(' ')}
-                    </ul>
-                </nav>
-            </main>
-            ${await renderFooter()}
-        `,
-        status: 200
-    }
-}
-
-const renderTag = async (tag: string): Promise<RenderedPage> => {
-    const allEntries = await Entry.loadAll();
-    const entries = Array.from(allEntries.values()).filter(entry => entry.tags.includes(tag));
-    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
-
-    const head = `
-        <title>Tag: ${tag}</title>
-        <meta name="description" content="A list of all the posts I've written with the tag '${tag}'.">
-        <meta name="robots" content="noindex">
-    `;
-
-    return {
-        head,
-        body: `
-            ${await renderHeader()}
-            <main>
-                <h1>All posts tagged with '${tag}'</h1>
-                <br>
-                ${entriesHTML}
-            </main>
-            ${await renderFooter()}
-        `,
-        status: 200
-    }
-}
-
 const renderOpenGraph = async (): Promise<string> => {
     return `
         <meta property="og:title" content="Ben's Blog">
@@ -135,17 +73,31 @@ const renderOpenGraph = async (): Promise<string> => {
 }
 
 const renderJsonLd = async (): Promise<string> => {
-    const jsonLd = {
+    const websiteJsonLd = {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "url": "https://cocz.net/",
         "name": "Ben's Blog",
         "description": "ramblings from cyberspace"
     };
+    const personJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ben",
+        "url": "https://cocz.net/",
+        "sameAs": [
+            "https://sr.ht/~melchizedek6809/",
+            "https://github.com/Melchizedek6809",
+            "https://www.twitch.tv/melchizedek6809"
+        ]
+    };
 
     return `
         <script type="application/ld+json">
-            ${JSON.stringify(jsonLd)}
+            ${JSON.stringify(websiteJsonLd)}
+        </script>
+        <script type="application/ld+json">
+            ${JSON.stringify(personJsonLd)}
         </script>
     `;
 }
@@ -154,12 +106,12 @@ const renderIndex = async (): Promise<RenderedPage> => {
     const allEntries = await Entry.loadAll();
     const entries = Array.from(allEntries.values()).sort((a, b) => b.date!.getTime() - a.date!.getTime()).filter(entry => !entry.hidden);
     const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop();
-    const entriesHTML = entries.map(entry => entry.renderTeaser()).join(' ');
+    const entriesHTML = entries.map((entry, index) => entry.renderTeaser(index)).join(' ');
 
     const head = `
         <title>Ben's Blog</title>
         <meta name="description" content="ramblings from cyberspace">
-        <meta name="robots" content="index, follow">
+        <meta name="robots" content="max-image-preview:large">
         <meta name="last-modified" content="${lastmod}">
         <link rel="canonical" href="https://cocz.net/">
         ${await renderOpenGraph()}
@@ -201,8 +153,6 @@ const renderPage = async (pageName: string): Promise<RenderedPage> => {
 
     const head = `
         <title>${entry.title}</title>
-        <meta name="description" content="${entry.description}">
-        <meta name="tags" content="${entry.tags.join(', ')}">
         <meta name="date" content="${entry.date?.toISOString()}">
         ${entry.renderMetadata()}
       `;
@@ -252,15 +202,6 @@ export const render = async (url: string): Promise<RenderedPage> => {
     // Parse URL and handle other routes
     const split = url.split("/");
     const pageName = split[1] || split[0] || "";
-
-    // Handle tag routes
-    if (pageName === "tags") {
-        const tag = split[2];
-        if (tag) {
-            return await renderTag(tag);
-        }
-        return await renderTags();
-    }
 
     // Default: render single page
     return renderPage(pageName);

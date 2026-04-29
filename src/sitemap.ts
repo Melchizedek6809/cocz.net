@@ -1,12 +1,21 @@
 import { Entry } from "./entry";
 
+const escapeXml = (value: string): string => {
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+};
+
 /**
  * Generate an XML sitemap for the website
  */
 export const renderSitemap = async (): Promise<string> => {
-    // Get all non-hidden entries
+    // Get all indexable entries. about-me is hidden from the blog index but linked in nav.
     const allEntries = await Entry.loadAll();
-    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden);
+    const entries = Array.from(allEntries.values()).filter(entry => !entry.hidden || entry.url === "about-me");
 
     // Get the last modification date from the entries
     const lastmod = entries.map(entry => entry.date?.toISOString()).sort().pop() || new Date().toISOString();
@@ -18,25 +27,12 @@ export const renderSitemap = async (): Promise<string> => {
     <url>
         <loc>https://cocz.net/</loc>
         <lastmod>${lastmod}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
     </url>
 
     <!-- Blog entries -->
     ${entries.map(entry => `<url>
-        <loc>${entry.getUrl()}</loc>
+        <loc>${escapeXml(entry.getUrl())}</loc>
         <lastmod>${entry.date?.toISOString() || lastmod}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
     </url>`).join('\n    ')}
-
-    <!-- Tags page -->
-    <url>
-        <loc>https://cocz.net/tags/</loc>
-        <lastmod>${lastmod}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
 </urlset>`;
 }

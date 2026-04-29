@@ -31,7 +31,6 @@ interface BuildCache {
     template: string;
     entries: Record<string, CachedEntry>;
     publicFiles: Record<string, FileSignature>;
-    tags: string[];
 }
 
 const emptyCache = (): BuildCache => ({
@@ -41,7 +40,6 @@ const emptyCache = (): BuildCache => ({
     template: "",
     entries: {},
     publicFiles: {},
-    tags: [],
 });
 
 const readCache = async (): Promise<BuildCache> => {
@@ -144,10 +142,9 @@ const hasSameContentInputs = (cache: BuildCache, signatures: EntrySignatures): b
     });
 };
 
-const hasAggregateOutputs = async (tags: string[]): Promise<boolean> => {
+const hasAggregateOutputs = async (): Promise<boolean> => {
     const paths = [
         "dist/index.html",
-        "dist/tags/index.html",
         "dist/rss.xml",
         "dist/sitemap.xml",
     ];
@@ -253,7 +250,7 @@ export const buildAll = async () => {
     if (
         !shouldRebuildAllHtml &&
         sameContentInputs &&
-        await hasAggregateOutputs(previousCache.tags)
+        await hasAggregateOutputs()
     ) {
         console.log("Content inputs unchanged; skipping HTML/RSS/sitemap generation.");
         await writeCache({
@@ -310,15 +307,8 @@ export const buildAll = async () => {
     const indexFilename = path.join("dist", "index.html");
     await renderAndWritePage(indexFilename, "/", templateRender);
 
-    // Now build the tags page
-    const tagsFilename = path.join("dist", "tags", "index.html");
-    await renderAndWritePage(tagsFilename, "/tags", templateRender);
-
-    // Remove stale per-tag pages. The build only emits /tags/ now.
-    const tags = [...new Set(Array.from(entries.values()).map(entry => entry.tags).flat())];
-    for (const tag of previousCache.tags) {
-        await fs.rm(path.join("dist", "tags", tag), { recursive: true, force: true });
-    }
+    // Remove stale tag pages from older builds.
+    await fs.rm(path.join("dist", "tags"), { recursive: true, force: true });
 
     // Generate the RSS feed
     const rssContent = await generateRSS(entries);
@@ -336,7 +326,6 @@ export const buildAll = async () => {
         template,
         entries: nextEntries,
         publicFiles,
-        tags,
     });
 };
 

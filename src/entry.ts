@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import markdownIt from 'markdown-it';
 import markdownItHighlightJS from 'markdown-it-highlightjs';
 import { parse } from 'yaml';
+import { escapeHtml } from './utils';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const md = markdownIt({
@@ -33,6 +34,13 @@ export type EntrySignatures = Record<string, {
     mtimeMs: number;
     size: number;
 }>;
+
+const absoluteUrl = (url: string): string => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+    return `https://cocz.net${url.startsWith('/') ? url : `/${url}`}`;
+};
 
 export class Entry {
     readonly filename: string;
@@ -144,8 +152,8 @@ export class Entry {
         };
     }
 
-    getJsonLd() {
-        return {
+    getJsonLd(): Record<string, unknown> {
+        const jsonLd: Record<string, unknown> = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             "mainEntityOfPage": {
@@ -153,34 +161,38 @@ export class Entry {
                 "@id": this.getUrl()
             },
             "headline": this.title,
-            "image": this.getImageUrl(),
+            "description": this.description,
             "datePublished": this.date?.toISOString(),
             "dateModified": this.date?.toISOString(),
             "author": {
                 "@type": "Person",
                 "url": "https://cocz.net/",
                 "name": "Ben"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "Ben's Blog",
-                "url": "https://cocz.net"
-            },
-            "articleBody": this.content,
-            "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [{
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://cocz.net/"
-                }, {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": this.title,
-                    "item": this.getUrl()
-                }]
             }
+        };
+
+        if (this.image) {
+            jsonLd.image = absoluteUrl(this.image);
+        }
+
+        return jsonLd;
+    }
+
+    getBreadcrumbJsonLd() {
+        return {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://cocz.net/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": this.title,
+                "item": this.getUrl()
+            }]
         };
     }
 
@@ -189,19 +201,23 @@ export class Entry {
             <script type="application/ld+json">
                 ${JSON.stringify(this.getJsonLd())}
             </script>
+            <script type="application/ld+json">
+                ${JSON.stringify(this.getBreadcrumbJsonLd())}
+            </script>
         `;
     }
 
-    getImageUrl() {
-        return `https://url2og.cocz.net/?url=${encodeURIComponent(this.getUrl())}`;
+    getImageUrl(): string | undefined {
+        return this.image ? absoluteUrl(this.image) : undefined;
     }
 
     renderOpenGraph() {
+        const image = this.getImageUrl();
         return `
-            <meta property="og:title" content="${this.title}">
-            <meta property="og:description" content="${this.description}">
+            <meta property="og:title" content="${escapeHtml(this.title)}">
+            <meta property="og:description" content="${escapeHtml(this.description)}">
             <meta property="og:url" content="${this.getUrl()}">
-            <meta property="og:image" content="${this.getImageUrl()}">
+            ${image ? `<meta property="og:image" content="${image}">` : ""}
             <meta property="og:type" content="article">
             <meta property="og:site_name" content="Ben's Blog">
             <meta property="og:locale" content="en_US">
@@ -210,10 +226,9 @@ export class Entry {
 
     renderMetadata() {
         return `
-            <meta name="description" content="${this.description}">
-            <meta name="keywords" content="${this.tags.join(', ')}">
+            <meta name="description" content="${escapeHtml(this.description)}">
             <meta name="author" content="Ben">
-            <meta name="robots" content="index, follow">
+            <meta name="robots" content="max-image-preview:large">
             <meta name="last-modified" content="${this.date?.toISOString()}">
             <link rel="canonical" href="${this.getUrl()}">
             ${this.renderOpenGraph()}
@@ -221,18 +236,19 @@ export class Entry {
         `;
     }
 
-    renderTeaser() {
+    renderTeaser(index = 0) {
+        const imageAttrs = index >= 3 ? ' loading="lazy" decoding="async"' : ' decoding="async"';
         return `<article>
             <header class="article-header">
-            <h3 class="post-title"><a href="/${this.url}/">${this.title}</a></h3>
+            <h3 class="post-title"><a href="/${this.url}/">${escapeHtml(this.title)}</a></h3>
                 <div class="post-side">
                     <time datetime="${this.date?.toISOString()}">${this.date?.toISOString().split('T')[0]}</time>
                     <ul role="list">
-                        ${this.tags.map(tag => `<li role="listitem"><span class="tag">${tag}</span></li>`).join(' ')}
+                        ${this.tags.map(tag => `<li role="listitem"><span class="tag">${escapeHtml(tag)}</span></li>`).join(' ')}
                     </ul>
                 </div>
             </header>
-            ${this.image ? `<a class="teaser-image-link" href="/${this.url}/"><img class="teaser-image" src="${this.image}" alt="${this.title}" /></a>` : `<p>${this.getSummary()}</p>`}
+            ${this.image ? `<a class="teaser-image-link" href="/${this.url}/"><img class="teaser-image" src="${this.image}" alt="${escapeHtml(this.title)}"${imageAttrs} /></a>` : `<p>${this.getSummary()}</p>`}
         </article>`;
     }
 
