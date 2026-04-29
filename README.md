@@ -9,7 +9,6 @@ A minimalist static site generator built with TypeScript, featuring RSS feed sup
 - XML sitemap generation
 - JSON-LD structured data
 - Tag-based organization
-- Development server with hot reloading
 - Customizable templates
 
 ## Project Structure
@@ -21,10 +20,9 @@ A minimalist static site generator built with TypeScript, featuring RSS feed sup
 ├── src/
 │   ├── build.ts      # Build process for static site generation
 │   ├── entry.ts      # Entry class for managing blog posts
-│   ├── fe/           # Frontend assets (CSS, JS)
+│   ├── fe/           # Frontend assets
 │   ├── pages.ts      # Page renderers
 │   ├── rss.ts        # RSS feed generator
-│   ├── server.ts     # Development server
 │   ├── sitemap.ts    # Sitemap generator
 │   ├── template.html # HTML template
 │   └── utils.ts      # Utility functions
@@ -32,16 +30,6 @@ A minimalist static site generator built with TypeScript, featuring RSS feed sup
 ```
 
 ## Usage
-
-### Development
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-This will start a local server at http://localhost:3000 with hot reloading.
 
 ### Build
 
@@ -51,7 +39,7 @@ Build the static site:
 npm run build
 ```
 
-This will generate the static site in the `dist/` directory.
+This will generate the static site in the `dist/` directory, including a content-hashed CSS file in `dist/assets/`.
 
 ## Content Format
 

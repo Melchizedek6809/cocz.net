@@ -1,4 +1,3 @@
-import { exec } from "child_process";
 import crypto from "crypto";
 import { Entry, EntryData, EntrySignatures } from "./entry";
 import fs from "fs/promises";
@@ -10,7 +9,10 @@ import { generateRSS } from "./rss";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const cachePath = ".cocz-build-cache.json";
-const cacheVersion = 1;
+const cacheVersion = 2;
+const cssSourcePath = "src/fe/css/index.css";
+const brandingSourcePath = "src/fe/css/branding";
+const assetsOutputPath = "dist/assets";
 
 interface CachedEntry {
     mtimeMs: number;
@@ -26,7 +28,7 @@ interface FileSignature {
 
 interface BuildCache {
     version: number;
-    viteHash: string;
+    frontendHash: string;
     rendererHash: string;
     template: string;
     entries: Record<string, CachedEntry>;
@@ -35,7 +37,7 @@ interface BuildCache {
 
 const emptyCache = (): BuildCache => ({
     version: cacheVersion,
-    viteHash: "",
+    frontendHash: "",
     rendererHash: "",
     template: "",
     entries: {},
@@ -179,19 +181,41 @@ const syncPublicFiles = async (
     }));
 };
 
-/**
- * Run a command in a shell and return the result
- */
-const runCommand = async (command: string): Promise<{stdout: string, stderr: string}> => {
-    return new Promise((resolve, reject) => {
-        const process = exec(command, (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
-                return;
-            }
-            resolve({stdout, stderr});
-        });
-    });
+const copyDirectory = async (source: string, destination: string): Promise<void> => {
+    const entries = await fs.readdir(source, { withFileTypes: true });
+    await fs.mkdir(destination, { recursive: true });
+
+    await Promise.all(entries.map(async (entry) => {
+        const sourcePath = path.join(source, entry.name);
+        const destinationPath = path.join(destination, entry.name);
+        if (entry.isDirectory()) {
+            await copyDirectory(sourcePath, destinationPath);
+            return;
+        }
+        await fs.copyFile(sourcePath, destinationPath);
+    }));
+};
+
+const buildFrontendAssets = async (): Promise<{ frontendHash: string, stylesheetPath: string }> => {
+    const css = await fs.readFile(cssSourcePath);
+    const frontendHash = await hashFiles(["src/template.html", cssSourcePath, brandingSourcePath]);
+    const cssHash = crypto.createHash("sha256").update(css).digest("hex").slice(0, 12);
+    const cssFile = `index.${cssHash}.css`;
+    await fs.rm(assetsOutputPath, { recursive: true, force: true });
+    await fs.rm(path.join("dist", "src"), { recursive: true, force: true });
+    await fs.mkdir(assetsOutputPath, { recursive: true });
+    await fs.writeFile(path.join(assetsOutputPath, cssFile), css);
+    await copyDirectory(brandingSourcePath, path.join(assetsOutputPath, "branding"));
+
+    return {
+        frontendHash,
+        stylesheetPath: `/assets/${cssFile}`,
+    };
+};
+
+const loadTemplate = async (stylesheetPath: string): Promise<string> => {
+    return (await fs.readFile("src/template.html", "utf-8"))
+        .replace("<!-- STYLESHEET_PATH_PLACEHOLDER -->", stylesheetPath);
 };
 
 /**
@@ -215,7 +239,6 @@ export const buildAll = async () => {
     await fs.mkdir("dist", { recursive: true });
 
     const previousCache = await readCache();
-    const viteHash = await hashFiles(["src/template.html", "src/fe"]);
     const rendererHash = await hashFiles([
         "src/build.ts",
         "src/entry.ts",
@@ -226,24 +249,14 @@ export const buildAll = async () => {
     ]);
     const contentSignatures = await getContentSignatures();
     const publicFiles = await getPublicSignatures();
+    const { frontendHash, stylesheetPath } = await buildFrontendAssets();
+    const template = await loadTemplate(stylesheetPath);
 
-    const shouldRunVite =
-        previousCache.viteHash !== viteHash ||
-        !previousCache.template ||
-        !(await pathExists("dist/assets"));
-    const shouldRebuildAllHtml = shouldRunVite || previousCache.rendererHash !== rendererHash;
+    const shouldRebuildAllHtml =
+        previousCache.frontendHash !== frontendHash ||
+        previousCache.template !== template ||
+        previousCache.rendererHash !== rendererHash;
     const sameContentInputs = hasSameContentInputs(previousCache, contentSignatures);
-
-    let template = previousCache.template;
-    if (shouldRunVite) {
-        const build = await runCommand("vite build");
-        console.log("Build output:", build.stdout);
-
-        template = await fs.readFile("dist/src/template.html", "utf-8");
-        await fs.rm("dist/src", { recursive: true, force: true });
-    } else {
-        console.log("Vite inputs unchanged; skipping vite build.");
-    }
 
     await syncPublicFiles(previousCache.publicFiles, publicFiles);
 
@@ -256,7 +269,7 @@ export const buildAll = async () => {
         await writeCache({
             ...previousCache,
             version: cacheVersion,
-            viteHash,
+            frontendHash,
             rendererHash,
             template,
             publicFiles,
@@ -321,7 +334,7 @@ export const buildAll = async () => {
 
     await writeCache({
         version: cacheVersion,
-        viteHash,
+        frontendHash,
         rendererHash,
         template,
         entries: nextEntries,

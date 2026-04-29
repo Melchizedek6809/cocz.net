@@ -4,23 +4,16 @@
   "description": "Ben's custom SSG / Blog",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch src/server.ts",
     "build": "node --import tsx src/build.ts",
-    "build:vite": "vite build",
-    "preview": "vite preview",
-    "typecheck:fe": "tsc --noEmit",
-    "typecheck:be": "tsc --noEmit",
-    "test": "npm run typecheck:fe && npm run typecheck:be"
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck"
   },
   "dependencies": {
-    "express": "latest",
     "markdown-it": "latest",
     "markdown-it-highlightjs": "latest",
-    "vite": "latest",
     "yaml": "latest"
   },
   "devDependencies": {
-    "@types/express": "latest",
     "@types/markdown-it": "latest",
     "@types/node": "latest",
     "tsx": "latest",
