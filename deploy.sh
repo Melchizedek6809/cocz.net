@@ -1,2 +1,2 @@
 #!/bin/sh
-npm run build && rsync -avhe ssh --delete ./dist/ cocz.net:./cocz.net/
+./build.scm && rsync -avhe ssh --delete ./dist/ cocz.net:./cocz.net/

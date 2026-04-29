@@ -1,6 +1,6 @@
-# Cocz.net - Custom TypeScript SSG
+# Cocz.net - Custom Guile SSG
 
-A minimalist static site generator built with TypeScript, featuring RSS feed support, sitemaps, and JSON-LD structured data.
+A minimalist static site generator built with Guile Scheme, featuring RSS feed support, sitemaps, and JSON-LD structured data.
 
 ## Features
 
@@ -11,21 +11,22 @@ A minimalist static site generator built with TypeScript, featuring RSS feed sup
 - Tag-based organization
 - Customizable templates
 
+## Requirements
+
+- Guile 3
+- guile-commonmark
+- sha256sum
+
 ## Project Structure
 
 ```
 .
 ├── content/          # Markdown blog posts
 ├── public/           # Static assets
+├── build.scm         # Build script
 ├── src/
-│   ├── build.ts      # Build process for static site generation
-│   ├── entry.ts      # Entry class for managing blog posts
 │   ├── fe/           # Frontend assets
-│   ├── pages.ts      # Page renderers
-│   ├── rss.ts        # RSS feed generator
-│   ├── sitemap.ts    # Sitemap generator
-│   ├── template.html # HTML template
-│   └── utils.ts      # Utility functions
+│   └── template.html # HTML template
 └── dist/             # Generated site (after build)
 ```
 
@@ -36,7 +37,7 @@ A minimalist static site generator built with TypeScript, featuring RSS feed sup
 Build the static site:
 
 ```bash
-npm run build
+./build.scm
 ```
 
 This will generate the static site in the `dist/` directory, including a content-hashed CSS file in `dist/assets/`.
