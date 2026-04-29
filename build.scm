@@ -6,6 +6,7 @@
              (ice-9 popen)
              (ice-9 rdelim)
              (ice-9 regex)
+             (ice-9 threads)
              (ice-9 textual-ports)
              (srfi srfi-1)
              (srfi srfi-13)
@@ -17,6 +18,7 @@
 (define css-source-path "src/fe/css/index.css")
 (define branding-source-path "src/fe/css/branding")
 (define assets-output-path "dist/assets")
+(define slug-regexp (make-regexp "^[0-9-]*(.*)$"))
 
 (define (read-file path)
   (call-with-input-file path get-string-all))
@@ -32,9 +34,6 @@
 
 (define (directory? path)
   (eq? 'directory (stat:type (stat path))))
-
-(define (file? path)
-  (eq? 'regular (stat:type (stat path))))
 
 (define (mkdir-p path)
   (unless (or (string=? path ".") (string=? path "/") (path-exists? path))
@@ -53,21 +52,10 @@
           (rmdir path))
         (delete-file path))))
 
-(define (copy-file* source destination)
-  (mkdir-p (dirname destination))
-  (copy-file source destination))
-
 (define (copy-directory source destination)
   (mkdir-p destination)
-  (for-each
-   (lambda (name)
-     (unless (member name '("." ".."))
-       (let ((source-path (string-append source "/" name))
-             (destination-path (string-append destination "/" name)))
-         (if (directory? source-path)
-             (copy-directory source-path destination-path)
-             (copy-file* source-path destination-path)))))
-   (scandir source)))
+  (unless (zero? (system* "cp" "-R" (string-append source "/.") destination))
+    (error "failed to copy directory" source destination)))
 
 (define (string-replace-all input needle replacement)
   (if (string-null? needle)
@@ -92,11 +80,17 @@
     (">" . "&gt;")
     ("\"" . "&quot;")))
 
+(define html-escape-replacements
+  (append common-escape-replacements '(("'" . "&#039;"))))
+
+(define xml-escape-replacements
+  (append common-escape-replacements '(("'" . "&apos;"))))
+
 (define (html-escape value)
-  (escape-with value (append common-escape-replacements '(("'" . "&#039;")))))
+  (escape-with value html-escape-replacements))
 
 (define (xml-escape value)
-  (escape-with value (append common-escape-replacements '(("'" . "&apos;")))))
+  (escape-with value xml-escape-replacements))
 
 (define (json-escape value)
   (string-append
@@ -150,6 +144,13 @@
         '()
         (map strip-quotes (string-split inner #\,)))))
 
+(define (parse-frontmatter-value key value)
+  (cond
+   ((string=? key "tags") (split-inline-list value))
+   ((string=? value "true") #t)
+   ((string=? value "false") #f)
+   (else (strip-quotes value))))
+
 (define (parse-frontmatter raw)
   (let ((lines (string-split raw #\newline)))
     (if (and (pair? lines) (string=? (string-trim-both (car lines)) "---"))
@@ -183,13 +184,7 @@
                                           tags))
                           (loop rest (acons "tags" (reverse tags) fields))))
                     (loop (cdr remaining)
-                          (acons key
-                                 (cond
-                                  ((string=? key "tags") (split-inline-list value))
-                                  ((string=? value "true") #t)
-                                  ((string=? value "false") #f)
-                                  (else (strip-quotes value)))
-                                 fields)))))))))
+                          (acons key (parse-frontmatter-value key value) fields)))))))))
 
 (define (field fields key default)
   (let ((value (assoc-ref fields key)))
@@ -204,7 +199,7 @@
                                       (char=? (string-ref without-ext 0) #\/)))
                              (substring without-ext 1)
                              without-ext)))
-    (match:substring (regexp-exec (make-regexp "^[0-9-]*(.*)$") without-prefix) 1)))
+    (match:substring (regexp-exec slug-regexp without-prefix) 1)))
 
 (define (protect-simple-tag line tag raw-values)
   (let ((open (string-append "<" tag))
@@ -319,10 +314,10 @@
                       (field fields "hidden" #f)))))))
 
 (define (load-entries)
-  (map load-entry
-       (sort (filter (lambda (name) (string-suffix? ".md" name))
-                     (scandir "content"))
-             string<?)))
+  (let ((filenames (sort (filter (lambda (name) (string-suffix? ".md" name))
+                                 (scandir "content"))
+                         string<?)))
+    (n-par-map 4 load-entry filenames)))
 
 (define (entry-full-url entry)
   (string-append site-url "/" (entry-url entry) "/"))
@@ -675,16 +670,22 @@
     (lambda (head body)
       (write-file output-path (apply-template template head body)))))
 
+(define (start-public-copy)
+  (call-with-new-thread
+   (lambda ()
+     (copy-directory "public" "dist"))))
+
 (define (build)
   (remove-tree "dist")
   (mkdir-p "dist")
-  (copy-directory "public" "dist")
-  (let* ((stylesheet-path (build-assets))
+  (let* ((public-copy-thread (start-public-copy))
+         (stylesheet-path (build-assets))
          (template (string-replace-all (read-file "src/template.html")
                                        "<!-- STYLESHEET_PATH_PLACEHOLDER -->"
                                        stylesheet-path))
          (entries (load-entries)))
-    (for-each
+    (n-par-map
+     4
      (lambda (entry)
        (write-rendered-page template
                             (string-append "dist/" (entry-url entry) "/index.html")
@@ -694,6 +695,7 @@
     (write-file "dist/rss.xml" (render-rss entries))
     (display "RSS feed generated at dist/rss.xml\n")
     (write-file "dist/sitemap.xml" (render-sitemap entries))
-    (display "Sitemap generated at dist/sitemap.xml\n")))
+    (display "Sitemap generated at dist/sitemap.xml\n")
+    (join-thread public-copy-thread)))
 
 (build)
