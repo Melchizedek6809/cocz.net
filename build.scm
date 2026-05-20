@@ -468,6 +468,7 @@
             <nav class=\"primary-nav\">
                 <ul role=\"list\">
                     <li role=\"listitem\"><a href=\"/about-me/\" class=\"\">About me</a></li>
+                    <li role=\"listitem\"><a href=\"/contact/\" class=\"\">Contact</a></li>
                     <li role=\"listitem\"><a href=\"/rss.xml\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"RSS Feed\" class=\"rss-icon\"></a></li>
                     <li role=\"listitem\"><a href=\"https://sr.ht/~melchizedek6809/\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"sourcehut\" class=\"sourcehut\"></a></li>
                     <li role=\"listitem\"><a href=\"https://github.com/Melchizedek6809\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"GitHub\" class=\"github\"></a></li>
@@ -567,6 +568,35 @@
         " header-html "
         <main>
           " (render-full-entry entry) "
+        </main>
+        " footer-html "
+      ")))
+
+(define (render-contact-page)
+  (values
+   "
+        <title>Contact | Ben's Blog</title>
+        <meta name=\"description\" content=\"Contact information for Ben's Blog.\">
+        <meta name=\"robots\" content=\"max-image-preview:large\">
+        <link rel=\"canonical\" href=\"https://cocz.net/contact/\">
+      "
+   (string-append
+    "
+        " header-html "
+        <main>
+          <article class=\"full-article\">
+            <header class=\"page-header\">
+              <h1 class=\"post-title\">Contact</h1>
+            </header>
+
+            <p>
+              Email: <a href=\"mailto:bennyschulenburg@gmx.de\">bennyschulenburg@gmx.de</a>
+            </p>
+
+            <p>
+              Matrix: <a href=\"https://matrix.to/#/@melchizedek6809:matrix.org\" target=\"_blank\" rel=\"noopener noreferrer\">@melchizedek6809:matrix.org</a>
+            </p>
+          </article>
         </main>
         " footer-html "
       ")))
@@ -679,6 +709,12 @@
         <lastmod>" lastmod "</lastmod>
     </url>
 
+    <!-- Static pages -->
+    <url>
+        <loc>https://cocz.net/contact/</loc>
+        <lastmod>" lastmod "</lastmod>
+    </url>
+
     <!-- Blog entries -->
     " (string-join
         (map (lambda (entry)
@@ -734,6 +770,7 @@
                             (lambda () (render-entry-page entry))))
      entries)
     (write-rendered-page template "dist/index.html" (lambda () (render-index entries)))
+    (write-rendered-page template "dist/contact/index.html" render-contact-page)
     (write-rendered-page template "dist/impressum/index.html" render-impressum-page)
     (write-file "dist/rss.xml" (render-rss entries))
     (display "RSS feed generated at dist/rss.xml\n")
