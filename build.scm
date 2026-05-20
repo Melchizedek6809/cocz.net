@@ -489,8 +489,8 @@
   "
         <footer class=\"primary-footer\">
           <ul role=\"list\">
-            <li role=\"listitem\">&copy;
-              <time datetime=\"2025\">2025</time> Benjamin Vincent Schulenburg
+            <li role=\"listitem\">
+              <a href=\"/impressum/\">Imprint</a>
             </li>
 
             <li role=\"listitem\">
@@ -567,6 +567,48 @@
         " header-html "
         <main>
           " (render-full-entry entry) "
+        </main>
+        " footer-html "
+      ")))
+
+(define (render-impressum-page)
+  (values
+   "
+        <title>Imprint | Ben's Blog</title>
+        <meta name=\"description\" content=\"Legal notice and contact information for Ben's Blog.\">
+        <meta name=\"robots\" content=\"max-image-preview:large\">
+        <link rel=\"canonical\" href=\"https://cocz.net/impressum/\">
+      "
+   (string-append
+    "
+        " header-html "
+        <main>
+          <article class=\"full-article\">
+            <header class=\"page-header\">
+              <h1 class=\"post-title\">Imprint</h1>
+            </header>
+
+            <h2>Information pursuant to Section 5 DDG</h2>
+            <p>
+              Benjamin Schulenburg<br>
+              Pfahlstr. 24<br>
+              85072 Eichst&auml;tt<br>
+              Germany
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+              Email: <a href=\"mailto:bennyschulenburg@gmx.de\">bennyschulenburg@gmx.de</a>
+            </p>
+
+            <h2>Responsible for content pursuant to Section 18(2) MStV</h2>
+            <p>
+              Benjamin Schulenburg<br>
+              Pfahlstr. 24<br>
+              85072 Eichst&auml;tt<br>
+              Germany
+            </p>
+          </article>
         </main>
         " footer-html "
       ")))
@@ -692,6 +734,7 @@
                             (lambda () (render-entry-page entry))))
      entries)
     (write-rendered-page template "dist/index.html" (lambda () (render-index entries)))
+    (write-rendered-page template "dist/impressum/index.html" render-impressum-page)
     (write-file "dist/rss.xml" (render-rss entries))
     (display "RSS feed generated at dist/rss.xml\n")
     (write-file "dist/sitemap.xml" (render-sitemap entries))
