@@ -1,0 +1,2 @@
+#!/bin/sh
+guile src/build.scm
