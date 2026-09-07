@@ -10,8 +10,6 @@ tags:
   - webdev
 ---
 
-## Intro
-
 Hey, so for the last month I've been playing around a lot with Rust and writing various backends with it, trying out various architectures and crates and see which combination I enjoy the most. Still really content with Axum and the overall choice of Rust, don't quite know why but writing Rust is just so satisfying, you do a huge change and then just fix the compiler errors / clippy errors one by one and for the most part if it compiles things actually work (unlike other languages/runtimes).
 
 Now, one of the bigger projects I've started is a new kind of git forge called [RubHub](https://rubhub.net/) and since I wanted to start dogfooding it pretty much immediately I had to figure out how to deploy this thing.

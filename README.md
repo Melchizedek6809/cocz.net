@@ -22,6 +22,7 @@ A minimalist static site generator built with Guile Scheme, featuring RSS feed s
 ```
 .
 ├── content/          # Markdown blog posts
+├── pages/            # Markdown static pages
 ├── public/           # Static assets
 ├── build.scm         # Build script
 ├── src/
@@ -56,6 +57,8 @@ tags: ["tag1", "tag2"]
 
 Post content goes here...
 ```
+
+Static pages are Markdown files in the `pages/` directory. They use `title` and `description` frontmatter, derive their URL from the filename, and are excluded from the blog index and RSS feed.
 
 ## License
 

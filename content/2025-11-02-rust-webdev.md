@@ -8,8 +8,6 @@ tags:
   - webdev
 ---
 
-## Intro
-
 Alright, so for the past couple of weeks I've been hard at work migrating a Node backend to Rust. Mainly this was due to some architectural problems with the old implementation and since a lot of parts had to be rewritten anyways I thought I might try out another language. Don't get me wrong, Node is fine, but it's also not a language that's super fun to write. Or to be more exact, the overall ecosystem isn't all that fun, while it is productive and generally gets the work done and can be quite fast/efficient, it has been taken over by people that just want to get things done with the least amount of effort and understanding possible. Probably doesn't help that it's become the language that every young developer starts with.
 
 So, since I've been meaning to rewrite this app for a while now I thought this might be a good chance to try out some other languages/runtimes. First I gave [Elixir](https://elixir-lang.org/)/[Phoenix](https://www.phoenixframework.org/) a try, and while it did feel quite productive it didn't quite click with me, afterwards I gave [Bun](https://bun.sh/) and [Elysia](https://elysiajs.com/) a shot which worked quite well but the combination of Bun segfaulting a little too often for my taste in combination with the overall experience not being that different from node led me to give an old favorite another shot: **Rust**.

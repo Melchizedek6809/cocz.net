@@ -10,8 +10,6 @@ tags:
   - nix
 ---
 
-## Intro
-
 In the last week I've given both GuixSD and NixOS a try, installing GuixSD on my desktop computer and NixOS on my laptop. In the beginning, things were alright, but as soon as I wanted to do more than just browse the web on my machines, things started to fall apart.
 
 The problems I encountered were mostly the same, though GuixSD sadly had a few more issues. Pretty soon I came to the conclusion that doing development on these machines is actually harder than on a normal Linux distribution.

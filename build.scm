@@ -18,6 +18,7 @@
 (define css-source-path "src/fe/css/index.css")
 (define branding-source-path "src/fe/css/branding")
 (define assets-output-path "dist/assets")
+(define pages-source-path "pages")
 (define slug-regexp (make-regexp "^[0-9-]*(.*)$"))
 
 (define (read-file path)
@@ -319,8 +320,37 @@
                          string<?)))
     (n-par-map 4 load-entry filenames)))
 
+(define-record-type <page>
+  (make-page url title description content)
+  page?
+  (url page-url)
+  (title page-title)
+  (description page-description)
+  (content page-content))
+
+(define (load-page filename)
+  (let* ((raw (read-file (string-append pages-source-path "/" filename))))
+    (call-with-values
+        (lambda () (parse-frontmatter raw))
+      (lambda (frontmatter body)
+        (let* ((fields (parse-frontmatter-fields frontmatter))
+               (content (render-markdown body)))
+          (make-page (slug-from-filename filename)
+                     (field fields "title" "")
+                     (field fields "description" "")
+                     content))))))
+
+(define (load-pages)
+  (let ((filenames (sort (filter (lambda (name) (string-suffix? ".md" name))
+                                 (scandir pages-source-path))
+                         string<?)))
+    (n-par-map 4 load-page filenames)))
+
 (define (entry-full-url entry)
   (string-append site-url "/" (entry-url entry) "/"))
+
+(define (page-full-url page)
+  (string-append site-url "/" (page-url page) "/"))
 
 (define (entry-image-url entry)
   (and (entry-image entry) (absolute-url (entry-image entry))))
@@ -572,72 +602,24 @@
         " footer-html "
       ")))
 
-(define (render-contact-page)
+(define (render-static-page page)
   (values
-   "
-        <title>Contact | Ben's Blog</title>
-        <meta name=\"description\" content=\"Contact information for Ben's Blog.\">
+   (string-append
+    "
+        <title>" (html-escape (page-title page)) " | Ben's Blog</title>
+        <meta name=\"description\" content=\"" (html-escape (page-description page)) "\">
         <meta name=\"robots\" content=\"max-image-preview:large\">
-        <link rel=\"canonical\" href=\"https://cocz.net/contact/\">
-      "
+        <link rel=\"canonical\" href=\"" (page-full-url page) "\">
+      ")
    (string-append
     "
         " header-html "
         <main>
           <article class=\"full-article\">
             <header class=\"page-header\">
-              <h1 class=\"post-title\">Contact</h1>
+              <h1 class=\"post-title\">" (html-escape (page-title page)) "</h1>
             </header>
-
-            <p>
-              Email: <a href=\"mailto:bennyschulenburg@gmx.de\">bennyschulenburg@gmx.de</a>
-            </p>
-
-            <p>
-              Matrix: <a href=\"https://matrix.to/#/@melchizedek6809:matrix.org\" target=\"_blank\" rel=\"noopener noreferrer\">@melchizedek6809:matrix.org</a>
-            </p>
-          </article>
-        </main>
-        " footer-html "
-      ")))
-
-(define (render-impressum-page)
-  (values
-   "
-        <title>Imprint | Ben's Blog</title>
-        <meta name=\"description\" content=\"Legal notice and contact information for Ben's Blog.\">
-        <meta name=\"robots\" content=\"max-image-preview:large\">
-        <link rel=\"canonical\" href=\"https://cocz.net/impressum/\">
-      "
-   (string-append
-    "
-        " header-html "
-        <main>
-          <article class=\"full-article\">
-            <header class=\"page-header\">
-              <h1 class=\"post-title\">Imprint</h1>
-            </header>
-
-            <h2>Information pursuant to Section 5 DDG</h2>
-            <p>
-              Benjamin Schulenburg<br>
-              Pfahlstr. 24<br>
-              85072 Eichst&auml;tt<br>
-              Germany
-            </p>
-
-            <h2>Contact</h2>
-            <p>
-              Email: <a href=\"mailto:bennyschulenburg@gmx.de\">bennyschulenburg@gmx.de</a>
-            </p>
-
-            <h2>Responsible for content pursuant to Section 18(2) MStV</h2>
-            <p>
-              Benjamin Schulenburg<br>
-              Pfahlstr. 24<br>
-              85072 Eichst&auml;tt<br>
-              Germany
-            </p>
+            " (page-content page) "
           </article>
         </main>
         " footer-html "
@@ -692,11 +674,8 @@
   </channel>
 </rss>")))
 
-(define (render-sitemap entries)
-  (let* ((indexable (filter (lambda (entry)
-                              (or (not (entry-hidden? entry))
-                                  (string=? (entry-url entry) "about-me")))
-                            entries))
+(define (render-sitemap entries pages)
+  (let* ((indexable (filter (lambda (entry) (not (entry-hidden? entry))) entries))
          (lastmod (or (and (pair? indexable)
                            (date-iso (latest-entry-date indexable)))
                       (date->string (current-date 0) "~Y-~m-~dT~H:~M:~S.000Z"))))
@@ -710,10 +689,14 @@
     </url>
 
     <!-- Static pages -->
-    <url>
-        <loc>https://cocz.net/contact/</loc>
+    " (string-join
+        (map (lambda (page)
+               (string-append "<url>
+        <loc>" (xml-escape (page-full-url page)) "</loc>
         <lastmod>" lastmod "</lastmod>
-    </url>
+    </url>"))
+             pages)
+        "\n    ") "
 
     <!-- Blog entries -->
     " (string-join
@@ -761,7 +744,8 @@
          (template (string-replace-all (read-file "src/template.html")
                                        "<!-- STYLESHEET_PATH_PLACEHOLDER -->"
                                        stylesheet-path))
-         (entries (load-entries)))
+         (entries (load-entries))
+         (pages (load-pages)))
     (n-par-map
      4
      (lambda (entry)
@@ -769,12 +753,17 @@
                             (string-append "dist/" (entry-url entry) "/index.html")
                             (lambda () (render-entry-page entry))))
      entries)
+    (n-par-map
+     4
+     (lambda (page)
+       (write-rendered-page template
+                            (string-append "dist/" (page-url page) "/index.html")
+                            (lambda () (render-static-page page))))
+     pages)
     (write-rendered-page template "dist/index.html" (lambda () (render-index entries)))
-    (write-rendered-page template "dist/contact/index.html" render-contact-page)
-    (write-rendered-page template "dist/impressum/index.html" render-impressum-page)
     (write-file "dist/rss.xml" (render-rss entries))
     (display "RSS feed generated at dist/rss.xml\n")
-    (write-file "dist/sitemap.xml" (render-sitemap entries))
+    (write-file "dist/sitemap.xml" (render-sitemap entries pages))
     (display "Sitemap generated at dist/sitemap.xml\n")
     (join-thread public-copy-thread)))
 
