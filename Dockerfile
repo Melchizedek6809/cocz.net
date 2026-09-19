@@ -9,6 +9,5 @@ RUN make all
 
 ### Nginx Server
 
-FROM nginx:1-alpine
-WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/dist /usr/share/nginx/html
+FROM alpinelinux/darkhttpd
+COPY --from=builder /app/dist /var/www/localhost/htdocs/
