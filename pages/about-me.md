@@ -3,8 +3,6 @@ title: "About Me: Software Developer, Language Enthusiast & Digital Nomad"
 description: "Meet a passionate free software developer exploring programming languages, Lisp, Rust, and JS/TS while traveling the world. Insights on tech projects and personal experiences."
 ---
 
-## Hello There!
-
 I'm a free software developer and language enthusiast, originally from Germany. My journey in software development has been driven by curiosity and a passion for elegant solutions to complex problems.
 
 Regarding the format of the blog: I'm trying to make it a habit to write every week about my various projects and my thoughts regarding the technologies used, sometimes interspersed with personal stuff.
