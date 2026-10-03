@@ -5,6 +5,6 @@ clean:
 	rm -rf ./dist/
 
 deploy:
-	rsync -avhe ssh --delete ./dist/ cocz.net:./www/cocz.net/
+	rsync -avhe ssh --delete ./dist/ cocz.net@cocz.net:./www/
 
 .PHONY: all deploy clean
