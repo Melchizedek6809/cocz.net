@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WolkenWelten: From C++ to TypeScript in Game Development</title>
+    <meta name="date" content="2025-04-21T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>WolkenWelten: From C++ to TypeScript in Game Development</h1>
+      <h1>The WolkenWelten Journey</h1>
+<p>Today I&#39;m diving into one of my most ambitious projects, <a href="https://wolkenwelten.net/">WolkenWelten</a> - a voxel sandbox game that evolved across multiple programming languages over several years. While development has slowed down (I&#39;m now focusing mainly on the Web/TypeScript version when I find time), the journey taught me invaluable lessons about game engines, modding systems, and language trade-offs.</p>
+<p><a href="/img/wolkenwelten/wwts.jpg"><img src="/img/wolkenwelten/wwts.jpg" alt="A third-person view of WolkenWelten&#39;s TypeScript version showing the blocky voxel world with islands floating in the sky"></a></p>
+<p><strong>Table of Contents:</strong></p>
+<ul>
+<li><a href="#the-vision-a-moddable-voxel-sandbox">The Vision: A Moddable Voxel Sandbox</a></li>
+<li><a href="#the-c-prototype-skycastle">The C++ Prototype: Skycastle</a></li>
+<li><a href="#the-c-rewrite-performance-and-multiplayer">The C Rewrite: Performance and Multiplayer</a></li>
+<li><a href="#nujel-creating-a-custom-scripting-language">Nujel: Creating a Custom Scripting Language</a></li>
+<li><a href="#browser-adventures-emscripten-and-wasm">Browser Adventures: Emscripten and WASM</a></li>
+<li><a href="#the-rust-experiment-v8-integration">The Rust Experiment: V8 Integration</a></li>
+<li><a href="#the-typescript-revolution-one-language-to-rule-them-all">The TypeScript Revolution</a></li>
+<li><a href="#lessons-learned">Lessons Learned</a></li>
+</ul>
+<h2>The Vision: A Moddable Voxel Sandbox</h2>
+<p>The idea mainly grew out of my frustrations while playing <a href="https://www.minecraft.net/">Minecraft</a>. I would have loved it if there
+were proper first-party modding support, turning it less into a game and more into an engine. This
+was mainly fueled by me playing an indie sandbox game that felt similar to Minecraft
+in my childhood, <a href="https://clonk.de/">Clonk</a>.</p>
+<p>A nice aspect of it was that one could download all kinds of game objects from the internet and
+not only play special maps and such, but actually mix and match various mods leading to all sorts
+of strange situations (Fighting off an alien swarm with Dragonball characters instead of firearms was
+a nice one for example).</p>
+<p>A more modern take on this is probably <a href="https://store.steampowered.com/app/4000/Garrys_Mod/">Garry&#39;s Mod</a>, which I&#39;ve also spent far too much time in.</p>
+<p>But in general the idea was to fully embrace the modding community and allow players to combine
+all sorts of mods/plugins together, think <a href="https://wordpress.org/">WordPress</a> or <a href="https://www.gnu.org/software/emacs/">Emacs</a>.</p>
+<p>Another very important aspect, which was most important first but grew less important over
+time, was performance. This is mainly because machines just kept getting faster and
+a super cheap used machine could even play normal Minecraft rather well.</p>
+<h3>Key Design Goals:</h3>
+<ul>
+<li><strong>Ultimate modding freedom</strong> - Let players combine mods without conflicts</li>
+<li><strong>High performance</strong> - Run well even on modest hardware like Raspberry Pi</li>
+<li><strong>Multiplayer first</strong> - Design with multiplayer in mind from the beginning</li>
+<li><strong>Accessible development</strong> - Make creating mods easier than in other voxel games</li>
+</ul>
+<h2>The C++ Prototype: Skycastle</h2>
+<p><a href="/img/wolkenwelten/wwcpp.jpg"><img src="/img/wolkenwelten/wwcpp.jpg" alt="Early C++ version of WolkenWelten showing basic voxel terrain rendering"></a></p>
+<p>I first started developing what would become the C version of WolkenWelten in
+C++. This was mainly because there were some features of C++ I rather like, mainly
+function overloading. Also, there were some great libraries for doing matrix/vector
+math for 3D games.</p>
+<p>So I started just coding ahead in C++. While I could have used something like
+<a href="https://www.vulkan.org/">Vulkan</a>, I wanted to stick to <a href="https://www.khronos.org/opengles/">OpenGL (ES)</a> so that we could also support low-level
+hardware. My main idea was that a <a href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/">Raspberry Pi 4</a> should be enough.</p>
+<p>Modding was considered but the main idea was to just ship the source code to
+people and they could then mod the game in C++ if they wanted (this didn&#39;t allow for
+mix and matching, but in general nothing was really figured out at that point).</p>
+<p>Soon the engine and game took shape and I learned a lot about voxel programming
+and game/graphics development in general.</p>
+<p>Additionally, over time I grew frustrated with C++, mainly due to the slow compilation
+times. So after a while I started porting things over to C, mainly because by
+now I actually knew what I needed and the overall engine structure had settled.</p>
+<p>This meant that I had to write my own code for doing matrix/vector math because
+there was no lib that I actually enjoyed using. This didn&#39;t pose much of a
+problem and I do like how things turned out (only took me a couple of days I
+think, that might be because I was writing rather C-like code from the
+start anyways).</p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> The C++ version laid the foundation for the voxel engine with OpenGL (ES) support, focusing on low-end hardware compatibility.</p>
+</blockquote>
+<h2>The C Rewrite: Performance and Multiplayer</h2>
+<p><a href="/img/wolkenwelten/wwc1.jpg"><img src="/img/wolkenwelten/wwc1.jpg" alt="C version of WolkenWelten showing improved graphics and terrain generation"></a></p>
+<p>Now that the codebase was in C, another big problem came up. Up until this point
+the entire code was single-player only, and I had no idea how to actually do
+multiplayer. This was sure to become a problem since playing with others is
+much more fun and should probably be introduced somewhat early in development
+since it will have quite the impact on the overall architecture of the game.</p>
+<blockquote>
+<p><strong>Source Code:</strong> You can find the entire source code over on <a href="https://github.com/wolkenwelten/wolkenwelten-c">GitHub</a></p>
+</blockquote>
+<p>So the plan was to make sure that everything would work in multiplayer.
+There wouldn&#39;t be a difference between multiplayer and singleplayer mode -
+we could just fork off a server process and connect to it for a singleplayer
+experience.</p>
+<p>This was a bit harder but didn&#39;t take too long since there wasn&#39;t much to the
+game yet, although there already were grappling hooks. I think that was one of the
+first interactions with the world and got added quite soon after mining/block
+placement.</p>
+<p>Around this time I also started streaming the development over on <a href="https://www.twitch.tv/melchizedek6809">Twitch</a>.</p>
+<p>By now we had a multiplayer voxel sandbox. I&#39;d also added a couple of items
+and interactions. Over time we added a GUI system and crafting recipes, and things
+kind of took shape, but one of the problems was still mod support.</p>
+<p>First off, I tried sticking with C, using makefiles and code generators to look
+at all of the source files in a special directory and then figure out which
+hooks there are in these mod files. It would then generate code that calls all
+of the hooks in turn. These hooks were for things like the game starting where
+we could then add new items or recipes.</p>
+<p><a href="/img/wolkenwelten/wwc2.jpg"><img src="/img/wolkenwelten/wwc2.jpg" alt="C version with GUI elements, inventory system, and improved lighting"></a></p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> The C version introduced a client-server architecture where even single-player mode runs as a local server, making multiplayer a core part of the design.</p>
+</blockquote>
+<h3>Assembly Optimizations</h3>
+<p>This version also got a couple of procedures written in assembly (x86_64 and AARCH64),
+mainly because I dislike SIMD intrinsics and this was one of the ways to really
+improve performance. It made a massive difference on the Raspberry Pi, much more so
+than on normal Desktop machines, probably because the hardware was overall more limited.</p>
+<h3>Modding Challenges</h3>
+<p>This system worked rather well but the problem was that modders needed the source
+code, would have to code in C, and recompile things all the time. This wasn&#39;t
+quite as bad since C compilation times were quite manageable, but still, things
+could be improved.</p>
+<h2><a href="/nujel">Nujel</a>: Creating a Custom Scripting Language</h2>
+<p><a href="/img/wolkenwelten/wwc3.jpg"><img src="/img/wolkenwelten/wwc3.jpg" alt="WolkenWelten with Nujel scripting integration showing a more complex world with custom entities"></a></p>
+<p>Now I think it was during one Christmas when I went away to visit my family and didn&#39;t
+stream for a while that I thought I&#39;d just write my own scripting language. I&#39;ve
+done similar things before and thought that if I gave it an S-Expression based
+syntax, parsing would be rather simple. So I just tried it out to see how simple
+it&#39;d be.</p>
+<p>While the beginning was rather simple, it of course led to a lot of work down the
+line since implementing your own language including libraries and VM is quite a
+bit of work. Albeit a fun one.</p>
+<p>During this time I also made Nujel into a somewhat problematic language because
+I was adding things to it that would only really be useful for WolkenWelten.</p>
+<p>But yeah, during this time I mostly tried to improve Nujel, open up more of the
+C Engine to Nujel, and port most of the content to use Nujel.</p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> Nujel was a custom Lisp-inspired language with S-Expression syntax, designed specifically to make modding more accessible without C compilation.</p>
+</blockquote>
+<h2>Browser Adventures: <a href="https://emscripten.org/">Emscripten</a> and WASM</h2>
+<p><a href="/img/wolkenwelten/wwc4.jpg"><img src="/img/wolkenwelten/wwc4.jpg" alt="Final C version of WolkenWelten running in a browser via WebAssembly"></a></p>
+<p>It is still quite amazing to me that we could actually compile the C code to
+JS/WASM and run everything in the browser. While I consciously know what a
+browser is capable of, it still mostly seems like a place for gaudy looking
+2D games. While there doesn&#39;t seem to be much technically stopping games from
+actually shipping proper Browser versions, somehow it doesn&#39;t seem to happen.
+Maybe because <a href="https://store.steampowered.com/">Steam</a> works well enough and doesn&#39;t require one to write things
+in a different way.</p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> Using Emscripten, the entire C codebase was compiled to <a href="https://webassembly.org/">WebAssembly</a>, proving that complex 3D voxel games can run efficiently in browsers.</p>
+</blockquote>
+<h2>The Rust Experiment: V8 Integration</h2>
+<p><a href="/img/wolkenwelten/wwrs.jpg"><img src="/img/wolkenwelten/wwrs.jpg" alt="Rust version of WolkenWelten featuring a first-person battle with a giant crab monster"></a></p>
+<p>Over time I grew dissatisfied with how much time it took to get basic
+functionality implemented in Nujel, and in general it didn&#39;t seem like much of
+an improvement while taking up most of the development time. So I thought I&#39;d
+try something else. Since I don&#39;t like <a href="https://www.lua.org/">Lua</a> all that much, and think <a href="https://www.python.org/">Python</a>
+is too slow, I thought we might try and embed a JS Runtime like <a href="https://v8.dev/">V8</a>.</p>
+<blockquote>
+<p><strong>Source Code:</strong> You can find the entire source code over on <a href="https://github.com/wolkenwelten/wolkenwelten-rs">GitHub</a></p>
+</blockquote>
+<p>After some experiments I discovered that <a href="https://deno.land/">Deno</a> actually provides some crates for
+easily embedding V8 into a <a href="https://www.rust-lang.org/">Rust</a> project. Since I was intrigued by Rust for
+some time, I thought I might try and rewrite things in Rust instead.</p>
+<p>This whole effort stopped quite soon because I realized that it wasn&#39;t much
+better than the old Nujel way. We still had to spend a lot of time exposing
+functionality from the engine to the scripting layer.</p>
+<p>Also, Rust compilation times were quite bad, at least compared to C.</p>
+<p>Another thing I noticed here is just how fast V8 actually is, especially if
+you have code where it can infer that integer math will suffice. Then it can
+actually compete with more low-level languages like <a href="https://go.dev/">Go</a>/<a href="https://dlang.org/">D</a> when it comes to raw
+performance.</p>
+<p>This gave me an interesting idea which brings us to the next implementation.</p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> The Rust version attempted to use Deno&#39;s V8 bindings to embed JavaScript as the scripting language, revealing V8&#39;s impressive performance for numeric operations.</p>
+</blockquote>
+<h2>The TypeScript Revolution: One Language to Rule Them All</h2>
+<p><a href="/img/wolkenwelten/wwts2.jpg"><img src="/img/wolkenwelten/wwts2.jpg" alt="TypeScript version featuring improved graphics, third-person view, and more detailed world"></a></p>
+<p>The (so far) last iteration of the overall idea, this time completely written
+in <a href="https://www.typescriptlang.org/">TypeScript</a>. I noticed that I could easily port the C/Rust parts and get
+somewhat similar performance, while gaining complete portability, super easy
+distribution, and almost instant iteration times due to modern tooling like
+<a href="https://vitejs.dev/">Vite</a>.</p>
+<blockquote>
+<p><strong>Source Code:</strong> You can find the entire source code over on <a href="https://github.com/wolkenwelten/wolkenwelten-ts">GitHub</a></p>
+</blockquote>
+<p>This also allows for the entire game to be written in one language. That way
+we don&#39;t have to expose certain parts to the scripting layer since everything
+is always available.</p>
+<p>Mods are also safe to run, since web browsers are probably one of the most well
+tested sandboxes out there. And pretty much anyone can just fork the repo on
+<a href="https://github.com/">GitHub</a> and then deploy to <a href="https://pages.github.com/">GH Pages</a> using the same CI pipeline I&#39;m using.</p>
+<p>I still really like the way things are structured here. Sadly, I&#39;ve taken on
+a new job at this point which left me with far less free time, so things kind
+of stalled.</p>
+<p>From time to time I still work on this version, currently focusing on adding
+multiplayer which already somewhat works but with a lot of limitations. I would
+love to turn this into a game that plays similar to <a href="https://www.smashbros.com/">Super Smash Brothers</a> but
+with elemental powers similar to <a href="https://avatar.fandom.com/wiki/Avatar:_The_Last_Airbender">Avatar</a>.</p>
+<blockquote>
+<p><strong>Technical Highlight:</strong> The TypeScript version achieves comparable performance to the lower-level implementations while dramatically improving development speed, mod support, and simpler distribution.</p>
+</blockquote>
+<h2>Lessons Learned</h2>
+<p>After working on WolkenWelten across multiple languages and paradigms, I&#39;ve gained several key insights:</p>
+<ol>
+<li><p><strong>Language trade-offs matter</strong>: C++ offered libraries but slow compilation, C was faster to compile but third-party libraries were a pain, Rust had strong safety but slow compilation, and TypeScript provided the best balance for this project.</p>
+</li>
+<li><p><strong>Modding architecture is crucial</strong>: Design for modding from the start rather than trying to bolt it on later.</p>
+</li>
+<li><p><strong>Unified language environments win</strong>: Having the entire codebase in one language eliminates the scripting interface problem.</p>
+</li>
+<li><p><strong>Web technologies are surprisingly capable</strong>: Modern browsers and WebGL/WebGPU can handle sophisticated 3D games with decent performance.</p>
+</li>
+<li><p><strong>Iteration speed beats raw performance</strong>: Fast development cycles and easy distribution ultimately matter more than squeezing out the last bits of performance.</p>
+</li>
+</ol>
+<p>If you&#39;re interested in exploring the project further, check out the <a href="https://github.com/wolkenwelten/wolkenwelten-ts">GitHub repository</a> for the TypeScript version. I&#39;d love to hear your thoughts or see contributions if you&#39;re into voxel games or web-based game development!</p>
+<hr>
+<p><em>Adios,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

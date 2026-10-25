@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My AI Image Generation Journey: ChatGPT vs Gemini</title>
+    <meta name="date" content="2025-04-26T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>My AI Image Generation Journey: ChatGPT vs Gemini</h1>
+      <p>Alright, so in the last couple of days I&#39;ve been quite busy polishing <a href="https://mandomaster.com/">MandoMaster</a> to get it to a state that I&#39;m content with to show widely. Have learned quite a bit and I do enjoy the end result so now it&#39;s just about cleaning up what we already have so that I can put my main focus on <a href="https://codewaifu.net/">other projects</a> and become just a user trying to improve their Chinese.</p>
+<p><a href="/img/ai_imagegen.jpg"><img src="/img/ai_imagegen.jpg" alt="Example image generated for one of the mandomstar lessons"></a></p>
+<p>During these days I frequently needed header/hero images for various pages. For example, each lesson now contains a hero image, mainly so things don&#39;t look as boring and so that in the list view each item is at least somewhat visually distinct.</p>
+<p>This whole process still isn&#39;t perfect but it does work and produces some decent results. I&#39;ll still try other methods in the coming days and I&#39;ll probably write another post giving a final verdict.</p>
+<h2>What I&#39;ve Tried So Far</h2>
+<p>For quick context, here&#39;s a rundown of the AI image tools I&#39;ve been experimenting with:</p>
+<ul>
+<li><strong>ChatGPT&#39;s DALL-E</strong>: Produces decent images with readable text, but often lacks visual appeal</li>
+<li><strong>Google&#39;s Gemini</strong>: Creates visually interesting images but with nonsensical text elements</li>
+<li><strong>Post-processing</strong>: GIMP for manual edits + AI upscalers like Img.Upscaler and waifu2x</li>
+</ul>
+<p>Each has its strengths and weaknesses, which I&#39;ll dive into below. I haven&#39;t yet tried Midjourney or Stable Diffusion, but they&#39;re next on my list.</p>
+<h2>ChatGPT</h2>
+<p>Honestly, using ChatGPT for image generation has been somewhat disappointing. While it does produce results and is actually rather good at generating readable text/characters, the images generally look rather boring. This might just be due to me writing bad prompts, but Gemini seems to produce far more visually appealing results using the same prompt.</p>
+<p>Today I&#39;ll give ChatGPT another try and might just let it write the prompt itself or give me advice on how to get better results. I&#39;m basically just playing around with it to get to a result I feel confident shipping.</p>
+<h2>Gemini</h2>
+<p>So far I like Gemini&#39;s results the most. They do tend to produce text/characters that are nonsense, but the overall visual appeal is definitely there. At times it needs multiple tries to get it right, and I do have to tweak the images afterward quite often, but it significantly reduces the amount of work needed.</p>
+<h2>Editing images afterward</h2>
+<p>If I have very specific changes I want to make, I now skip further AI prompting and instead open the generated image in <a href="https://www.gimp.org/">GIMP</a> to make the desired adjustments. Since I&#39;m working on rather stylized images, this isn&#39;t much of an issue. I mostly just scale down things 4x when I&#39;m done and then use an AI upscaler to remove a lot of the noise added by the AI or by my manual edits. </p>
+<p>Right now I&#39;m using <a href="https://imgupscaler.com/">Img.Upscaler</a> which works quite well. I also tried <a href="https://www.waifu2x.net/">waifu2x</a> but the results weren&#39;t as pleasing.</p>
+<h2>My Workflow</h2>
+<p>A quick summary of my current image generation workflow:</p>
+<ol>
+<li>Generate initial image using Gemini with detailed prompts</li>
+<li>If needed, edit in GIMP to fix text or other details</li>
+<li>Downscale by 4x to remove artifacts</li>
+<li>Upscale with Img.Upscaler to restore quality</li>
+<li>Final minor adjustments if necessary</li>
+</ol>
+<p>This approach gives me just enough control while still leveraging the AI&#39;s creative capabilities.</p>
+<h2>Prompting Tips</h2>
+<p>After dozens of attempts, here are some prompting strategies I&#39;ve found helpful:</p>
+<ul>
+<li><strong>Be overly specific</strong>: &quot;Create a colorful, stylized Chinese classroom scene with a teacher at a whiteboard&quot; works better than vague prompts like &quot;Chinese lesson image&quot;</li>
+<li><strong>Mention art style</strong>: Adding &quot;in the style of [artist/movement]&quot; drastically changes results. I&#39;ve had good luck with &quot;digital illustration&quot; and &quot;isometric pixel art&quot;</li>
+<li><strong>Add an image with a color palette you like</strong>: for the header images I like to use a similar color palette in most of them, so I&#39;ve added another header image with a color palette I like to the prompt and told Gemini to use it as a reference</li>
+<li><strong>List what NOT to include</strong>: For ChatGPT especially, saying &quot;no text overlay&quot; or &quot;avoid human faces&quot; helps prevent common issues</li>
+<li><strong>Iterate on successful prompts</strong>: When you get something close, refine that prompt rather than starting over</li>
+<li><strong>Aspect ratio matters</strong>: Specifying &quot;16:9 landscape format&quot; or &quot;square 1:1 ratio&quot; helps create images that fit your layout</li>
+</ul>
+<p>These are early findings, and I&#39;m still learning what works best. If you have tips that work well for you, I&#39;d love to hear them!</p>
+<h2>Future Experiments</h2>
+<p>Today I still have several lessons that need editing and hero images. I&#39;ll use this opportunity to try different approaches, since this challenge will likely come up again in the future. I&#39;m going to try figuring out how to get ChatGPT to produce better results. Beyond that, I should probably give Midjourney and various Stable Diffusion models a try as well.</p>
+<p>Some specific things I want to test:</p>
+<ul>
+<li>Different prompt structures for better DALL-E results</li>
+<li>Using reference images with ChatGPT</li>
+<li>Finding the right balance between AI generation and manual editing</li>
+</ul>
+<h2>Conclusion</h2>
+<p>It&#39;s still amazing to me how much easier content generation has become. Now I can just type out a rough draft (or let an AI generate it), edit it with AI assistance, generate headers and generally clean everything up. AI can add reasonable keywords/metadata, write acceptable titles, and generate header images (which I don&#39;t love yet, but they enable nice designs when representing articles visually).</p>
+<p>I&#39;m excited to get better at using these tools and to figure out where the actual limitations lie.</p>
+<hr>
+<p><em>Adios,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

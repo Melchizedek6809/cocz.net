@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MandoMaster: AI-Powered Chinese Learning with Spaced Repetition</title>
+    <meta name="date" content="2025-04-13T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>MandoMaster: AI-Powered Chinese Learning with Spaced Repetition</h1>
+      <p><img src="/img/mandomaster/mandomaster_screenshot_0.png" alt="Screenshot of the MandoMaster.com startpage"></p>
+<h2>Hey there!</h2>
+<p>First off, <a href="https://mandomaster.com/">MandoMaster</a> is live and free to use, so if you&#39;re interested you can just take a quick look to see what I&#39;m talking about.</p>
+<p>Alright, time to write about another project of mine, this one is almost finished just waiting on a couple of finishing touches. I&#39;m quite content with this one since it&#39;s one I actually added to my daily routine now, so there&#39;ll probably be little improvements down the line but for now things work as they should.</p>
+<h2>What is MandoMaster?</h2>
+<p>MandoMaster is a WebApp for learning Chinese making use of spaced repetition techniques to make memorization easier. I&#39;ve wanted to do this since Pei started teaching me (traditional) Chinese and I kept forgetting things, now it&#39;s much easier since I&#39;ll just add any new words to my review pile. </p>
+<p>The way it works is that it&#39;s basically a huge dictionary with lots of metadata for each word/character. This can be basic stuff like the meaning of a character, or something like an audio sample of how it is supposed to be pronounced, or on which level of the <a href="https://en.wikipedia.org/wiki/Hanyu_Shuiping_Kaoshi">HSK</a>/<a href="https://en.wikipedia.org/wiki/Test_of_Chinese_as_a_Foreign_Language">TOCFL</a> test it is required.</p>
+<p><img src="/img/mandomaster/mandomaster_screenshot_2.png" alt="Screenshot of the MandoMaster.com learners dashboard"></p>
+<h2>So what can it do?</h2>
+<p>Just to give you a quick rundown of what MandoMaster can do:</p>
+<ul>
+<li>It&#39;s got a massive dictionary with meanings, examples, and all that good stuff</li>
+<li>Spaced repetition that actually works (at least for me) to remember characters</li>
+<li>Audio samples so you can hear how words should sound</li>
+<li>The first HSK/TOCFL levels are in there if you&#39;re studying for those tests</li>
+<li>You can add stuff to your personal review pile</li>
+<li>Works fine on your phone too because who sits at a desk to study these days?</li>
+</ul>
+<h2>How I built it</h2>
+<p>Let me walk you through how I put this thing together. It was quite the journey but LLMs made a lot of things much easier than I expected.</p>
+<h3>Technical overview</h3>
+<p>The tech stack is very similar to <a href="/bitmenu/">bitmenu</a>, mainly because I started this project off by making a copy of the bitmenu repo and then stripping out all the digital menu stuff. This actually worked really well and meant that I could focus on actually developing features specific to this particular idea, rather than doing generic boilerplate.</p>
+<p>It was quite the challenge to build an app for learning Chinese when I only speak a couple of words. It helped to have a native speaker for asking questions as well as modern LLMs around. It&#39;s also amazing how much LLMs helped and actually made this possible.</p>
+<p><img src="/img/mandomaster/mandomaster_screenshot_1.png" alt="Screenshot of the MandoMaster.com dictionary showing some TOCFL1 words/characters"></p>
+<h3>Building the Dictionary</h3>
+<p>This would have been a massive undertaking, luckily with LLMs this was quite the easy thing to do. I mainly worked by adding all the words from the first 3 levels of the HSK/TOCFL tests into a TypeScript source file like so:</p>
+<pre><code class="language-TypeScript">我
+你
+// ... and on and on
+</code></pre>
+<p>Then used search/replace on every new line to turn this into the following:</p>
+<pre><code class="language-TypeScript">{ id: &quot;我&quot;},
+{ id: &quot;你&quot;},
+// ... and on and on
+</code></pre>
+<p>Now I can just manually add some surrounding syntax to turn this into valid TypeScript:</p>
+<pre><code class="language-TypeScript">export const hsk1Words: DictionaryEntry[] = [
+{ id: &quot;我&quot;},
+{ id: &quot;你&quot;},
+// ... and on and on
+];
+</code></pre>
+<p>Now we can just run an auto formatter to get some nice looking code. However we don&#39;t just want the words, but also the meaning and other important metadata (we can ignore the pinyin/reading, there are libraries for that). Now I could just let the LLM go wild on this file and have it produce the other fields:</p>
+<pre><code class="language-TypeScript">export const hsk1Words: DictionaryEntry[] = [
+{
+    id: &quot;我&quot;,
+    meaning: &quot;I, me, my&quot;,
+    type: &quot;personal pronoun&quot;,
+    description: &quot;The most common way to say &#39;I&#39; or &#39;me&#39; in Chinese. Used as the subject or object in sentences to refer to oneself.&quot;,
+},
+{
+    id: &quot;你&quot;,
+    meaning: &quot;you (singular)&quot;,
+    type: &quot;personal pronoun&quot;,
+    description: &quot;The standard way to say &#39;you&#39; in Chinese. Used in informal situations or when addressing someone of similar or lower status.&quot;,
+},
+// ... and on and on
+];
+</code></pre>
+<p>One-shotting things doesn&#39;t always work though, and I&#39;ve had the best results making things in multiple steps:</p>
+<ol>
+<li>First, I asked the LLM to write the meaning/type and a short description</li>
+<li>Then ran it again (sometimes with another model) to check the first results </li>
+<li>Finally just did some quick manual checks to make sure things weren&#39;t completely wrong</li>
+</ol>
+<p>Checked about 15 entries thoroughly and the meanings/descriptions seem to be accurate from what I can tell. Really nice since this would&#39;ve been a massive undertaking before, now it just took me a couple hours to build up a massive dictionary.</p>
+<h3>Adding Voice samples</h3>
+<p>This one would have been really problematic before, but modern Text to Speech models produce really good output. Searched the web for some samples and really liked the way <a href="https://aws.amazon.com/blogs/machine-learning/meet-zhiyu-the-first-mandarin-chinese-voice-for-amazon-polly/">Amazon&#39;s Zhiyu</a> sounded, also had a very simple API and a free tier. </p>
+<p>So I used Cursor to write some code that on startup checks every dictionary entry and sees whether there&#39;s a voice sample available (it&#39;s just a directory called /voice containing MP3&#39;s). If not, it creates the file using the Amazon Polly API. </p>
+<p>Worked great and Cursor one-shotted it, so the actual coding took me a couple of minutes. I actually spent more time generating the API token on AWS than it took the LLM to write the code. Now I just added a simple rsync script so that I could synchronize the voice samples between my dev machine and the production server (that way we don&#39;t need to generate the same sample twice).</p>
+<h3>Experimenting with SEO</h3>
+<p>This one I&#39;ve been struggling with, thought it might be a good project to check out best practices for SEO and in general depend on search engines to generate traffic. It kind of works but not as much as I&#39;d like to. </p>
+<p>I suppose one of the good things is that due to the dictionary there is a lot of very specific content people might actually search for (think &quot;what does 你 mean?&quot;). This part still isn&#39;t done and I quite enjoy using MandoMaster as an SEO testbed.</p>
+<p><img src="/img/mandomaster/mandomaster_screenshot_3.png" alt="Screenshot of a MandoMaster.com review page for the Chinese character 我"></p>
+<h2>Future development</h2>
+<p>While these might take a while, I&#39;d really like to add these features in the coming weeks. Here are a couple of ideas I&#39;m particularly excited about:</p>
+<h3>Better search</h3>
+<p>While there already is a very basic search, it&#39;s not that great. I&#39;d love to have one as sophisticated as <a href="https://jisho.org/">jisho</a> which can also understand sentences and split them up so you can check things out one word/character at a time. Might also be interesting to add some LLM integration here that could explain the overall structure of the sentence.</p>
+<h3>Example sentences / LLM Tutor</h3>
+<p>No idea how well this might work, but it might be great to have an LLM generate example sentences in English based on the knowledge of the user which they then need to write in Chinese. This would get checked by the LLM that hopefully produces sensible feedback about how well things are written.</p>
+<h2>Conclusion</h2>
+<p>Real fun project, started it about 3 weeks ago and now I&#39;ve got something that works good enough for me to use on a daily basis to improve my Chinese. Getting more and more impressed by LLMs and how one can utilize them to create content that would have taken weeks/months before.</p>
+<p>Although I won&#39;t focus as much on this anymore, I&#39;ll still improve things just for my own sake. I&#39;d also like to figure out how to directly utilize LLMs for teaching, since I&#39;m starting to get to a level where I&#39;m able to build sentences myself and having somebody tell you whether it&#39;s right or wrong or how to improve things would be great (hope that LLMs are capable of that, though it&#39;d be surprising if not since I&#39;m only capable of super simple beginners Chinese).</p>
+
+    </main>
+  </body>
+</html>

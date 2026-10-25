@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Seeqie: A Terminal-Based Image Viewer Using Sixel Graphics</title>
+    <meta name="date" content="2025-04-18T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>Seeqie: A Terminal-Based Image Viewer Using Sixel Graphics</h1>
+      <p><a href="/img/seeqie/seeqie_screenshot_1.jpg"><img src="/img/seeqie/seeqie_screenshot_1.jpg" alt="Seeqie terminal image viewer - Gallery mode displaying multiple thumbnail images with sixel graphics"></a></p>
+<h2>What is Seeqie?</h2>
+<p>Seeqie is a lightweight terminal-based image gallery browser inspired by <a href="https://www.geeqie.org/">geeqie</a> but built exclusively with <a href="https://en.wikipedia.org/wiki/Sixel">sixel graphics</a>. It allows you to browse and view images directly within your terminal environment, eliminating the need to switch between applications.</p>
+<p>The project began when I switched back to using <a href="http://www.mutt.org/">mutt</a> as my mail user agent (MUA) and wanted a way to view image attachments without leaving the terminal. What started as a simple utility script quickly evolved into a full-featured image browser with navigation controls and viewing modes.</p>
+<p>Unlike many of my other projects, Seeqie is one of the few that I consider essentially complete - it does exactly what I need it to do. While there might be occasional bugs or incompatibilities to address, the core functionality is stable and reliable. My preferred terminal emulator, <a href="https://github.com/arakiken/mlterm">mlterm</a>, works particularly well with it, though I&#39;d be interested to see how it performs in other sixel-compatible terminals.</p>
+<p>If you&#39;d like to try it yourself or dive into the code, the entire script is available on <a href="https://github.com/Melchizedek6809/seeqie">GitHub</a>.</p>
+<h3>Key Features</h3>
+<ul>
+<li><strong>Terminal-native</strong>: Works entirely within your terminal using sixel graphics</li>
+<li><strong>Intuitive navigation</strong>: Controls use familiar key mappings (<kbd>w</kbd><kbd>a</kbd><kbd>s</kbd><kbd>d</kbd>, arrow keys, or vim-style <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd>)</li>
+<li><strong>Dual view modes</strong>: Toggle between single-image and tile/thumbnail views</li>
+<li><strong>Performance optimized</strong>: Efficient thumbnail generation with lazy loading</li>
+</ul>
+<p><a href="/img/seeqie/seeqie_screenshot_2.jpg"><img src="/img/seeqie/seeqie_screenshot_2.jpg" alt="Seeqie terminal image viewer - Single image view mode demonstrating high-quality sixel rendering"></a></p>
+<h2>Performance Optimizations</h2>
+<p>I&#39;ve spent significant time on improving the script&#39;s performance, focusing primarily on startup time and responsiveness. The initial approach involved parallelizing the sixel thumbnail generation by spawning multiple processes on startup, but this revealed several challenges.</p>
+<h3>Challenges and Solutions</h3>
+<p>The first major issue was system responsiveness. With multiple img2sixel processes consuming all available CPU resources, the desktop environment became unresponsive. I resolved this by implementing <code>nice</code> to lower the priority of these processes, maintaining system responsiveness while still utilizing all CPU cores.</p>
+<p>Another significant problem was that the original implementation generated thumbnails for all images at startup rather than just the visible ones. This caused substantial delays when browsing directories with hundreds of images (a common scenario for photographers and digital artists).</p>
+<h3>Technical Deep Dive</h3>
+<p>To identify the bottleneck, I examined the img2sixel source code with debug symbols and profiled the thumbnail generation process using valgrind/callgrind. The analysis revealed that scaling operations, not the sixel conversion itself, were causing the performance issues. The nearest_neighbor interpolation algorithm was faster because it used an optimized fast path, bypassing the more complex scaling operations.</p>
+<p>This led to two potential solutions:</p>
+<ol>
+<li>Skip the built-in scaling functionality</li>
+<li>Optimize the scaling process</li>
+</ol>
+<p>I chose the pragmatic approach (as laziness is indeed a virtue in programming!) by offloading the scaling operations to an external program. Since <a href="http://www.graphicsmagick.org/">GraphicsMagick</a> was already a dependency, it was the natural choice for handling image scaling.</p>
+<h3>Results and Improvements</h3>
+<p>This optimization resulted in approximately 10x faster performance, allowing me to switch from parallel ahead-of-time thumbnail generation to a sequential lazy-loading approach. This change dramatically improved startup times, especially for large directories, as thumbnails are now generated on demand when needed.</p>
+<p><a href="/img/seeqie/seeqie_screenshot_3.jpg"><img src="/img/seeqie/seeqie_screenshot_3.jpg" alt="Seeqie terminal image viewer - Detailed view showing sharp image quality and terminal integration"></a></p>
+<p>A pleasant side effect is the natural loading animation that occurs as thumbnails appear sequentially, providing better visual feedback compared to the previous implementation where users experienced a delay followed by all thumbnails appearing simultaneously.</p>
+<h2>Current Status and Future Development</h2>
+<p>Seeqie has become my go-to image viewer for terminal work. I find myself using it frequently due to its convenience and integration with my terminal-based workflow. While I&#39;m pleased with its current functionality, there are still some compatibility issues with different screen sizes and several pending bugs that need addressing.</p>
+<p>The project demonstrates how terminal applications can provide rich visual experiences without sacrificing the efficiency and keyboard-focused nature of command-line tools. For developers and users who spend significant time in the terminal, tools like Seeqie offer a way to reduce context switching and maintain workflow momentum.</p>
+<p>If you&#39;re interested in terminal-based image viewing or working with sixel graphics in your own projects, feel free to check out the code and experiment with it yourself.</p>
+<hr>
+<p><em>Adios,</em><br>べン</p>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WS2HTTP - Day 1: Switching from Rust to Node.js</title>
+    <meta name="date" content="2024-09-20T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>WS2HTTP - Day 1: Switching from Rust to Node.js</h1>
+      <h2>Initial Attempt with Rust/Tokio</h2>
+<p>Today I&#39;ve continued experimenting with this WS2HTTP idea and first started building the backend with Rust/Tokio...</p>
+<p>Gotta say, I really didn&#39;t like it, it just felt so overly complicated. I suppose that&#39;s the price one has to pay
+for efficiency, but this was quite surprising since otherwise Rust is pretty nice to work in. Maybe I&#39;ll just have
+to try again some other time and things will end up making sense once one understands the basic ideas underlying
+these abstractions.</p>
+<h2>Pivoting to Node.js for Prototyping</h2>
+<p>But since I&#39;m still in the phase where I don&#39;t quite know how things will end up looking in the end I&#39;ve decided
+to scratch the Rust backend and instead build the first prototype in Node.js, since I&#39;m already quite familiar
+with how to build WebSocket/HTTP servers there, and once things stabilize and the design is done then I can
+take another look at implementing the same program in Rust. </p>
+<p>This also sounds like a great way to compare
+the performance of Node.js vs Rust/Tokio, since right now I just have a gut feeling that the Rust one will
+probably end up being faster/more efficient, but so far that is just an assumption on my part. Wouldn&#39;t be
+the first time that I&#39;m surprised by how great modern JS runtimes are at optimizing code, and libuv has probably
+had a lot of effort put into it to make it as fast/efficient as possible. Although I suppose the single-threaded
+nature might become a bottleneck, but who knows, modern CPUs are super fast these days and since WS2HTTP is
+probably spending most of its time waiting for I/O it might end up not being an issue at all.</p>
+<h2>Future Implementation Plans</h2>
+<p>Now that I&#39;m thinking about it, doing another implementation in Go/Erlang afterwards would be really interesting,
+and a great way to learn these languages. But first I&#39;ll have to get the base design with the Node.js version right,
+build a couple of example applications to test whether things actually work and then develop some benchmarks to see
+how much performance can be expected from this architecture. </p>
+<h2>Performance Targets</h2>
+<p>For it to be a success to me it needs to support at least
+1k msg/s and at least 10k open connections on a $5 VPS, since that&#39;s pretty much the absolute upper bound from what I&#39;m
+expecting for my tiny projects. I mean if there are more than 10k people using this app simultaneously I&#39;ll probably have
+to rewrite things to be more efficient anyways.</p>
+<p>Alright, that&#39;s it, if you&#39;re interested, then you can see the current state over on <a href="https://github.com/Melchizedek6809/ws2http">GitHub</a>.</p>
+
+    </main>
+  </body>
+</html>

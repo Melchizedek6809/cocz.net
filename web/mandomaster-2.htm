@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MandoMaster 2: Evolution of a Chinese Learning Tool</title>
+    <meta name="date" content="2025-05-03T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>MandoMaster 2: Evolution of a Chinese Learning Tool</h1>
+      <div class="intro">
+So I've been continuing working a little on MandoMaster, a free Chinese learning app. If you're interested in the beginning then you can read my <a href="/mandomaster">earlier entry</a>. In this entry I'd like to share how some things worked out as well as some (minor) lessons I learned along the way.
+</div><p><a href="/img/mandomaster/mm2_sc0.webp"><img src="/img/mandomaster/mm2_sc0.webp" alt="Screenshot of the redesigned mandomaster.com start page"></a></p>
+<h2>Latest Developments</h2>
+<p>While the overall idea has stayed the same, pretty much every aspect has been improved and polished.</p>
+<h3>Structured Learning Path with AI-Enhanced Lessons</h3>
+<p>Before one could just add vocabulary to the review pile one by one without any sort of general explanation or plan.
+Now things are quite different in that there are lessons a user must work through one by one. These introduce new concepts as well as vocabulary in a preset path and then add entries to the review pile after finishing a lesson.</p>
+<p><a href="/img/mandomaster/mm2_sc1.webp"><img src="/img/mandomaster/mm2_sc1.webp" alt="Screenshot of the lesson overview"></a></p>
+<h4>Writing process</h4>
+<p>Just like the normal dictionary entries, a lot of AI was used in the process here. In general, I specified the overall theme of the particular lesson and mostly specified the vocabulary that was to be taught in that particular lesson. I&#39;d then use the AI to actually write a lesson about that, which I&#39;d then reorder and rewrite heavily to fit the overall style. Basically a long back and forth just like the rest of the codebase.</p>
+<h4>Header Images</h4>
+<p>All of the lessons also have a header image. While it doesn&#39;t add any information, I think it does make things look somewhat nicer and in my opinion greatly helps the overview since you now have an image representing each lesson. Sometimes the image also represents the lesson quite well, while some topics were rather hard to describe in images.</p>
+<p>I tried using both <a href="/ai-image-generation/">Gemini and ChatGPT at first</a> which somewhat worked but wasn&#39;t great. In the end, I settled on the following workflow for generating these headers using Gemini/Midjourney:</p>
+<ul>
+<li>Use Gemini 2.5 Pro with a prompt telling it to create a comma-separated list of up to 15 tags specifying an image that represents the following lesson</li>
+<li>Copy and Paste this list and combine it with a custom prefix I&#39;ve written giving an overall art direction into Midjourney</li>
+<li>Refine in Midjourney by generating variants of good-looking pictures and then editing/upscaling a final version</li>
+</ul>
+<p>This worked really well and I still really enjoy the pictures generated via Midjourney, prompting some rather big redesigns.</p>
+<p><a href="/img/mandomaster/mm2_sc2.webp"><img src="/img/mandomaster/mm2_sc2.webp" alt="Screenshot of a lesson showing a header image"></a></p>
+<h3>Enhanced Dictionary Search</h3>
+<p>I&#39;ve (well, Claude 3.7 actually) written a dead simple search for the dictionary. While it&#39;s not particularly sophisticated, it works well enough for my use case when I need to look something up to check the reading/characters for a particular word.</p>
+<h3>Improved Social Media Integration</h3>
+<p>Thanks to <a href="/url2og">url2og</a>, MandoMaster also has very nice OpenGraph images and improved metadata which makes it show up much better in most messaging apps and social media apps.</p>
+<h3>Flexible Vocabulary Card System</h3>
+<p>I also generalized the dictionary view into a sort of general vocabulary card with two forms: a big one for the dictionary or the section at the end of a lesson listing all the vocabulary. The other form is an inline form that can be used within the lesson which then automatically shows the pinyin and allows one to hear a voice sample when clicking on the particular card.</p>
+<p><a href="/img/mandomaster/mm2_sc3.webp"><img src="/img/mandomaster/mm2_sc3.webp" alt="Screenshot of the end of a lesson showing these vocabulary cards"></a></p>
+<h2>SEO and Discoverability Insights</h2>
+<p>I&#39;m still learning a lot about how to design for searchability, but things are looking somewhat alright. It does get far more impressions/clicks than pretty much any other page I&#39;ve made, which still isn&#39;t great but seems as though my efforts did have some effect. I&#39;ll probably stick to it and fine-tune things here and there in the future for various experiments.</p>
+<h2>Conclusion</h2>
+<p>Rather fun project, learned a lot about SEO though I&#39;m still somewhat lost. Apart from that, it does work as intended and helps at least me greatly in learning/reviewing my Chinese every day. I&#39;ve also finally tried out Midjourney due to this and am quite excited about using it in future projects due to the great results I&#39;ve gotten so far, because I feel that similar to Cursor, it&#39;s a great tool which one just has to learn how to use properly.</p>
+<hr>
+<p><em>Adios,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

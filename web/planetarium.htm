@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Planetarium: keeping track of architecture while vibecoding</title>
+    <meta name="date" content="2025-07-29T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>Planetarium: keeping track of architecture while vibecoding</h1>
+      <div class="intro">
+Just a simple tool I've built for myself that hopefully helps keep a codebase clean during vibecoding
+</div><p><a href="/img/planetarium/planetarium0.webp"><img src="/img/planetarium/planetarium0.webp" alt="Screenshot of planetarium looking at Wolkenweltn-ts"></a></p>
+<h2>Why I Built This</h2>
+<p>So, after ranting a bit about how terrible vibe coding is for anything somewhat complex I&#39;ve researched a bit and it seems that managing context is one of the main problems for coding agents. Additionally there seems to be some indicators that AI agents do a better job while working on microservies. This led me to try it out myself and so I started refactoring the bitmenu codebase a bit to try and decompose and modularize it better, and while not object/scientific it does seem to improve the quality of the changes claude code makes.</p>
+<p>To better understand the codebase, especially as it&#39;s undergoing rapid changes due to AI agents, I&#39;ve built myself a tool in the form of a VS Code extension for quickly visualizing what the current architecture is, focusing on quickly showing which modules are referenced throughout the codebase as well as providing some ballpark figures for complexity (lines of code... not great, I know, but it&#39;s probably one of the simpler metrics to calculate).</p>
+<p><a href="/img/planetarium/planetarium1.webp"><img src="/img/planetarium/planetarium1.webp" alt="Screenshot of planetarium looking at Codewaifu"></a></p>
+<p>I&#39;ve also (well Claude Code to be exact, it&#39;s 99% vibecoded) a feature that colors nodes/arrows red/green depending on whether they&#39;ve been added or removed when compared to the last commit. This should hopefully quickly indicate when an AI agent starts importing like crazy increasing overall system complexity. Since it seems like the ideal are many modules that only depend on a handful of other modules.</p>
+<p>Also have to say that Claude Code worked really well here, I was pretty much only doing testing (apart from debugging some minor issues in the beginning) and providing overall guidance on what to do, which features to add (and also which to remove). Though I suppose this just underlines that AI agents are remarkable for small projects, but then quickly grind to a halt as the system
+gathers a complexity that is too big to fit into the limited context window of today&#39;s models.</p>
+<p>Now, I&#39;ve only spent about an hour to build this prototype but I&#39;ll be testing it out in the coming days while working on some other projects of mine to try and reduce complexity. Might actually end up publishing it to the repo if it ends up being useful to me, since so far it&#39;s just an idea.</p>
+<hr>
+<p><em>Adiós,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ruxvt: the project that broke vibe coding for me</title>
+    <meta name="date" content="2026-10-25T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>ruxvt: what broke vibe coding for me</h1>
+      <div class="byline">2026-10-25</div>
+      <hr/>
+      <p>
+        A couple of months back, still having some tokens left in my subscription,
+        I wanted to do a very small constrained project, a way to test whether AI
+        (mainly Fable 5 and GPT 5.5 I think) are capable of producing excellent code.
+      </p>
+      <p>
+        For this I also wanted to have a project that has a lot of implementations available
+        already, but none just the way I wanted them to be, the goal was mainly to have
+        an efficient terminal emulator that uses as little memory as possible (I have 10
+        instances running most times), support native X11 <b>and</b> Wayland, idle at 0% CPU
+        and support bitmapped BDF/PCF fonts.<br/>
+        Apart from that I wanted to use Rust here since the crates ecosystem is
+        amazing, resulting in far less code for the LLM to write.
+      </p>
+      <p>
+        I had an initial prototype after a couple of session windows (no suprises here)
+        and it actually worked quite well, leading me to use it as my daily driver.<br/>
+        After it completed a feature, I kept focusing on simplifying the codebase,
+        basically by just asking AI to look at a specific file/module and come up with a
+        plan on how to simplify it, approving it if it sounded sensible and commiting it if the diff
+        looked reasonable.<br/>
+        I also ran it on various devices / tried all sorts of CLI/TUI programs
+        to surface as many bugs as possible and just let AI fix things.
+      </p>
+      <p>
+        Now, keep in mind I've probably requested over 20 plans on how to simplify the various
+        modules/files implementing most of them and at some point the answer was
+        that the codebase is quite simple and there's very little to be done to simplify it.
+      </p>
+      <p>
+        I think it had ~7k LoC (I know, not a good measure but should give an estimate sort of).
+        Some things were just odd that the LLM did not flag them, for example it wasn't using <a href="https://crates.io/crates/clap">clap</a> for
+        parsing arguments. Got rid of hundreds of lines by replacing it with a super simple clap derive
+        based parser (sure, the executable will probably get slightly bigger but that to me is kind of an obvious tradeoff).
+      </p>
+      <p>
+        Now for one of the more problematic ones, during development I had an
+        issue where in sway/wayland it would only render the first frame and then
+        not update, I described the bug and the LLM made a plan on how to fix this properly,
+        this was probably a "mistake" on my part in how I prompted the LLM since it proceeeded
+        to basically side-step <a href="https://crates.io/crates/winit">winit</a> by enumerating all screens, getting the refresh rates,
+        getting the offset of the current window (of course only during startup, who moves a window).
+        Calculates the percentage that each window occupies on a given screen and the proceeds to use
+        the refresh rate of the display with the highest overlap as the refresh rate for the application
+        itself, by just setting up a timer which then manually requests a redraw.
+      </p>
+      <p>
+        That whole machinery measured in at hundreds of lines, and on multiple occasions (think I asked
+        both Fable 5 and GPT 5.5) when asked whether this was safe to remove it replied with
+        huge text walls saying why this is important and absolutely needed to ensure proper
+        functionality on Wayland and X11. So I just deleted that entire bit by hand and
+        just hooked things up normally to just redraw when winit tells us to. Unlike the prior
+        warnings on how this was required by state of the art models, removing it just improved
+        things, idle CPU usage went down, it felt more responsive and I reduced the overall size
+        of the codebase by at 15% or so.
+      </p>
+      <p>
+        This bit kind of made me loose all trust in LLMs for coding. I mean I could have probably
+        told the agent to remove that bit, but I never would have noticed if I didn't look at
+        the code manually. my guess is that a big problem was that it had surrounding comments
+        warning about removal since this might silently break wayland, which the LLM apparently
+        took rather serious.
+      </p>
+      <p>
+        Now at the time it actually did fix my wayland issues, took like 5 attempts to get things
+        working there with increasing complex machinery. In the end after rewriting the entire redraw
+        scheduling by hand (and removing lots of unnecessary indirection/abstractions) things just worked
+        much better and without all that stuff.
+      </p>
+      <p>
+        This to me looked like an issue since quite often you have changes that by itself aren't bad, but
+        they keep going in a direction that long-term lead to problems. Additionally it was concerning to me
+        that the agent said that all of this was required, it was quite the mess to clean up since redraw was
+        kind of spread out across 3 different files/modules but honestly wasn't that complicated. Something
+        I'd expect a motivated junior dev to handle in a couple of days. Keep in mind the overall codebase
+        was just a couple thousand lines of code with most of the heavy lifting being done in external crates.
+      </p>
+      <p>
+        What also suprised me was that I'd have expected LLMs to know better on how to use crates like winit,
+        or how to handle GUI applications in general, I mean winit is a very popular crate with loads of open
+        source applications and toolkits depending on it.
+      </p>
+      <p>
+        So this goes back to my now disillusioned look at LLM-based coding agents, most changes look alright
+        or at least have a good enough explanation for why they are necessary. To ensure that you actually get
+        a high-quality codebase you must manually go through every single line, think about each function and
+        especially abstractions and indirections. The problem is that this takes time, a lot of time, enough
+        that at least for me it doesn't seem to make producing great code faster. Additionally a big issue
+        is that I actually enjoy writing code, so I get a modest speed boost but at the cost of the more
+        enjoyable parts of software development.
+      </p>
+      <p>
+        I mean average software quality was already in a rather steep decline before modern LLMs got
+        introduced, so might actually on average produce better code. Yet I have to say, in the last
+        year I kept noticing more and more bugs and that decline in quality feels like it has sped
+        up (although I have no data to back that up, just vibes).
+      </p>
+      <hr>
+      <p>
+        <em>Adiós,</em><br/>
+        べン
+      </p>
+    </main>
+  </body>
+</html>

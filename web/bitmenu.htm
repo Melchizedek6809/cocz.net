@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Building a Digital Menu Startup: Lessons from bitmenu</title>
+    <meta name="date" content="2025-04-11T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>Building a Digital Menu Startup: Lessons from bitmenu</h1>
+      <p>In this comprehensive retrospective, I&#39;ll share everything I&#39;ve learned while building bitmenu, a startup that enables restaurants to create digital menus accessible via QR codes and links. This project also served as an excellent opportunity to explore the capabilities of Large Language Models (LLMs), particularly <a href="https://www.cursor.com">Cursor</a>.</p>
+<p><a href="/img/bitmenu.jpg"><img src="/img/bitmenu.jpg" alt="Startpage of bitmenu rendered via url2og"></a></p>
+<h2>Project Overview / Learnings</h2>
+<p>Our journey began with a simple yet ambitious goal: creating a platform where restaurants could sell digital menus. Users could register, create their menu, and preview it, while others could view it for a small one-time fee. While the project didn&#39;t achieve commercial success, it provided valuable insights and learning opportunities.</p>
+<p>We successfully onboarded local restaurants to create digital menus using our app and print QR codes for display. However, we made several critical mistakes:</p>
+<ol>
+<li><p>We handled all data entry ourselves, primarily using an LLM to analyze pictures of printed menus. This approach meant we missed valuable feedback about our editor&#39;s usability.</p>
+</li>
+<li><p>We offered the service for free to restaurants where we had connections. While it was gratifying to see our QR codes and menus in places we frequented, this strategy meant no revenue and potentially less critical feedback. Harsh critique would have been more valuable than kind words.</p>
+</li>
+</ol>
+<p>Our assumptions about customer convenience proved incorrect. Many customers weren&#39;t particularly excited about the digital menus, and our analytics showed that most users found the menus through Google Search rather than scanning QR codes.</p>
+<p>Google Ads proved effective, though expensive. This suggests that advertising is most valuable when you have a product that people are willing to pay for and just need to reach more potential customers.</p>
+<h2>Technical Implementation</h2>
+<p>Let&#39;s dive into the technical side of bitmenu! Building a digital menu platform required careful consideration of our tech stack and overcoming several implementation challenges. Here&#39;s how we approached the technical aspects of the project:</p>
+<h3>Technical Stack</h3>
+<p>After extensive experimentation, we settled on a stack that balanced performance with rapid development:</p>
+<h4>Node.js</h4>
+<p>Our backend of choice, offering excellent performance and the convenience of sharing code and types between frontend and backend.</p>
+<h4>TypeScript</h4>
+<p>An essential tool that caught errors during development rather than runtime, significantly improving our development experience.</p>
+<h4>TSX</h4>
+<p>Proved excellent for development work and performed well enough in production to justify its continued use.</p>
+<h4>Vite</h4>
+<p>An exceptional bundler that, when combined with a Node backend, enabled super-fast iteration cycles through embedded development servers.</p>
+<h4>SQLite</h4>
+<p>Our preferred database solution, requiring no setup and handling our scale requirements effectively.</p>
+<h4>Vanilla CSS</h4>
+<p>After experimenting with Bootstrap and Tailwind, we found that vanilla CSS with LLM-generated components provided the best balance of performance and development speed.</p>
+<h4>Express</h4>
+<p>A reliable backend framework that made it simple to integrate the Vite Dev Server.</p>
+<h3>Technical Challenges</h3>
+<p>Implementing Figma designs with LLM tools presented significant challenges. While the tools excelled at rough implementations, achieving pixel-perfect designs required substantial manual coding.</p>
+<h2>LLM Integration</h2>
+<p>One of the most innovative aspects of bitmenu was our use of Large Language Models. We leveraged LLMs in several key areas to enhance the user experience and streamline our workflow. These AI-powered features became central to our product offering:</p>
+<h3>Menu Modification</h3>
+<p>We implemented an innovative feature allowing menu modification through LLMs. By serializing menu JSON and crafting detailed prompts, we enabled users to modify menus through natural language. While this worked well with proper prompts, single-word inputs (like &quot;Dessert&quot;) sometimes confused the system, though it often correctly interpreted the intent.</p>
+<p>The LLM-powered image analysis feature proved remarkably effective. In many cases, simply photographing a menu was sufficient for the LLM to generate the corresponding JSON structure.</p>
+<h3>Menu Serialization</h3>
+<p>Our approach to menu serialization proved particularly effective. By using a simple JSON structure with basic types, we enabled easy LLM-based modification and generation. This contrasted with more complex relational database structures we&#39;d used in previous projects, which involved multiple tables (menu, menu_section, menu_item, menu_item_variation) with inter-table references.</p>
+<p>We stored the entire menu in a single table as a blob, implementing immutability to support undo/redo functionality through a version selection interface. This proved crucial for handling potential LLM errors.</p>
+<p>You might wonder how we treated LLM errors or edge cases. Here, we took a very simple approach that worked rather well: the JSON structure is just the input for a more sophisticated class-based data structure. We can then construct this high-level structure by parsing the JSON structure built out of primitive types, which then does a lot of sanity and type checks on the underlying data structure while building up the objects.</p>
+<p>To ensure that we actually got a good result, we tried to parse the JSON we got from the LLM, and only if it was a valid menu would we accept it. This approach was used for both the prompt-based editor and the image importer.</p>
+<h2>Wrapping things up / Future</h2>
+<p>Looking ahead, implementing an ordering feature through QR codes could significantly enhance our value proposition to restaurants. This functionality would transform our app from a simple menu display to a comprehensive ordering solution.</p>
+<p>If you&#39;re interested in seeing the current state of the project, you can visit <a href="https://bitmenu.net/">bitmenu</a>. Note that the interface is in German.</p>
+
+    </main>
+  </body>
+</html>

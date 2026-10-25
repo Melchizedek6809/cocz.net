@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Nujel: A Lightweight Lisp Implementation</title>
+    <meta name="date" content="2025-04-17T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>Nujel: A Lightweight Lisp Implementation</h1>
+      <p>Today I&#39;m going to write about another old project of mine where development
+stopped but where I&#39;m still somewhat excited about the overall idea. It&#39;s my
+attempt at writing my own Lisp-like programming language called <a href="https://github.com/Melchizedek6809/Nujel">Nujel</a> - a lightweight, dependency-free language implementation with both functional and object-oriented features.</p>
+<h2>What is Nujel?</h2>
+<p>Nujel is a <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>-like
+language with a syntax that&#39;s heavily inspired by <a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>
+and <a href="https://en.wikipedia.org/wiki/Clojure">Clojure</a>. It supports multiple
+paradigms including functional and object-oriented programming, allowing the
+programmer to choose whichever style better suits the project at hand.</p>
+<h3>Nujel is a Lisp</h3>
+<p>Nujel uses S-Expressions for its syntax making it homoiconic, it also has a
+powerful macro system and most of the language is actually built up using the
+macro system from a bunch of primitives. These primitives in turn are created
+by a compiler written in Nujel which expands these macros which in turn gets
+compiled into bytecode instructions for a custom VM that is rather optimized,
+even surpassing some simpler JIT&#39;s in a couple of benchmarks. Of course proper
+JIT&#39;s or other highly optimized runtimes are much faster.</p>
+<h3>Nujel is functional</h3>
+<p>Functions are first-class values in Nujel allowing you to use them like any
+other value. Additionally there are many functional iteration primitives like
+map or fold. It also prominently features <a href="https://en.wikipedia.org/wiki/Cons">Cons cells</a>
+as an immutable data structure. Although it does allow for mutability if it
+makes things easier/faster.</p>
+<h3>Nujel is object-oriented</h3>
+<p>This one might be somewhat controversial but after a while I&#39;ve added an object
+system including inheritance to Nujel. It is <a href="https://en.wikipedia.org/wiki/Prototype-based_programming">prototype</a>
+based rather than class based since that was most natural to implement in the
+runtime, and seemed to allow for the most flexibility, since we mainly needed
+to add method dispatch to the VM (which wasn&#39;t really necessary, but made things
+much faster). Apart from that it&#39;s mainly just some syntax sugar and some
+macros.</p>
+<p>This got started mainly due to the IO subsystem which is somewhat object
+oriented but with a strange syntax and very slow method dispatch, though I
+suppose that a sufficiently smart compiler might hide that fact.</p>
+<h2>What makes Nujel special?</h2>
+<p>Nujel distinguishes itself from other embedded language implementations through
+its minimal footprint and impressive performance characteristics.
+The language runtime is designed with simplicity and embeddability
+as core principles.</p>
+<h3>Nujel is remarkably small</h3>
+<p>A static executable for Linux using <a href="https://musl.libc.org/">musl</a> weighs in at
+about <strong>312KB</strong> in size, it&#39;s also rather fast, regularly beating Python/Ruby
+in some benchmarks of mine (also beats most embedded Lisp/Scheme implementations).
+The entire VM with bindings to standard unix/libc functions is about 6000 lines of C code.</p>
+<h3>Nujel has no dependencies</h3>
+<p>Nujel just requires a standard C library, nothing more, and even that could be
+worked around if one is willing to give up on math functions like sin/cos.</p>
+<p>Additionally Nujel can be compiled into a single C Source and Header file pair,
+which should make it dead simple to use it in a C/C++ codebase, similar to the
+<a href="https://github.com/nothings/stb">stb libs</a>. This makes Nujel particularly
+suitable for embedding in resource-constrained environments
+or as a scripting language for applications.</p>
+<h2>Future Nujel Development</h2>
+<p>Once I have some more time I&#39;d like to write the reader/parser in Nujel instead
+of C, while this should make things a little slower it would make the VM
+smaller and allow for reader macros, which right now would be very problematic
+to do.</p>
+<p>The good thing is that since the VM supports a binary image format we don&#39;t need
+to read/parse any code to start the runtime, only when a user types in some code
+or we compile some new code do we need to use the reader.</p>
+<p>Apart from that there are still some ideas about static typing, similar to
+TypeScript in that things default to an Any type, but you&#39;re free to specialize
+to make things more readable, we could then also use this in the compiler to
+emit type specific code, since there already are some type specific opcodes for
+things like addition/comparison operations (mainly for fast loops).</p>
+<h2>Conclusion</h2>
+<p>Nujel was a rather nice project where I&#39;ve learned a ton, in the beginning it
+was actually a Scheme and I implemented most of R5RS including a number of
+SRFI&#39;s, but over time things shifted into a different direction. While I sadly
+am not using it that often I still really like it and think it helped me become
+a much better programmer in a lot of ways.</p>
+<p>For developers interested in embedded language runtimes or Lisp implementations,
+Nujel offers a compelling example of how to create a powerful language with
+minimal overhead. Though development has slowed,
+the project remains open source and could serve as an
+excellent foundation for those looking to explore
+programming language implementation or add scripting
+capabilities to resource-constrained applications.</p>
+
+    </main>
+  </body>
+</html>

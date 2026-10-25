@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WS2HTTP - Day 0: Bridging WebSockets and CGI</title>
+    <meta name="date" content="2024-09-19T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>WS2HTTP - Day 0: Bridging WebSockets and CGI</h1>
+      <h2>The Problem with Modern Web Stacks</h2>
+<p>So, because I&#39;ve been thinking a lot about how to do small projects on the web without all the
+complexity inherent in modern stacks I came upon an idea that might be able to allow for
+efficient WebSockets with a (Fast)CGI backend.</p>
+<p>It seems that most ways allowing for WebSockets really really want you to have a HTTP server
+running your backend code all the time. This really irks me because I absolutely love how
+with CGI only your HTTP server needs to run all the time and enforces each request to be
+dealt with in complete isolation. This allows for easy experimentation/updates since if
+you break something the HTTP server will just return a 500 page and the next request might
+just succeed, this makes an application quite resilient since I&#39;ve seen it far too often
+that one bad request brings down the whole backend because of some uncaught exception.</p>
+<h2>Benefits of the CGI Model</h2>
+<p>This also allows for much better GC schemes, mainly just don&#39;t collect at all since you
+can just free the entire heap at the end.</p>
+<p>But enough praise of the CGI model, since I&#39;ve wanted to preserve these characteristics
+but still allow for efficient server initiated updates I needed something to bring
+WebSockets into the CGI world.</p>
+<h2>The WS2HTTP Solution</h2>
+<p>The idea is to have a simple Rust program act as a bridge, in that it translates each
+WebSocket event into a separate HTTP request. To send a message one can just POST to
+that same Rust program. That&#39;s it. That way the only programs that need to be running
+all the time are the HTTP server and the Rust bridge, both programs that have a very
+specific feature set and don&#39;t need to change according to application needs.</p>
+<p>And while doing a separate HTTP request for every WebSocket event might sound inefficient,
+with most projects there&#39;s just not that much going on, and since even somewhat slow languages
+can easily serve more than 1k req/s this shouldn&#39;t be a problem (since only an event triggers
+a request, a WebSocket that&#39;s just open should be pretty inexpensive).</p>
+<h2>Current Progress and Future Plans</h2>
+<p>So, if you&#39;re interested you can see the current state over on <a href="https://github.com/Melchizedek6809/ws2http">GitHub</a>.
+Today I&#39;ve mostly set things up and started on a very simple PoC PHP Chatroom, once things
+stabilize I&#39;ll see what else can be built with it, and I&#39;m also itching to get Nujel hooked up
+to it, would be pretty cool to develop fancy WebApps in my own language.</p>
+
+    </main>
+  </body>
+</html>

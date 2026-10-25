@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Ben's Blog</title>
+  <link>https://cocz.net</link>
+  <description>Ramblings from cyberspace</description>
+  <item>
+    <title>ruxvt: the project that broke vibe coding for me</title>
+    <guid>https://cocz.net/ruxvt.html</guid>
+    <link>https://cocz.net/ruxvt.html</link>
+    <pubDate>Sun, 25 Oct 2026</pubDate>
+  </item>
+<item>
+    <title>systemd is rather nice</title>
+    <guid>https://cocz.net/systemd-is-rather-nice.html</guid>
+    <link>https://cocz.net/systemd-is-rather-nice.html</link>
+    <pubDate>Sun, 14 Dec 2025</pubDate>
+  </item>
+<item>
+    <title>Rust WebDev - a delightful experience</title>
+    <guid>https://cocz.net/rust-webdev.html</guid>
+    <link>https://cocz.net/rust-webdev.html</link>
+    <pubDate>Sun, 02 Nov 2025</pubDate>
+  </item>
+<item>
+    <title>Goodbye GuixSD</title>
+    <guid>https://cocz.net/goodbye-guix.html</guid>
+    <link>https://cocz.net/goodbye-guix.html</link>
+    <pubDate>Sun, 07 Sep 2025</pubDate>
+  </item>
+<item>
+    <title>Hello GuixSD</title>
+    <guid>https://cocz.net/hello-guix.html</guid>
+    <link>https://cocz.net/hello-guix.html</link>
+    <pubDate>Fri, 29 Aug 2025</pubDate>
+  </item>
+<item>
+    <title>Why has Linux stopped innovating?</title>
+    <guid>https://cocz.net/why-is-linux-not-innovating.html</guid>
+    <link>https://cocz.net/why-is-linux-not-innovating.html</link>
+    <pubDate>Sat, 16 Aug 2025</pubDate>
+  </item>
+<item>
+    <title>Python’s ecosystem is a mess</title>
+    <guid>https://cocz.net/python-is-a-terrible-ecosystem.html</guid>
+    <link>https://cocz.net/python-is-a-terrible-ecosystem.html</link>
+    <pubDate>Sat, 09 Aug 2025</pubDate>
+  </item>
+<item>
+    <title>What's Up with tRPC?</title>
+    <guid>https://cocz.net/whats-up-with-trpc.html</guid>
+    <link>https://cocz.net/whats-up-with-trpc.html</link>
+    <pubDate>Thu, 07 Aug 2025</pubDate>
+  </item>
+<item>
+    <title>Bitmenu 2.0 - From Zero to First Sale: Table-Ordering via QR Code in 5 Minutes</title>
+    <guid>https://cocz.net/bitmenu-sales.html</guid>
+    <link>https://cocz.net/bitmenu-sales.html</link>
+    <pubDate>Sat, 02 Aug 2025</pubDate>
+  </item>
+<item>
+    <title>Planetarium: keeping track of architecture while vibecoding</title>
+    <guid>https://cocz.net/planetarium.html</guid>
+    <link>https://cocz.net/planetarium.html</link>
+    <pubDate>Tue, 29 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>Designing software architecture for AI coding assistants</title>
+    <guid>https://cocz.net/software-architecture-for-vibe-coding.html</guid>
+    <link>https://cocz.net/software-architecture-for-vibe-coding.html</link>
+    <pubDate>Fri, 25 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>Vibecoding: why Claude Code is the wrong approach</title>
+    <guid>https://cocz.net/thoughts-on-vibe-coding.html</guid>
+    <link>https://cocz.net/thoughts-on-vibe-coding.html</link>
+    <pubDate>Thu, 24 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>A Type-Safe, Lightweight i18n System in TypeScript</title>
+    <guid>https://cocz.net/typescript-i18n.html</guid>
+    <link>https://cocz.net/typescript-i18n.html</link>
+    <pubDate>Sun, 20 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>Cursor's Pricing Train-Wreck: What the Hell Happened?</title>
+    <guid>https://cocz.net/what-happened-to-cursor.html</guid>
+    <link>https://cocz.net/what-happened-to-cursor.html</link>
+    <pubDate>Sat, 19 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>CodeWaifu: VTuber Voice Assistant</title>
+    <guid>https://cocz.net/codewaifu-2.html</guid>
+    <link>https://cocz.net/codewaifu-2.html</link>
+    <pubDate>Thu, 17 Jul 2025</pubDate>
+  </item>
+<item>
+    <title>MandoMaster 3: This Time with More AI</title>
+    <guid>https://cocz.net/mandomaster-3.html</guid>
+    <link>https://cocz.net/mandomaster-3.html</link>
+    <pubDate>Sat, 07 Jun 2025</pubDate>
+  </item>
+<item>
+    <title>WolkenWelten Update - Multiplayer Now Working in TypeScript Version!</title>
+    <guid>https://cocz.net/wolkenwelten-update.html</guid>
+    <link>https://cocz.net/wolkenwelten-update.html</link>
+    <pubDate>Sun, 01 Jun 2025</pubDate>
+  </item>
+<item>
+    <title>MaoMi - Building a Vibe Coding Platform for Web Games</title>
+    <guid>https://cocz.net/maomi-vibe-coding-web-games.html</guid>
+    <link>https://cocz.net/maomi-vibe-coding-web-games.html</link>
+    <pubDate>Sun, 11 May 2025</pubDate>
+  </item>
+<item>
+    <title>Cocz.net - Now Powered by a Custom TypeScript SSG</title>
+    <guid>https://cocz.net/cocz.net.html</guid>
+    <link>https://cocz.net/cocz.net.html</link>
+    <pubDate>Mon, 05 May 2025</pubDate>
+  </item>
+<item>
+    <title>MandoMaster 2: Evolution of a Chinese Learning Tool</title>
+    <guid>https://cocz.net/mandomaster-2.html</guid>
+    <link>https://cocz.net/mandomaster-2.html</link>
+    <pubDate>Sat, 03 May 2025</pubDate>
+  </item>
+<item>
+    <title>URL2OG - An Exercise in Vibe Coding</title>
+    <guid>https://cocz.net/url2og.html</guid>
+    <link>https://cocz.net/url2og.html</link>
+    <pubDate>Tue, 29 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>My AI Image Generation Journey: ChatGPT vs Gemini</title>
+    <guid>https://cocz.net/ai-image-generation.html</guid>
+    <link>https://cocz.net/ai-image-generation.html</link>
+    <pubDate>Sat, 26 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>A certain magical shooter - My Touhou-Inspired Game Jam Project</title>
+    <guid>https://cocz.net/a-certain-magical-shooter.html</guid>
+    <link>https://cocz.net/a-certain-magical-shooter.html</link>
+    <pubDate>Wed, 23 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>WikiNarau: Interactive Learning Meets Wiki</title>
+    <guid>https://cocz.net/wikinarau.html</guid>
+    <link>https://cocz.net/wikinarau.html</link>
+    <pubDate>Tue, 22 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>WolkenWelten: From C++ to TypeScript in Game Development</title>
+    <guid>https://cocz.net/wolkenwelten.html</guid>
+    <link>https://cocz.net/wolkenwelten.html</link>
+    <pubDate>Mon, 21 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>VibeOS: Day 1 - Creating an Operating System from Scratch with AI</title>
+    <guid>https://cocz.net/vibeos-day1.html</guid>
+    <link>https://cocz.net/vibeos-day1.html</link>
+    <pubDate>Sun, 20 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>CLuix: A Common Lisp Approach to Functional Package Management</title>
+    <guid>https://cocz.net/cluix.html</guid>
+    <link>https://cocz.net/cluix.html</link>
+    <pubDate>Sat, 19 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>Seeqie: A Terminal-Based Image Viewer Using Sixel Graphics</title>
+    <guid>https://cocz.net/seeqie.html</guid>
+    <link>https://cocz.net/seeqie.html</link>
+    <pubDate>Fri, 18 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>Nujel: A Lightweight Lisp Implementation</title>
+    <guid>https://cocz.net/nujel.html</guid>
+    <link>https://cocz.net/nujel.html</link>
+    <pubDate>Thu, 17 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>ZZTerm: A Terminal Emulator with Extended Graphics Capabilities</title>
+    <guid>https://cocz.net/zzterm.html</guid>
+    <link>https://cocz.net/zzterm.html</link>
+    <pubDate>Wed, 16 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>Modern C Makefiles: Complete Setup with CI/CD</title>
+    <guid>https://cocz.net/modern-c-makefiles.html</guid>
+    <link>https://cocz.net/modern-c-makefiles.html</link>
+    <pubDate>Tue, 15 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>CodeWaifu: Building an AI Code Assistant with Voice Control and VTuber Avatar</title>
+    <guid>https://cocz.net/codewaifu.html</guid>
+    <link>https://cocz.net/codewaifu.html</link>
+    <pubDate>Mon, 14 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>MandoMaster: AI-Powered Chinese Learning with Spaced Repetition</title>
+    <guid>https://cocz.net/mandomaster.html</guid>
+    <link>https://cocz.net/mandomaster.html</link>
+    <pubDate>Sun, 13 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>RMake: A Modern GNU Make Alternative written in Rust</title>
+    <guid>https://cocz.net/rmake.html</guid>
+    <link>https://cocz.net/rmake.html</link>
+    <pubDate>Sat, 12 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>Building a Digital Menu Startup: Lessons from bitmenu</title>
+    <guid>https://cocz.net/bitmenu.html</guid>
+    <link>https://cocz.net/bitmenu.html</link>
+    <pubDate>Fri, 11 Apr 2025</pubDate>
+  </item>
+<item>
+    <title>6 Tips for Effective AI-Assisted Coding</title>
+    <guid>https://cocz.net/tips-for-ai-coding.html</guid>
+    <link>https://cocz.net/tips-for-ai-coding.html</link>
+    <pubDate>Sat, 08 Feb 2025</pubDate>
+  </item>
+<item>
+    <title>WS2HTTP - Day 2: Implementing Message Routing</title>
+    <guid>https://cocz.net/ws2http-day2.html</guid>
+    <link>https://cocz.net/ws2http-day2.html</link>
+    <pubDate>Mon, 23 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>WS2HTTP - Day 1: Switching from Rust to Node.js</title>
+    <guid>https://cocz.net/ws2http-day1.html</guid>
+    <link>https://cocz.net/ws2http-day1.html</link>
+    <pubDate>Fri, 20 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>WS2HTTP - Day 0: Bridging WebSockets and CGI</title>
+    <guid>https://cocz.net/ws2http-day0.html</guid>
+    <link>https://cocz.net/ws2http-day0.html</link>
+    <pubDate>Thu, 19 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>Skill X Change - Day 1: Why I'm Abandoning the Project</title>
+    <guid>https://cocz.net/skill-exchange-day-1.html</guid>
+    <link>https://cocz.net/skill-exchange-day-1.html</link>
+    <pubDate>Tue, 17 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>Skill X Change - Day 0: Project Setup and Tech Stack Exploration</title>
+    <guid>https://cocz.net/skill-exchange-day-0.html</guid>
+    <link>https://cocz.net/skill-exchange-day-0.html</link>
+    <pubDate>Mon, 16 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>Future Projects: One-Week App Development Challenge</title>
+    <guid>https://cocz.net/future-projects.html</guid>
+    <link>https://cocz.net/future-projects.html</link>
+    <pubDate>Sun, 15 Sep 2024</pubDate>
+  </item>
+<item>
+    <title>Thoughts on Interactive Programming</title>
+    <guid>https://cocz.net/guile-gamedev.html</guid>
+    <link>https://cocz.net/guile-gamedev.html</link>
+    <pubDate>Sat, 16 Mar 2024</pubDate>
+  </item>
+<item>
+    <title>Trade-offs between Single- and Multiple-Dispatch</title>
+    <guid>https://cocz.net/multimethods.html</guid>
+    <link>https://cocz.net/multimethods.html</link>
+    <pubDate>Thu, 14 Mar 2024</pubDate>
+  </item>
+<item>
+    <title>Hello, World! My Journey into Tech Blogging Begins</title>
+    <guid>https://cocz.net/hello.html</guid>
+    <link>https://cocz.net/hello.html</link>
+    <pubDate>Wed, 13 Mar 2024</pubDate>
+  </item>
+</channel>
+</rss>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>URL2OG - An Exercise in Vibe Coding</title>
+    <meta name="date" content="2025-04-29T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>URL2OG - An Exercise in Vibe Coding</h1>
+      <div class="intro">
+Hey there! I've been trying to step out of my comfort zone lately and share more of my projects with the world. But you know what's been driving me crazy? Those social media preview images that show up when you share a link. You know the ones - they're either missing completely or look like they were made by a sleep-deprived programmer at 3 AM. I've been either ignoring them completely or making some pretty terrible collages in Gimp when I could be bothered. Not exactly ideal, right?
+</div><p><a href="/img/url2og.jpg"><img src="/img/url2og.jpg" alt="Startpage of url2og rendered via url2og"></a></p>
+<h2>What&#39;s OpenGraph Anyway?</h2>
+<p>It&#39;s a standard defined by Facebook back in the day on how a website can specify how it looks when shared on social media. These metadata tags, along with some originally intended for Twitter, seem to be the main way to declare your appearance on social media.</p>
+<p>In addition to a title and description, a pretty important part is an image representing that particular page. For the most part, I&#39;ve just not done anything, but if I could be bothered, I&#39;d either create a terrible-looking collage in Gimp or use some sort of AI tool to generate some abstract image I could just plaster on every page - not an ideal solution.</p>
+<h2>Meet url2og: A Simple Solution</h2>
+<p>A week or so ago, I read a post by <a href="https://x.com/levelsio">@levelsio</a> on X describing a service he vibe coded in a couple of hours that just takes a screenshot of a particular URL at a popular resolution. A great idea, I thought, and went ahead to do just the same.</p>
+<h2>How I Built It: The Fun Part</h2>
+<p>Now, I just created a new directory, initialized git/npm in it, and opened cursor, telling it what I wanted. Things worked great, and in about an hour and a couple of prompts, I got a working service. Over time, I&#39;ve modified minor nitpicks I&#39;ve noticed.</p>
+<h3>The Not-So-Perfect Side of Vibe Coding</h3>
+<p>One thing that for now is holding back vibe coding considerably is the over-agreeable nature of most LLMs. They are meant to be assistants to you, not to question your decisions, which leads to terrible results when vibe coding.</p>
+<p>Generally, the LLM did not help at all when it came to creating a secure/efficient service like this. I generally had to specifically ask it to restructure things in a certain way, or at least tell it to, for example, review the codebase for security issues and harden it at least somewhat. Same for the domain whitelist (it&#39;d have happily let me deploy a service that would just send requests to any server on the web).</p>
+<h2>Wrapping It Up: What I Learned</h2>
+<p>Well, apart from that minor excursion, things worked really great. When you pretty much know exactly what you want and just use the LLM for its superior speed in typing out the actual code and knowing how the framework du jour wants you to specify the various endpoints your service needs, then things work excellently.</p>
+<p>Now, if you need a service like this as well and are even lazier than I am, then you can just fork/clone everything over on <a href="https://github.com/Melchizedek6809/url2og">GitHub</a>.</p>
+<hr>
+<p><em>Adios,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>VibeOS: Day 1 - Creating an Operating System from Scratch with AI</title>
+    <meta name="date" content="2025-04-20T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>VibeOS: Day 1 - Creating an Operating System from Scratch with AI</h1>
+      <p>Alright, so today while talking to a friend about the limits of current AI coding tools I&#39;ve been wondering whether
+it is possible to do low-level &quot;vibe coding&quot; — specifically, an operating system from scratch. So this is what I set out to do today, and I gotta say I&#39;m quite impressed by the results.</p>
+<p>For those unfamiliar with &quot;vibe coding,&quot; it&#39;s essentially letting an AI coding assistant guide the development process based on high-level descriptions rather than detailed specifications. The goal is to see how well modern AI tools can handle complex, low-level systems programming challenges.</p>
+<p>If you&#39;re interested in the source code, it&#39;s available on <a href="https://github.com/Melchizedek6809/vibeos">GitHub</a>.</p>
+<p><a href="/img/vibeos/screenshot.png"><img src="/img/vibeos/screenshot.png" alt="Screenshot of VibeOS booting, showing off its simple graphics and keyboard capabilities"></a></p>
+<h2>Overview of the capabilities after 2 hours</h2>
+<p>I&#39;ve spent about 2 hours vibe coding, and in the end VibeOS already has the following capabilities:</p>
+<ul>
+<li>Be booted directly via Qemu (a popular machine emulator)</li>
+<li>Be booted via Multiboot on real hardware (didn&#39;t test that yet, probably won&#39;t work)</li>
+<li>Text mode VGA output (the classic 80×25 character display)</li>
+<li>Simple VGA terminal emulator, supporting some simple ANSI Escape sequences for setting color</li>
+<li>PS/2 keyboard input (US English layout is hardcoded for now)</li>
+<li>Timer interrupt (for basic timing functions)</li>
+<li>Setting up an <a href="https://wiki.osdev.org/Interrupt_Descriptor_Table">IDT</a> (Interrupt Descriptor Table, which handles hardware/software interrupts)</li>
+<li>Simple standalone printf implementation (for formatted text output)</li>
+<li>Some libc functions, mainly regarding string handling</li>
+<li>UART output, so all output gets sent to the Terminal and Screen</li>
+</ul>
+<p>To me that is actually quite astonishing — it would have taken me far longer than 2 hours to write all of this manually, and
+while the overall code quality isn&#39;t great, it does seem to work at first glance. The AI was surprisingly adept at understanding the complexities of low-level hardware interaction.</p>
+<h2>The Challenges of OS Development</h2>
+<p>Building an operating system from scratch involves working directly with hardware, with no underlying OS to handle the details for you. Each component—from boot code to keyboard drivers—must be implemented from the ground up.</p>
+<p>Traditional OS development typically requires deep knowledge of computer architecture, assembly language, and hardware interfaces. The fact that an AI-assisted approach produced a working system in just 2 hours demonstrates how far these tools have come.</p>
+<h2>Future ideas</h2>
+<p>Tomorrow I&#39;ll probably continue since I&#39;m quite intrigued by how well this actually works. The next steps
+will probably be support for mass storage (probably ATA/AHCI) and a simple filesystem like <a href="https://wiki.osdev.org/FAT#FAT_32">FAT32</a>, since
+we can then try and extend VibeOS to be some sort of DOS on steroids and who knows what we&#39;ll add over time.</p>
+<p>Some potential features I&#39;m considering:</p>
+<ul>
+<li>A simple shell interface for executing commands</li>
+<li>Basic memory management and process isolation</li>
+<li>Perhaps a simple graphical interface beyond text mode</li>
+<li>Network stack if things get really ambitious</li>
+</ul>
+<p>I&#39;ll also try and test it on real hardware soon, since I do wanna know whether things actually work. In the past, I&#39;ve noticed some differences between behavior in a VM and on real machines — virtual machines often emulate &quot;perfect&quot; hardware, while real systems have quirks and timing issues that can expose subtle bugs. We&#39;ll see how well things actually work out when running on physical hardware.</p>
+<p>If you&#39;re interested in OS development or pushing the boundaries of what AI coding assistants can do, stay tuned for further updates on this experiment.</p>
+<hr>
+<p><em>Adios,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

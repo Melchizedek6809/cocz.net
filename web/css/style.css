@@ -1,0 +1,849 @@
+:root {
+  --fg-color: #f0f0f0;
+  --bg-color: #123;
+  --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
+  --fg-border: #57B;
+  --bg-mark: #dfdfb0;
+  --fg-mark: #100f10;
+
+  /* Adding accent colors for visual interest */
+  --accent-1: #50b8f8;  /* Blue */
+  --accent-2: #f850b8;  /* Pink */
+  --accent-3: #50f8b8;  /* Teal */
+  --accent-4: #f8b850;  /* Orange */
+  --accent-5: #b850f8;  /* Purple */
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fg-color: #2d3748;
+    --bg-color: #ffffff;
+    --fg-href: #3182ce;
+    --fg-secondary: #d53f8c;
+    /* Improved contrast for border color */
+    --fg-border: #4299e1;
+    --bg-mark: #fef3c7;
+    --fg-mark: #1a202c;
+    /* Add subtle texture to the background for light mode */
+    --bg-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234299e1' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+
+    /* Adding accent colors for light mode */
+    --accent-1: #3182ce;  /* Blue */
+    --accent-2: #d53f8c;  /* Pink */
+    --accent-3: #38b2ac;  /* Teal */
+    --accent-4: #dd6b20;  /* Orange */
+    --accent-5: #805ad5;  /* Purple */
+  }
+}
+
+:root {
+  --serif-font: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  --sans-font: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --mono-font: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Inconsolata, monospace;
+
+
+
+  /* @link https://utopia.fyi/type/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+  --step-s5: clamp(0.37rem, calc(0.52rem + -0.19vw), 0.49rem);
+  --step-s4: clamp(0.46rem, calc(0.57rem + -0.14vw), 0.55rem);
+  --step-s3: clamp(0.58rem, calc(0.63rem + -0.06vw), 0.61rem);
+  --step-s2: clamp(0.69rem, calc(0.68rem + 0.05vw), 0.72rem);
+  --step-s1: clamp(0.78rem, calc(0.74rem + 0.20vw), 0.90rem);
+  --step-x0: clamp(0.88rem, calc(0.79rem + 0.42vw), 1.13rem);
+  --step-x1: clamp(0.98rem, calc(0.84rem + 0.70vw), 1.41rem);
+  --step-x2: clamp(1.11rem, calc(0.89rem + 1.08vw), 1.76rem);
+  --step-x3: clamp(1.25rem, calc(0.93rem + 1.59vw), 2.20rem);
+  --step-x4: clamp(1.40rem, calc(0.95rem + 2.24vw), 2.75rem);
+
+  /* @link https://utopia.fyi/space/calculator?c=320,14,1.125,1280,18,1.25,4,5,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+  --space-3xs: clamp(0.25rem, calc(0.23rem + 0.10vw), 0.31rem);
+  --space-2xs: clamp(0.44rem, calc(0.40rem + 0.21vw), 0.56rem);
+  --space-xs: clamp(0.69rem, calc(0.63rem + 0.31vw), 0.88rem);
+  --space-s: clamp(0.88rem, calc(0.79rem + 0.42vw), 1.13rem);
+  --space-m: clamp(1.31rem, calc(1.19rem + 0.63vw), 1.69rem);
+  --space-l: clamp(1.75rem, calc(1.58rem + 0.83vw), 2.25rem);
+  --space-xl: clamp(2.63rem, calc(2.38rem + 1.25vw), 3.38rem);
+  --space-2xl: clamp(3.50rem, calc(3.17rem + 1.67vw), 4.50rem);
+  --space-3xl: clamp(5.25rem, calc(4.75rem + 2.50vw), 6.75rem);
+
+  --width: 70ch;
+  --body-line-height: 1.5;
+  --head-line-height: 1.3;
+}
+
+html {
+  /* use the border-box box model instead of the browser default content-box */
+  box-sizing: border-box;
+  /* fallback for safari - remove if it starts supporting scrollbar-gutter */
+  overflow-y: auto;
+  background: var(--bg-color);
+}
+
+body {
+  display: block;
+  /* align-items: center; */
+  /* readability */
+  margin: auto;
+  width: 100%;
+  max-width: 980px;
+  padding: var(--space-s) var(--space-m);
+  line-height: var(--body-line-height);
+  font-family: var(--sans-font);
+  color: var(--fg-color);
+  background: var(--bg-color);
+
+  min-height: 100vh;
+}
+
+.primary-header h3 a {
+  color: var(--fg-color);
+}
+
+/* Animations removed for immediate content display */
+
+nav a.twitch::before,
+nav a.sourcehut::before,
+nav a.github::before,
+nav a.rss-icon::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+nav a.github::before {
+  background-image: url('./branding/github-mark-white.svg');
+}
+
+nav a.sourcehut::before {
+  background-image: url('./branding/sr.ht-white.svg');
+}
+
+nav a.twitch::before {
+  background-image: url('./branding/twitch-white.svg');
+}
+
+nav a.rss-icon::before {
+  background-image: url('./branding/rss-white.svg');
+}
+
+@media (prefers-color-scheme: light) {
+  nav a.github::before {
+    background-image: url('./branding/github-mark.svg');
+  }
+
+  nav a.sourcehut::before {
+    background-image: url('./branding/sr.ht.svg');
+  }
+
+  nav a.twitch::before {
+    background-image: url('./branding/twitch.svg');
+  }
+
+  nav a.rss-icon::before {
+    background-image: url('./branding/rss.svg');
+  }
+}
+
+/* remove all browser default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* if any of the following elements don't exist, the rule still applies  */
+:is(code, kbd, samp, pre) {
+  font-family: var(--mono-font);
+  overflow-x: auto;
+}
+
+/* reduce distraction from text by removing underlines from hyperlinks */
+/* rely on color to distinguish hyperlinks */
+/* the order of pseudo classes should follow the LVHA order */
+/* :link, :visited, :hover, :active */
+a {
+  color: var(--fg-href);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--space-3xs);
+  text-decoration-thickness: 0.02em;
+  display: inline-block;
+  transition: all 200ms ease;
+}
+
+/* underline hyperlinks on hover and increase their underline offset */
+a:hover {
+  text-decoration-color: var(--fg-href);
+  opacity: 0.85;
+}
+
+/* if the role of a list is explicitly defined, it isn't being used as a list */
+ul[role="list"] {
+  padding: 0;
+  list-style: none;
+}
+
+/* prevent overflow of possibly long lines */
+p, li, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+ul,ol,p {
+  margin-bottom: 1rem;
+}
+
+time {
+  white-space: nowrap;
+}
+
+article {
+  margin-bottom: var(--step-x0);
+  overflow: hidden;
+}
+
+article:last-child {
+  margin-bottom: 0;
+}
+
+article + article {
+  padding-top: var(--step-x0);
+  margin-top: var(--space-m);
+}
+
+img, video {
+  /* never render images/videos wider than their containing element */
+  max-inline-size: 100%;
+  height: auto;
+  /* preserve the aspect ratio of the image */
+  block-size: auto;
+  margin-inline: auto;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+  /* center small images on large screens */
+  display: block;
+}
+
+article > header {
+  padding-bottom: 8px;
+  background: var(--bg-color);
+  position: relative;
+  z-index:1;
+}
+
+main {
+  padding: var(--space-s) 0;
+}
+
+main article {
+    padding: 0 var(--step-x0);
+}
+
+.teaser-image-link {
+  display: block;
+}
+
+.teaser-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  margin-top: -8px;
+  margin-bottom: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: all 0.4s ease;
+  border: none;
+}
+
+main > article {
+  background: var(--bg-color);
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+:is(img, video) {
+  /* make images/videos blocks rather than inline elements */
+  display: block;
+}
+
+/* Ensure content images are centered on larger screens */
+article img:not(.teaser-image):not(.avatar) {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.avatar {
+  border-radius: var(--step-x1);
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--sans-font);
+  line-height: var(--head-line-height);
+  margin-bottom:0.3em;
+}
+
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1.05rem; }
+
+.primary-header h3 {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+
+header {
+  margin-bottom: var(--space-s);
+}
+
+header.primary-header {
+  margin-bottom: 0;
+}
+
+header > section {
+  margin-bottom: 0;;
+}
+
+footer {
+  padding-top: var(--space-s);
+}
+
+footer.primary-footer {
+  /* No animation needed */
+}
+
+.primary-nav > ul[role="list"],
+.primary-footer > ul[role="list"] {
+  display: flex;
+  flex-flow: row wrap;
+  /* prevent accidental incorrect clicks by increasing space between elements */
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.primary-header {
+  border-bottom: 1px solid var(--fg-border);
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-m);
+  position: relative;
+}
+
+.primary-header-spacer {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.primary-header-spacer-b,
+.primary-header-spacer-c,
+.primary-header-spacer-d,
+.primary-header-spacer-e,
+.primary-header-spacer-a {
+  background: var(--accent-1);
+  height: 100%;
+  width: 20%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.primary-header-spacer-b {
+  background: var(--accent-2);
+  left: 20%;
+}
+
+.primary-header-spacer-c {
+  background: var(--accent-3);
+  left: 40%;
+}
+
+.primary-header-spacer-d {
+  background: var(--accent-4);
+  left: 60%;
+}
+
+.primary-header-spacer-e {
+  background: var(--accent-5);
+  height: 100%;
+  left: 80%;
+}
+
+
+.primary-footer {
+  border-top: 1px solid var(--fg-border);
+  padding-top: var(--space-xs);
+}
+
+/* add a hash symbol before the taxonomy tag links */
+.tag::before {
+  content: "#";
+}
+
+.tag-sup {
+  padding-inline: var(--space-3xs);
+}
+
+.article-header > ul[role="list"] {
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  gap: var(--space-2xs);
+}
+
+.post-side,
+.post-side > ul[role="list"],
+.page-header > ul[role="list"] {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  gap: var(--space-2xs);
+}
+
+.post-side {
+  margin-bottom: var(--space-2xs);
+}
+
+article > header {
+  padding-top: 0.2rem;
+}
+
+.article-header {
+  display: block;
+}
+
+header.primary-header {
+  display: flex;
+  gap: var(--space-2xs);
+  justify-content: space-between;
+}
+
+.unknown-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-block: var(--space-xl);
+}
+
+/* code blocks inside pre should be a block otherwise it doesn't work well when
+ * text overflows inside code */
+pre > code {
+  display: block;
+}
+
+code[role="img"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.figquote {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* show the name of the programming language inside pre */
+pre[data-lang]::before {
+  display: block;
+  content: attr(data-lang);
+  text-decoration: underline var(--fg-border) solid;
+  text-underline-offset: var(--space-3xs);
+  text-decoration-thickness: 0.1rem;
+  text-transform: uppercase;
+  padding-block-end: var(--space-2xs);
+}
+
+/* add space after line numbers and don't select the line numbers for copying */
+pre[data-linenos] table tbody tr td:first-child {
+  padding-inline-end: var(--space-s);
+  user-select: none;
+}
+
+pre[data-linenos] table {
+  /* if we set table width to 100% and if text overflows, the space separation
+   * between cells is removed */
+  /* width: 100%; */
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: 0;
+}
+
+.unknown-page-emoticon {
+  font-size: var(--step-x3);
+  padding: var(--space-2xs);
+  border: 0;
+  border-radius: 0;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+figcaption {
+  text-align: center;
+}
+
+:is(ul, ol) {
+  padding-inline: var(--space-l);
+}
+
+mark {
+  /* plays well with at least 1.5 line-height or more */
+  padding-inline: var(--space-3xs);
+  padding-block: 0.1rem;
+  color: var(--fg-mark);
+  background: var(--bg-mark);
+  border-radius: var(--step-s5);
+  transition: all 0.2s ease;
+}
+
+kbd {
+  border-inline: 0.1rem solid var(--fg-border);
+  border-block-start: 0.1rem solid var(--fg-border);
+  border-block-end: 0.2rem solid var(--fg-border);
+  border-radius: var(--step-s5);
+  padding-inline: var(--space-3xs);
+  padding-block: 0.1rem;
+  font-family: var(--mono-font);
+  margin: 0 0.1rem;
+}
+
+@media only screen and (max-width: 700px) {
+  header.article-header,
+  header.primary-header {
+    display: block;
+  }
+
+  .post-side ul[role="list"],
+  .post-side {
+    gap: var(--space-s);
+  }
+
+  footer.primary-footer > ul[role="list"] {
+    display: block;
+    text-align: right;
+  }
+
+  footer.primary-footer > ul[role="list"] > li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+p + h1,
+p + h2,
+p + h3,
+p + h4 {
+  padding-top: var(--space-s);
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 200;
+  margin-bottom: 0.5rem;
+  color: var(--fg-color);
+}
+
+h2 {
+  font-size: 2.6rem;
+  font-weight: 200;
+  margin-bottom: 0.25rem;
+  color: var(--fg-color);
+}
+
+h3 {
+  font-size: 2.4rem;
+  font-weight: 200;
+  margin-bottom: 0.125rem;
+  color: var(--fg-color);
+}
+
+h4 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 0.125rem;
+  color: var(--fg-color);
+}
+
+h4.cyberspace {
+  font-weight: 200;
+}
+
+@media screen and (max-width: 700px) {
+  h1 { font-size: 2.4rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.6rem; }
+}
+
+@media screen and (max-width: 450px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.8rem; }
+}
+
+article h2,
+article h3 {
+  margin-bottom: 0.5rem;
+}
+
+main.index-main article h2,
+main.index-main article h3 {
+    border: none;
+}
+
+/* Rainbow borders for headings */
+article h2:nth-of-type(5n+1),
+article h3:nth-of-type(5n+1) {
+  border-bottom: 2px solid var(--accent-1);
+}
+
+article h2:nth-of-type(5n+2),
+article h3:nth-of-type(5n+2) {
+  border-bottom: 2px solid var(--accent-2);
+}
+
+article h2:nth-of-type(5n+3),
+article h3:nth-of-type(5n+3) {
+  border-bottom: 2px solid var(--accent-3);
+}
+
+article h2:nth-of-type(5n+4),
+article h3:nth-of-type(5n+4) {
+  border-bottom: 2px solid var(--accent-4);
+}
+
+article h2:nth-of-type(5n+5),
+article h3:nth-of-type(5n+5) {
+  border-bottom: 2px solid var(--accent-5);
+}
+
+main article.full-article {
+  border-top: none;
+}
+
+.article-header h2,
+.article-header h3 {
+  border: none;
+}
+
+.cs1, .cs2, .cs3, .cs4, .cs5 {
+  font-family: var(--mono-font);
+}
+
+ol > li::marker,
+ul > li::marker {
+  color: var(--fg-border);
+  font-weight: bold;
+}
+
+
+.hljs-attr, .hljs-built_in, .hljs-title, .hljs-name, .cs1 { color: #50b8f8; }
+.hljs-string, .cs2 { color: #f8b850; }
+.hljs-type, .hljs-number, .cs3 { color: #50f863; }
+.hljs-variable, .hljs-keyword, .cs4 { color: #f850b8; }
+.hljs-comment, .cs5 { color: #b850f8; }
+
+@media (prefers-color-scheme: light) {
+  .hljs-attr, .hljs-built_in, .hljs-title, .hljs-name, .cs1 { color: #2563eb; }
+  .hljs-string, .cs2 { color: #c2410c; }
+  .hljs-type, .hljs-number, .cs3 { color: #047857; }
+  .hljs-variable, .hljs-keyword, .cs4 { color: #be185d; }
+  .hljs-comment, .cs5 { color: #7c3aed; }
+}
+
+pre {
+  margin-bottom: 0.5rem;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid var(--fg-border);
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.intro {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  padding: 0 0 1rem;
+}
+
+html.url2og header.primary-header,
+html.url2og footer.primary-footer {
+  display: none !important;
+}
+
+html.url2og {
+  --fg-color: #f0f0f0;
+  --bg-color: #223;
+  --fg-href: #50b8f8;
+  --fg-secondary: #f850b8;
+  --fg-border: #57B;
+  --bg-mark: #dfdfb0;
+  --fg-mark: #100f10;
+}
+
+button, input[type="submit"], input[type="button"] {
+  background: var(--fg-href);
+  color: white;
+  border: none;
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 0.25rem;
+  font-family: var(--sans-font);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: light) {
+  button, input[type="submit"], input[type="button"] {
+    background: var(--fg-href);
+    color: white;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  pre {
+    background: linear-gradient(145deg, rgba(45, 55, 72, 0.05), rgba(45, 55, 72, 0.08));
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-top: 3px solid var(--accent-1);
+  }
+
+  blockquote {
+    background-color: rgba(49, 130, 206, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background: var(--bg-color);
+  }
+}
+
+
+article > header {
+  margin-bottom: 0;
+}
+
+article > p {
+  padding: 0;
+}
+
+/* Adding colorful accents to sections */
+article:nth-of-type(5n+1) {
+  border-top: 3px solid var(--accent-1);
+}
+
+article:nth-of-type(5n+2) {
+  border-top: 3px solid var(--accent-2);
+}
+
+article:nth-of-type(5n+3) {
+  border-top: 3px solid var(--accent-3);
+}
+
+article:nth-of-type(5n+4) {
+  border-top: 3px solid var(--accent-4);
+}
+
+article:nth-of-type(5n+5) {
+  border-top: 3px solid var(--accent-5);
+}
+
+
+/* Colorful blockquotes */
+blockquote {
+  padding: var(--space-s) var(--space-m);
+  border: solid 1px var(--fg-border);
+  border-inline-start: var(--step-s3) solid var(--accent-1);
+  border-radius: 0 1rem 1rem 0;
+  margin: 0 0 2.5rem;
+  background-color: rgba(80, 184, 248, 0.05);
+}
+
+@media (prefers-color-scheme: light) {
+  blockquote {
+    background-color: rgba(49, 130, 206, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* Colorful list markers */
+ul li::marker {
+  color: var(--accent-1);
+}
+
+ol li::marker {
+  color: var(--accent-2);
+}
+
+/* More visually interesting code blocks */
+pre {
+  padding: var(--space-xs);
+  border: 0.1rem solid var(--fg-border);
+  border-radius: 0.5rem;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+  border-top: 3px solid var(--accent-1);
+}
+
+@media (prefers-color-scheme: light) {
+  pre {
+    background: linear-gradient(145deg, rgba(45, 55, 72, 0.05), rgba(45, 55, 72, 0.08));
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-top: 3px solid var(--accent-1);
+  }
+}
+
+.tag {
+  position: relative;
+  transition: all 0.2s ease;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: rgba(80, 184, 248, 0.1);
+  border-bottom: 2px solid var(--accent-1);
+}
+
+.tag:hover {
+  background: rgba(80, 184, 248, 0.2);
+}
+
+a.tag {
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: light) {
+  .tag {
+    background-color: rgba(49, 130, 206, 0.1);
+    border-bottom: 2px solid var(--accent-1);
+  }
+
+  .tag:hover {
+    background: rgba(49, 130, 206, 0.2);
+  }
+}
+
+.byline {
+  float: right;
+}
+
+hr {
+  clear: both;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cursor's Pricing Train-Wreck: What the Hell Happened?</title>
+    <meta name="date" content="2025-07-19T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>Cursor's Pricing Train-Wreck: What the Hell Happened?</h1>
+      <div class="intro">
+If you blinked last week, you probably missed Cursor lighting its reputation on fire. I'm writing this mainly to vent, but also to figure out how a tool I loved managed to shoot itself in both feet.
+</div><h2>What actually changed?</h2>
+<p>For the past year I paid $20/month and got <strong>500 fast premium requests</strong> to models like Claude. Depending on the model, a single call cost 0.5 or 2 of those requests. The system was transparent: I could see exactly how much runway I had left, and I rarely ran dry. On the odd month I did, I knew the counter reset in a few days and life went on.</p>
+<p>Then—overnight—Cursor announced &quot;unlimited&quot; requests. Sounds dreamy, right? The fine print revealed it was really <strong>$20 worth of API credits</strong>, after which you hit opaque rate-limits. Worse, if you didn&#39;t set a spend cap, the system silently flipped to usage-based pricing and people racked up triple-digit bills while they were just… coding. I had a $5 hard limit, so I dodged the bullet, but after a day or two of normal work I was throttled into oblivion.</p>
+<p>The whole switch was communicated via one popup I reflexively accepted because I still trusted the product. Big mistake.</p>
+<h2>Where they screwed up</h2>
+<h3>1. Orwellian marketing</h3>
+<p>Calling it &quot;unlimited&quot; when it&#39;s roughly <strong>10% of the old quota</strong> is just plain insulting.</p>
+<h3>2. Black-box rate limits</h3>
+<p>When you hit the wall you get an error: <em>Rate limit exceeded</em>. How long until you can continue? Five minutes? Five hours? Five days? Cursor won&#39;t say.
+Compare that to Claude Code: the moment you hit the cap, it tells you &quot;Back in 2 h 14 m&quot; or offers an upgrade. Third-party burn-rate calculators even let you <em>plan</em> your session. That&#39;s how professionals treat other professionals.</p>
+<h3>3. Mystery tiers</h3>
+<p>Cursor added pricier plans that promise &quot;more usage.&quot; How much more? <strong>No one fucking knows.</strong> I&#39;d happily pay extra for a great tool, but after this stunt I&#39;m not handing over any more money to them without a clear description of what I&#39;ll be getting.</p>
+<h3>4. Radio silence after the backlash</h3>
+<p>Weeks later there&#39;s still no real fix—just refunds for the surprise bills (probably to avoid lawsuits). Usage might be lighter now because people are fleeing; I actually managed a long session a couple of days ago without throttling. That&#39;s not a policy change, it&#39;s a side effect.</p>
+<h2>Trying to understand their side</h2>
+<p>I get it, Cursor probably ran into issues because if you combine Claude 4 with some MCP servers you can make a single request go quite far. I&#39;ve also managed this mainly by adding the Playwright MCP Server (great tool btw!) and adjusting the system prompt to get Cursor to regularly do 20-30 tool calls with a single request, using up tokens like crazy.</p>
+<p>It&#39;s understandable that with things changing like this the pricing strategy also needs to change for things to stay fair. Having a simple question resulting in ~50 tokens and a massive refactor producing thousands of tokens cost the same amount of requests would surely lead to problems. If things were communicated like this and with proper transparent rate limits, then I&#39;d be a happy Cursor user still, but this is just a complete trainwreck.</p>
+<h2>So what now?</h2>
+<p>Technically Cursor is still great. The UX, the inline diffs, the little touches—they&#39;re all still there. But this wasn&#39;t a technical failure; it was a business decision executed with staggering stupidity. They torched user trust with a single update.</p>
+<p>I&#39;ve cancelled my subscription and moved to Claude Code. It isn&#39;t as <em>charming</em> as Cursor yet, but it&#39;s predictable, transparent, and respects my time. There are too many good AI editors out there to keep using one that apparently has no respect for their userbase.</p>
+<hr>
+<p><em>Adiós,</em>
+べン</p>
+
+    </main>
+  </body>
+</html>

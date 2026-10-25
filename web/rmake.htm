@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RMake: A Modern GNU Make Alternative written in Rust</title>
+    <meta name="date" content="2025-04-12T00:00:00.000Z">
+  </head>
+  <body>
+    <main>
+      <h1>RMake: A Modern GNU Make Alternative written in Rust</h1>
+      <p>I&#39;ve often thought that make is a solid tool, but it could really benefit from modern features like package management and file watching capabilities.</p>
+<p>After considering this for a while, I decided to stop just thinking about it and actually build something. The result is a Rust implementation of GNU make that aims to be 100% compatible with GNU make 3.81 (the version shipped in macOS that many developers target) while adding features that address some long-standing pain points.</p>
+<p>The project is still in its early stages, but I&#39;m excited about the progress so far and believe it could become a practical tool for real-world development in the near future. While full compatibility is the first priority, I&#39;m already designing some extensions that could make C/C++ development significantly more pleasant.</p>
+<h2>Structure</h2>
+<p>Right now everything is still sync, but in the long run I&#39;d like to utilize an async runtime like <a href="https://tokio.rs/">Tokio</a> here since it seems as though make mostly waits on other processes/IO. Regarding the parser, I&#39;m currently experimenting with <a href="https://pest.rs/">pest</a> which can create parsers from PEG grammars, although I do quite enjoy writing my own parsers.</p>
+<h2>Why Rust?</h2>
+<p>Mainly because I was searching for a small project to prepare for a job interview, but generally I think for a project like this there are only a couple of viable languages:</p>
+<h3>C</h3>
+<p>Obviously C would have been a fine choice as well, especially with something like <a href="https://libevent.org/">libevent</a>. Though I kinda feel that while in doubt, Rust is a better choice for system software if the underlying hardware is somewhat modern/performant.</p>
+<h3>C++</h3>
+<p>Not a fan of C++ to be honest. For the most part, I think that Rust does everything C++ does, just better. Although I have to say GameDev is a scene where C++ seems like an OK choice.</p>
+<h3>Go</h3>
+<p>Go seems like a great language for a project like this, and I might just go for it just to have an excuse to finally do a deep dive into Go.</p>
+<h2>BSD Make</h2>
+<p>I actually prefer the BSD Make syntax for the most part, so in the long run I&#39;d like to support both syntaxes or provide a switch in the makefile so that one can choose without having to use a different program (mainly since it seems like the difference is only superficial if one ignores things like the <a href="https://www.gnu.org/software/guile/">embedded Guile</a>).</p>
+<h2>Future improvements</h2>
+<p>Now I&#39;d like to write about 2 features that particularly excite me and that I&#39;ll hopefully come around to implementing.</p>
+<h3>Watch mode</h3>
+<p>I&#39;d love to implement a &quot;watch mode&quot; feature activated by a command-line flag. In this mode, instead of running once and exiting as make normally does, the program would:</p>
+<ol>
+<li>Build the requested targets</li>
+<li>Continue running in the background</li>
+<li>Monitor all input files for changes</li>
+<li>Automatically trigger a new build whenever any dependency is modified</li>
+</ol>
+<p>This would create a seamless development experience, especially for projects where you frequently make small changes and want to see immediate results.</p>
+<h3>Package management</h3>
+<p>This is gonna be a tricky one. Right now I&#39;m thinking of having a special format for specifying package dependencies, for example like this:</p>
+<pre><code class="language-make">PKG(ncurses): PKG(ncurses@6.5)
+
+prog: main.o PKG(ncurses)
+    $(CC) -o $@ $&lt;
+</code></pre>
+<p>The core idea is simple:</p>
+<ul>
+<li>Use the PKG(<a href="mailto:ncurses@6.5">ncurses@6.5</a>) syntax for depending on a particular version</li>
+<li>By using the familiar dependency syntax we can specify which particular version of a dependency we&#39;d like to use</li>
+<li>This could be moved to a separate Makefile that&#39;s included from the main one, giving us a separate lockfile</li>
+<li>Your build targets can directly depend on packages using the <code>PKG()</code> syntax</li>
+</ul>
+<p>For implementation, I&#39;m considering these key requirements:</p>
+<ol>
+<li><p><strong>Cross-platform compatibility</strong> - Must work across different operating systems</p>
+</li>
+<li><p><strong>Source-first approach</strong> - Support compiling from source, with binaries as an optimization</p>
+</li>
+<li><p><strong>Standardized package format</strong> - An archive containing:</p>
+<ul>
+<li>Standard directories (<code>/lib</code>, <code>/include</code>, <code>/bin</code>)</li>
+<li>Metadata file (likely JSON or TOML)</li>
+<li>Architecture information in both filename and metadata</li>
+<li>Hash of configuration options used</li>
+</ul>
+</li>
+<li><p><strong>Flexible linking options</strong> - Easy switching between dynamic and static linking</p>
+</li>
+</ol>
+<p>The workflow would likely involve cloning repositories and running specialized make commands to compile everything into binary packages. This approach would create consistency between how we handle binary dependencies and how we build packages from source.</p>
+<h2>Conclusions</h2>
+<p>There is still a lot to be done, however I&#39;m quite excited about it and especially the Package management feature is something that&#39;s sorely lacking from C in my opinion, though I should probably give <a href="https://vcpkg.io/en/">vcpkg</a> another try. My first impressions weren&#39;t that great though.</p>
+<p>Unlike build systems like CMake or Bazel that try to replace make entirely, RMake aims to maintain compatibility while incrementally adding modern features. This approach allows developers to migrate gradually and maintain compatibility with existing build ecosystems.</p>
+<p>My immediate focus is on achieving full compatibility with GNU make 3.81, with watch mode and package management features to follow shortly after.</p>
+<p>If you&#39;re interested in following the development or want to contribute, check out the project on <a href="https://github.com/Melchizedek6809/rmake">GitHub</a>.</p>
+
+    </main>
+  </body>
+</html>
