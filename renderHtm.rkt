@@ -1,25 +1,9 @@
 #! /usr/bin/env racket
 #lang racket/base
-(require racket/port)
+
 (require racket/string)
 (require racket/vector)
-
-(define site-url "https://cocz.net")
-
-(define (slurp file-name)
-  (port->string (open-input-file file-name) #:close? #t))
-
-(define (spit file-name content)
-  (call-with-output-file file-name
-    #:exists 'truncate
-    (lambda (out)
-      (display content out))))
-
-(define template (slurp "template.html"))
-
-(define (wrap-in-template head-markup body-markup)
-  (string-replace (string-replace template "<!-- HEAD_INSERTION_POINT -->" head-markup)
-                  "<!-- BODY_INSERTION_POINT -->" body-markup))
+(require "shared.rkt")
 
 (define (parse-content-html markup)
   (let [(head-start (+ 6 (string-find markup "<head>")))
